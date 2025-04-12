@@ -1,4 +1,4 @@
-import browser from "webextension-polyfill";
+// import browser from "webextension-polyfill";
 
 console.log("Hello from the background!");
 
@@ -35,8 +35,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       try {
         // Скачиваем видео по очереди
         for (const url of message.urls) {
-          const fixedUrl = 'https://2ch.hk' + url;
-          await downloadFile(fixedUrl);
+          await downloadFile(url);
           console.log(`Downloaded: ${url}`);
         }
         sendResponse({ success: true });

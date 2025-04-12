@@ -48,16 +48,16 @@ export function scanForVideos() {
   const anchorElems = Array.from(document.querySelectorAll('a[href$=".mp4"], a[href$=".webm"], a[href$=".gif"]'));
   anchorElems.forEach((a) => {
     const href = a.href;
-    if (href && videos.length < 5) {
+    if (href && videos.length < 20) {
       // Пытаемся получить миниатюру из вложенного <img>, если он есть
       const img = a.querySelector("img");
-      const thumb = img ? img.getAttribute("src") : null;
-      if (!videos.some((v) => v.url === href)) {
+      const thumb = img ? img.src : null;
+      let videoEl = videos.find((v) => v.url === href)
+      if (videoEl === undefined) {
         videos.push({ url: href, thumb });
       }
-      let pseudoVideoEl = videos.find((v) => v.url === href)
-      if(pseudoVideoEl?.thumb === null && thumb !== null) {
-        pseudoVideoEl.thumb === thumb
+      if(videoEl?.thumb === null && thumb !== null) {
+        videoEl.thumb = thumb
       }
     }
   });
