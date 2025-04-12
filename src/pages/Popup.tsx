@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { scanForVideos } from "../lib/scanForVideos";
+import { scanForImages } from "../lib/scanForImages";
 
 // Тип для найденного видео
 interface VideoItem {
@@ -14,9 +15,11 @@ interface ScanResponse {
 
 export default function Popup() {
   const [videos, setVideos] = useState<ScanResponse[] | null>(null);
+  const [activeTab, setActiveTab] = useState<"videos" | "images">("videos");
   const [selected, setSelected] = useState<Record<string, boolean>>({});
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  console.log(activeTab)
 
   // Функция для запроса сканирования страницы
   const fetchVideos = async () => {
@@ -27,12 +30,13 @@ export default function Popup() {
 
     if (!tab?.id) return;
 
+    const currentScanFn = (activeTab === 'videos') ? scanForVideos : scanForImages;
     try {
       setLoading(true);
       setError("");
       const [result] = await chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        func: scanForVideos,
+        func: scanForImages,
       });
 
       console.log("result is: ", result);
@@ -114,7 +118,27 @@ export default function Popup() {
   return (
     <div style={{ padding: "10px", width: "300px" }}>
       <h2>Video Downloader</h2>
-      <button onClick={fetchVideos}>Scan Page</button>
+      {/* Вкладки для выбора типа медиа */}
+      <div style={{ marginBottom: "10px" }}>
+        <button
+          style={{
+            fontWeight: activeTab === "videos" ? "bold" : "normal",
+          }}
+          onClick={() => setActiveTab("videos")}
+        >
+          Videos
+        </button>
+        <button
+          style={{
+            fontWeight: activeTab === "images" ? "bold" : "normal",
+            marginLeft: "10px",
+          }}
+          onClick={() => setActiveTab("images")}
+        >
+          Images
+        </button>
+      </div>
+      <button onClick={fetchVideos}>Scan Page for {activeTab}</button>
       {loading && <p>Loading videos...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
       {!loading && videos === null && <p>No videos found.</p>}

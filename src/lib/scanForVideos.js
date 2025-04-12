@@ -45,7 +45,7 @@ export function scanForVideos() {
   // });
 
   // 3. Сканируем ссылки <a>, ведущие на видеофайлы
-  const anchorElems = Array.from(document.querySelectorAll('a[href$=".mp4"], a[href$=".webm"], a[href$=".gif"]'));
+  const anchorElems = Array.from(document.querySelectorAll('a[href$=".mp4"], a[href$=".webm"]'));
   anchorElems.forEach((a) => {
     const href = a.href;
     if (href && videos.length < 20) {
