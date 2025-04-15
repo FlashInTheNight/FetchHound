@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { scanForVideos } from "../lib/scanForVideos";
 import { scanForImages } from "../lib/scanForImages";
-import { Button } from "../ui/button/Button";
+import { MediaList } from "../ui/shared/media-list/MediaList";
+import { ScanPage } from "../ui/features/scan-page/ScanPage";
+import style from "./popup.module.css";
+
 
 // Тип для найденного видео
 interface VideoItem {
@@ -20,7 +23,6 @@ export default function Popup() {
   const [selected, setSelected] = useState<Record<string, boolean>>({});
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  console.log(activeTab);
 
   // Функция для запроса сканирования страницы
   const fetchVideos = async () => {
@@ -117,85 +119,35 @@ export default function Popup() {
     );
   };
 
-  const handleClick = () => {
-    console.log("Button clicked!");
-  };
-
   return (
-    <div>
-      <h2>My Extension Popup</h2>
-      <Button variant="primary" onClick={handleClick}>
-        Primary Button
-      </Button>
-      <Button
-        variant="secondary"
-        onClick={handleClick}
-        style={{ marginLeft: "10px" }}
-      >
-        Secondary Button
-      </Button>
-    </div>
-  );
+    <main>
+      <div className={style.header}>
+        <h1 className={style.title}>Media Downloader</h1>
+        <span className={style.burgerMenu}></span>
+      </div>
+      <ScanPage />
+    </main>
+  )
+
   // return (
-  //   <div style={{ padding: "10px", width: "300px" }}>
-  //     <h2>Video Downloader</h2>
-  //     {/* Вкладки для выбора типа медиа */}
-  //     <div style={{ marginBottom: "10px" }}>
-  //       <button
-  //         style={{
-  //           fontWeight: activeTab === "videos" ? "bold" : "normal",
-  //         }}
-  //         onClick={() => setActiveTab("videos")}
-  //       >
-  //         Videos
-  //       </button>
-  //       <button
-  //         style={{
-  //           fontWeight: activeTab === "images" ? "bold" : "normal",
-  //           marginLeft: "10px",
-  //         }}
-  //         onClick={() => setActiveTab("images")}
-  //       >
-  //         Images
-  //       </button>
+  //   <main>
+  //     <div>
+  //       <h1>Media Downloader</h1>
+  //       <span>Burger menu</span>
   //     </div>
+  //     {/* Вкладки для выбора типа медиа */}
+  //     < VariantMediaGroup activeTab={activeTab} setActiveTab={setActiveTab} />
   //     <button onClick={fetchVideos}>Scan Page for {activeTab}</button>
   //     {loading && <p>Loading videos...</p>}
   //     {error && <p style={{ color: "red" }}>{error}</p>}
   //     {!loading && videos === null && <p>No videos found.</p>}
   //     {videos !== null && videos.length > 0 && (
-  //       <>
-  //         <ul style={{ listStyle: "none", padding: 0 }}>
-  //           {videos.map((video) => (
-  //             <li key={video.url} style={{ marginBottom: "10px" }}>
-  //               <label style={{ display: "flex", alignItems: "center" }}>
-  //                 <input
-  //                   type="checkbox"
-  //                   checked={selected[video.url] || false}
-  //                   onChange={() => toggleSelect(video.url)}
-  //                 />
-  //                 <div style={{ marginLeft: "5px" }}>
-  //                   {video.thumb ? (
-  //                     <img
-  //                       src={video.thumb}
-  //                       alt="thumb"
-  //                       style={{ width: "50px", marginRight: "5px" }}
-  //                     />
-  //                   ) : null}
-  //                   <span>{video.url}</span>
-  //                 </div>
-  //               </label>
-  //             </li>
-  //           ))}
-  //         </ul>
-  //         <div style={{ marginTop: "10px" }}>
-  //           <button onClick={handleSelectAll}>Select All</button>
-  //           <button onClick={handleDownload} style={{ marginLeft: "5px" }}>
-  //             Download Selected
-  //           </button>
-  //         </div>
-  //       </>
+  //       <MediaList
+  //         videos={videos}
+  //         selected={selected}
+  //         toggleSelect={toggleSelect}
+  //       />
   //     )}
-  //   </div>
+  //   </main>
   // );
 }
