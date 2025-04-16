@@ -1,10 +1,12 @@
+import { MediaItem, scanFnType } from "../types";
+
 /**
- * Функция scanForVideos ищет видеофайлы на странице.
- * Возвращает массив объектов вида:
- * [{ url: '...', thumb: '...' | null }]
+ * @description Функция scanVideos ищет видеофайлы на странице.
+ * @returns {MediaItem[]} Возвращает массив объектов вида: [{ url: '...', thumb: '...' | null }]
+ * @throws {Error} Если видеофайлы не найдены, выбрасывает ошибку.
  */
-export function scanForVideos() {
-  const videos = [];
+export const scanVideos: scanFnType = () => {
+  const videos: MediaItem[] = [];
 
   // 1. Сканируем элементы <video>
   // const videoElems = Array.from(document.querySelectorAll("video"));
@@ -45,22 +47,30 @@ export function scanForVideos() {
   // });
 
   // 3. Сканируем ссылки <a>, ведущие на видеофайлы
-  const anchorElems = Array.from(document.querySelectorAll('a[href$=".mp4"], a[href$=".webm"]'));
+  const anchorElems: HTMLAnchorElement[] = Array.from(
+    document.querySelectorAll('a[href$=".mp4"], a[href$=".webm"]')
+  );
+
+  if (anchorElems.length === 0) {
+    console.error("No videos found in scanVideos fn");
+    throw new Error("No videos found");
+  }
+
   anchorElems.forEach((a) => {
     const href = a.href;
-    if (href && videos.length < 20) {
+    if (href && videos.length < 21) {
       // Пытаемся получить миниатюру из вложенного <img>, если он есть
       const img = a.querySelector("img");
       const thumb = img ? img.src : null;
-      let videoEl = videos.find((v) => v.url === href)
+      let videoEl = videos.find((v) => v.url === href);
       if (videoEl === undefined) {
         videos.push({ url: href, thumb });
       }
-      if(videoEl?.thumb === null && thumb !== null) {
-        videoEl.thumb = thumb
+      if (videoEl?.thumb === null && thumb !== null) {
+        videoEl.thumb = thumb;
       }
     }
   });
 
   return videos;
-}
+};

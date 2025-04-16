@@ -1,68 +1,62 @@
 import { useState } from "react";
-import { scanForVideos } from "../lib/scanForVideos";
-import { scanForImages } from "../lib/scanForImages";
 import { MediaList } from "../ui/shared/media-list/MediaList";
-import { ScanPage } from "../ui/features/scan-page/ScanPage";
+import { ScanBox } from "../ui/features/scan-box/ScanBox";
 import style from "./popup.module.css";
-
+import { MediaItem } from "../types";
+import { useMediaStore } from "../store";
 
 // Тип для найденного видео
-interface VideoItem {
-  url: string;
-  thumb: string | null;
-}
 
 // Интерфейс ответа от content script
-interface ScanResponse {
-  videos: VideoItem[];
-}
-
+// interface ScanResponse {
+//   videos: MediaItem[];
+// }
 export default function Popup() {
-  const [videos, setVideos] = useState<ScanResponse[] | null>(null);
-  const [activeTab, setActiveTab] = useState<"videos" | "images">("videos");
-  const [selected, setSelected] = useState<Record<string, boolean>>({});
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  // const [loading, setLoading] = useState<boolean>(false);
+  // const [error, setError] = useState<string>("");
+  // const [selected, setSelected] = useState<Record<string, boolean>>({});
+
+  const { mediaItems } = useMediaStore();
 
   // Функция для запроса сканирования страницы
-  const fetchVideos = async () => {
-    const [tab] = await chrome.tabs.query({
-      active: true,
-      currentWindow: true,
-    });
+  // const fetchVideos = async () => {
+  //   const [tab] = await chrome.tabs.query({
+  //     active: true,
+  //     currentWindow: true,
+  //   });
 
-    if (!tab?.id) return;
+  //   if (!tab?.id) return;
 
-    const currentScanFn =
-      activeTab === "videos" ? scanForVideos : scanForImages;
-    try {
-      setLoading(true);
-      setError("");
-      const [result] = await chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        func: scanForImages,
-      });
+  //   const currentScanFn =
+  //     activeTab === "videos" ? scanForVideos : scanForImages;
+  //   try {
+  //     setLoading(true);
+  //     setError("");
+  //     const [result] = await chrome.scripting.executeScript({
+  //       target: { tabId: tab.id },
+  //       func: scanForImages,
+  //     });
 
-      console.log("result is: ", result);
+  //     console.log("result is: ", result);
 
-      if (!result.result) {
-        throw Error("No videos found.");
-      }
+  //     if (!result.result) {
+  //       throw Error("No videos found.");
+  //     }
 
-      setVideos(result.result);
-      // Инициализируем объект выбора: для каждого URL значение false
-      const initSelect: Record<string, boolean> = {};
-      result.result.forEach((video) => {
-        initSelect[video.url] = false;
-      });
-      setSelected(initSelect);
-    } catch (error) {
-      console.error("Error searchin  videos:", error);
-      // возможно стоит перезаписать переменную videos null
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     setVideos(result.result);
+  //     // Инициализируем объект выбора: для каждого URL значение false
+  //     const initSelect: Record<string, boolean> = {};
+  //     result.result.forEach((video) => {
+  //       initSelect[video.url] = false;
+  //     });
+  //     setSelected(initSelect);
+  //   } catch (error) {
+  //     console.error("Error searchin  videos:", error);
+  //     // возможно стоит перезаписать переменную videos null
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   // Переключение чекбокса для видео
   const toggleSelect = (url: string) => {
@@ -125,9 +119,14 @@ export default function Popup() {
         <h1 className={style.title}>Media Downloader</h1>
         <span className={style.burgerMenu}></span>
       </div>
-      <ScanPage />
+      {mediaItems.length === 0 ? (
+        <ScanBox />
+        // <div>test</div>
+      ) : (
+        <p>Media items length is: {mediaItems.length}</p>
+      )}
     </main>
-  )
+  );
 
   // return (
   //   <main>

@@ -1,0 +1,7 @@
+.step-back {
+  display: flex;
+  align-items: start;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.5rem 0;
+}

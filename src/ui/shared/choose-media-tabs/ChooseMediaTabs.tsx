@@ -1,10 +1,11 @@
 import clsx from "clsx";
-import { useTabStore } from "../../../store/store";
+import { useLoadingStore, useTabStore } from "../../../store";
 import { Button } from "../button/Button";
 import style from "./chooseMediaTabs.module.css";
 
 function ChooseMediaTabs() {
   const { activeTab, setActiveTab } = useTabStore();
+  const { loading } = useLoadingStore();
 
   return (
     <div className={style.tabsWrapper}>
@@ -12,6 +13,7 @@ function ChooseMediaTabs() {
         className={clsx(style.mediaButton, style.leftMediaButton)}
         onClick={() => setActiveTab("videos")}
         variant={activeTab === "videos" ? "primary" : "unchecked"}
+        disabled={loading}
       >
         Videos
       </Button>
@@ -19,6 +21,7 @@ function ChooseMediaTabs() {
         className={clsx(style.mediaButton, style.rightMediaButton)}
         onClick={() => setActiveTab("images")}
         variant={activeTab === "images" ? "primary" : "unchecked"}
+        disabled={loading}
       >
         Images
       </Button>
