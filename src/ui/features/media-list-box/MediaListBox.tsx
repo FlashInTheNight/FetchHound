@@ -1,42 +1,48 @@
 // Тип для найденного видео
-import { VideoItem } from "../../../types";
 import { ScanAgain } from "../../shared/scan-again/ScanAgain";
-import {MediaListMenu} from "../../shared/media-list-menus/MediaListMenu";
-// Интерфейс ответа от content script
-interface Props {
-  videos: VideoItem[];
-  selected: Record<string, boolean>;
-  toggleSelect: (url: string) => void;
-}
+import { MediaListMenu } from "../../shared/media-list-menus/MediaListMenu";
+import { useMediaStore, useSelectedStore } from "../../../store";
+import style from "./media-list.module.css";
 
-function MediaListBox({ videos = [], selected, toggleSelect }: Props) {
+function MediaListBox() {
+  const { mediaItems } = useMediaStore();
+  const { selected, setCheckedSelected } = useSelectedStore();
+
+  function getFileName(url: string) {
+    const idx = url.lastIndexOf("/");
+    return idx !== -1 ? url.slice(idx + 1) : url;
+  }
+
   return (
-    <>
+    <div>
       <ScanAgain />
       <MediaListMenu />
-      <ul>
-        {videos.map((video) => (
-          <li key={video.url}>
-            <label>
+      <ul className={style["media-list"]}>
+        {mediaItems.map((media) => (
+          <li key={media.url}>
+            <label className={style["media-list__label"]}>
               <input
                 type="checkbox"
-                checked={selected[video.url] || false}
-                onChange={() => toggleSelect(video.url)}
+                checked={selected[media.url] || false}
+                onChange={() => setCheckedSelected(media.url)}
               />
-              <div>
-                {video.thumb ? (
+              <div className={style["media-list__item-thumb-wrapper"]}>
+                {media.thumb ? (
                   <img
-                    src={video.thumb}
+                    className={style["media-list__item-thumb"]}
+                    src={media.thumb}
                     alt="thumb"
                   />
                 ) : null}
-                <span>{video.url}</span>
               </div>
+              <p className={style["media-list__item-name"]}>
+                {getFileName(media.url)}
+              </p>
             </label>
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 
