@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Inter";
-  src: url("./fonts/Inter_light.ttf") format("ttf");
+  src: url("./fonts/Inter_light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -8,34 +8,46 @@
 
 @font-face {
   font-family: "Inter";
-  src: url("./fonts/Inter_regular.ttf") format("ttf");
+  src: url("./fonts/Inter_regular.woff2") format("woff2");
   font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("./fonts/Inter_bold.woff2") format("woff2");
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 :root {
   /* Основные цвета */
-  --background-color: #ffffff;         /* Белый фон */
-  --text-color: #333333;               /* Тёмно-серый текст для хорошей читаемости */
-  
+  --background-color: #ffffff; /* Белый фон */
+  --header-bg-color: #1d3353; /* Темно-синий фон для заголовка */
+  --text-color: #333333; /* Тёмно-серый текст для хорошей читаемости */
+
   /* Основной акцент (например, для кнопок, ссылок) */
-  --primary-color: #007aff;            /* Яркий синий (подобен iOS Blue) */
-  --primary-hover: #005ecb;            /* Темнее для hover-состояния */
+  --primary-color: #007aff; /* Яркий синий (подобен iOS Blue) */
+  --primary-hover: #005ecb; /* Темнее для hover-состояния */
+  --primary-active: #004a99; /* Ещё темнее для активного состояния */
 
   /* Второстепенный акцент */
-  --secondary-color: #34c759;          /* Зелёный, хорошо подходит для успеха/подтверждения */
+  --secondary-color: #34c759; /* Зелёный, хорошо подходит для успеха/подтверждения */
   --secondary-hover: #28a745;
-  --secondary-active: #218838;       /* Темнее для активного состояния */
-  
-  /* Дополнительные цвета */
-  --border-color: #e0e0e0;             /* Для разделителей, рамок */
-  --error-color: #ff3b30;              /* Красный для ошибок */
-  
-  /* Дополнительная акцентная палитра */
-  --accent-color: #ff9500;             /* Оранжевый для акцентов, если понадобится */
+  --secondary-active: #218838; /* Темнее для активного состояния */
 
-  --app-padding: 10px; /* Отступы для приложения */
+  /* Дополнительные цвета */
+  --border-color: #e0e0e0; /* Для разделителей, рамок */
+  --error-color: #ff3b30; /* Красный для ошибок */
+
+  /* Дополнительная акцентная палитра */
+  --accent-color: #ff9500; /* Оранжевый для акцентов, если понадобится */
+
+  --wrapper-padding: 8px; /* Отступы для приложения */
+
+  --gap-element: 16px; /* Отступы между элементами */
 
   --font-family: "Inter";
 }
@@ -46,15 +58,18 @@ body {
   height: 450px;
   padding: 0;
   margin: 0;
+  /* border: 8px solid var(--border-color); */
 }
 
 body {
   background-color: var(--background-color);
   color: var(--text-color);
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-family), sans-serif;
+  font-size: 14px;
+  line-height: 20px;
 }
 
-button {
+/* button {
   background-color: var(--primary-color);
   color: #fff;
   border: none;
@@ -62,26 +77,26 @@ button {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.2s;
-}
+} */
 
-button:hover {
+/* button:hover {
   background-color: var(--primary-hover);
-}
+} */
 
-input,
+/* input,
 select,
 textarea {
   padding: 8px;
   border: 1px solid var(--border-color);
   border-radius: 4px;
-}
+} */
 
-.error-message {
+/* .error-message {
   color: var(--error-color);
-}
+} */
 
 /* Пример стилизации контейнеров или разделителей */
-.divider {
+/* .divider {
   border-bottom: 1px solid var(--border-color);
   margin: 16px 0;
-}
+} */
