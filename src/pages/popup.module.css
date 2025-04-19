@@ -1,21 +1,14 @@
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  padding: var(--wrapper-padding-y) var(--wrapper-padding-x);
+  background-color: var(--header-bg-color);
 }
 
 .title {
-    font-size: 18px;
-    font-weight: bold;
-    margin: 0;
-}
-
-.burgerMenu {
-    width: 30px;
-    height: 30px;
-    background-color: #ccc;
-    border-radius: 5px;
-    cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+  color: var(--text-color-light);
 }

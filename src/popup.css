@@ -26,7 +26,10 @@
   /* Основные цвета */
   --background-color: #ffffff; /* Белый фон */
   --header-bg-color: #1d3353; /* Темно-синий фон для заголовка */
+
   --text-color: #333333; /* Тёмно-серый текст для хорошей читаемости */
+  --text-color-light: #ffffff; /* Белый текст для заголовка */
+  --text-color-non-active: #7d88a1; /* Серый текст для неактивных элементов */
 
   /* Основной акцент (например, для кнопок, ссылок) */
   --primary-color: #007aff; /* Яркий синий (подобен iOS Blue) */
@@ -40,12 +43,15 @@
 
   /* Дополнительные цвета */
   --border-color: #e0e0e0; /* Для разделителей, рамок */
+  --border-outline-color: #bcc5d4; /* Синий для выделения элементов */
   --error-color: #ff3b30; /* Красный для ошибок */
 
   /* Дополнительная акцентная палитра */
   --accent-color: #ff9500; /* Оранжевый для акцентов, если понадобится */
 
-  --wrapper-padding: 8px; /* Отступы для приложения */
+  --wrapper-padding-x: 8px; /* Отступы для приложения */
+  --wrapper-padding-y: 12px; /* Отступы для приложения */
+  --wrapper-border-radius: 8px; /* Радиус скругления для приложения */
 
   --gap-element: 16px; /* Отступы между элементами */
 
@@ -66,7 +72,7 @@ body {
   color: var(--text-color);
   font-family: var(--font-family), sans-serif;
   font-size: 14px;
-  line-height: 20px;
+  line-height: 1.45;
 }
 
 /* button {
