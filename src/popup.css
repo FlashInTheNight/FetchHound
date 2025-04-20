@@ -66,6 +66,9 @@ body {
   margin: 0;
   /* border: 8px solid var(--border-color); */
 }
+#root {
+  height: 100%;
+}
 
 body {
   background-color: var(--background-color);

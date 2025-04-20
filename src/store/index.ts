@@ -135,7 +135,7 @@ export const useMediaStore = create<MediaState>()((set) => ({
 }));
 
 export const useLoadingStore = create<LoadingState>()((set) => ({
-  loading: false,
+  loading: true,
   setLoading: (loading) => set({ loading }),
 }));
 
