@@ -1,0 +1,9 @@
+.media-tabs-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--gap-element);
+}
+
+.media-tabs-btn {
+  margin: 0 var(--wrapper-padding-x);
+}

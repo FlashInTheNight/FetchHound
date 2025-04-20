@@ -1,0 +1,12 @@
+.info-message {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-color);
+  margin: 16px auto;
+  text-align: center;
+  max-width: 100%;
+}
+
+.info-message--error {
+  color: var(--error-color);
+}
