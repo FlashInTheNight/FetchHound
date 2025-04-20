@@ -1,7 +1,7 @@
 import style from "./popup.module.css";
 import { useMediaStore } from "../store";
 import { CircleChevronDown, Menu } from "lucide-react";
-import { ScanMedia, StartBlock } from "../ui/features";
+import { MediaListBlock, ScanMedia, StartBlock } from "../ui/features";
 
 export default function Popup() {
   const { mediaItems } = useMediaStore();
@@ -13,9 +13,8 @@ export default function Popup() {
         <h1 className={style.title}>Media Downloader</h1>
         <Menu color="#ffffff" />
       </header>
-      {/* {mediaItems.length === 0 ? <ScanBox /> : <MediaListBox />} */}
       <ScanMedia />
-      <StartBlock />
+      {mediaItems.length === 0 ? <StartBlock /> : <MediaListBlock />}
     </main>
   );
 }

@@ -11,9 +11,9 @@
 
 /* Размеры */
 .btn--small {
-  padding: 4px 8px;
-  font-size: 12px;
-  font-weight: 400;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .btn--medium {
@@ -25,6 +25,7 @@
 .btn--large {
   padding: 12px 20px;
   font-size: 16px;
+  font-weight: 700;
 }
 
 /* Варианты */
@@ -66,7 +67,7 @@
 .btn--disabled,
 .btn:disabled {
   background-color: var(--border-color);
-  color: #999;
+  color: var(--disabled-color);
   cursor: not-allowed;
   opacity: 0.6;
 }

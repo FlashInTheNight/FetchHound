@@ -9,9 +9,11 @@ function InfoMessage() {
 
   if (error) {
     currentText = `Something went wrong: ${error}`;
-  } else {
-    currentText = "Press ‘Scan Page’ to start scanning";
+  } else  {
+    currentText = `To start scanning ${activeTab}, press 'Scan Page'.`;
   }
+
+
   return (
     <p
       className={clsx(styles["info-message"], {

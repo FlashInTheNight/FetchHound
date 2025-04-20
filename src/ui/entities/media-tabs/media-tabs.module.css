@@ -40,6 +40,16 @@
   border-bottom: 2px solid var(--primary-color);
 }
 
+/* Состояние disabled */
+.tab--disabled,
+.tab:disabled {
+  background-color: var(--border-color);
+  color: var(--disabled-color);
+  border: none;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .media-tabs-btn {
   margin: 0 var(--wrapper-padding-x);
 }

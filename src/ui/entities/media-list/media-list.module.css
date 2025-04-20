@@ -1,0 +1,69 @@
+/* Основной список */
+.media-list {
+  list-style: none;
+  padding: 0 var(--wrapper-padding-x);
+  margin: 0;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+/* Одна карточка медиа */
+.media-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.media-item:hover {
+  background-color: rgba(180, 48, 48, 0.03);
+}
+
+/* Если выбран — можно чуть подсветить фон (необязательно) */
+.media-item--selected {
+  background-color: rgba(0, 122, 255, 0.1);
+}
+
+/* Блок с миниатюрой */
+.media-thumb {
+  position: relative;
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.media-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Полупрозрачный тёмный слой при выборе */
+.media-thumb__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* Название файла */
+.media-name {
+  margin-left: 12px;
+  font-size: 14px;
+  color: var(--text-color);
+  user-select: none;
+}
+
+/* .media-item:hover>.media-name {
+  color: var(--primary-hover);
+}  */

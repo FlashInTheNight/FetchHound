@@ -1,0 +1,9 @@
+.group-btns {
+  padding: var(--wrapper-padding-y) var(--wrapper-padding-x);
+  display: flex;
+  gap: 8px;
+}
+
+.group-btns__download-btn {
+  margin-left: auto;
+}
