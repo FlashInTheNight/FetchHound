@@ -9,7 +9,7 @@ function ScanMedia() {
     <div className={styles["media-tabs-wrapper"]}>
       <MediaTabs />
       <CustomButton className={styles["media-tabs-btn"]} disabled={loading}>
-        Scan Page
+        Scan
       </CustomButton>
     </div>
   );

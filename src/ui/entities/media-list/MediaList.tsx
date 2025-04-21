@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useMediaStore, useSelectedStore } from "../../../store";
 import styles from "./media-list.module.css";
-import { CheckIcon } from "../../shared";
+import { CheckIcon, PlaceholderIcon } from "../../shared";
 
 function MediaList() {
   const { mediaItems } = useMediaStore();
@@ -15,16 +15,19 @@ function MediaList() {
         return (
           <li
             key={item.url}
-            className={clsx(
-              styles["media-item"],
-              {
-                [styles["media-item--selected"]]: isSel,
-              }
-            )}
+            className={clsx(styles["media-item"], {
+              [styles["media-item--selected"]]: isSel,
+            })}
             onClick={() => setCheckedSelected(item.url)}
           >
             <div className={styles["media-thumb"]}>
-              <img src={item.thumb || item.url} alt={name} />
+              {item.thumb ? (
+                <img src={item.thumb} alt={name} />
+              ) : (
+                <div className={styles["media-thumb__placeholder"]}>
+                  <PlaceholderIcon />
+                </div>
+              )}
               {isSel && (
                 <div className={styles["media-thumb__overlay"]}>
                   <CheckIcon />

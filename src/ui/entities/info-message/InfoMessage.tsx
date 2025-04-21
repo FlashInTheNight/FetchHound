@@ -8,11 +8,11 @@ function InfoMessage() {
   let currentText = "";
 
   if (error) {
-    currentText = `Something went wrong: ${error}`;
-  } else  {
-    currentText = `To start scanning ${activeTab}, press 'Scan Page'.`;
+    currentText =
+      activeTab === "videos" ? "No videos found." : "No images found.";
+  } else {
+    currentText = `Click “Scan” to scan ${activeTab}.`;
   }
-
 
   return (
     <p
