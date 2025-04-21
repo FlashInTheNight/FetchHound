@@ -1,0 +1,38 @@
+.mediaListHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border-color);
+  /* Небольшая тень снизу для отделения от списка */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mediaListHeader__backButton {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-family), sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--text-color);
+  background: none;
+  border: none;
+  padding: 0 8px 0 0;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 4px;
+}
+
+.mediaListHeader__backButton:hover {
+  background-color: rgba(0, 122, 255, 0.1);
+}
+
+.mediaListHeader__backButtonIcon {
+  color: var(--text-color);
+}
+
+.mediaListHeader__status {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-color);
+}

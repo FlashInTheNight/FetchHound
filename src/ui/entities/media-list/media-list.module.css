@@ -3,7 +3,7 @@
   list-style: none;
   padding: 0 var(--wrapper-padding-x);
   margin: 0;
-  max-height: 240px;
+  height: 335px;
   overflow-y: auto;
 }
 
