@@ -18,6 +18,7 @@ function MediaList() {
         // const name = item.url.slice(item.url.lastIndexOf("/") + 1);
         const name = getFileName(item.url);
         const isSel = selected.has(item.url);
+        console.log("media element rendered", name, isSel);
         return (
           <li
             key={item.url}
