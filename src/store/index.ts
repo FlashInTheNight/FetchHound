@@ -23,22 +23,13 @@ export interface ErrorState {
 }
 
 export interface SelectedState {
-  selected: Record<string, boolean>;
-  setCheckedSelected: (selectedItem: string) => void;
-  setAllSelected: () => void;
-  setNoneSelected: () => void;
+  selected: Map<string, boolean>;
+  setCheckedSelected: (url: string) => void;
+  removeAllChecked: () => void;
+  addAllChecked: (items: MediaItem[]) => void;
+  getSelectedCount: () => number;
 }
 
-// const [selected, setSelected] = useState<Record<string, boolean>>({});
-
-// const [videos, setVideos] = useState<ScanResponse[]>([]);
-// export interface MediaState {
-//   selectedMedia: string[];
-//   addMedia: (mediaId: string) => void;
-//   removeMedia: (mediaId: string) => void;
-// }
-
-// Создание Zustand store для управления активной вкладкой
 export const useTabStore = create<TabState>()((set) => ({
   activeTab: "videos",
   setActiveTab: (tab) => set({ activeTab: tab }),
@@ -144,40 +135,36 @@ export const useErrorStore = create<ErrorState>()((set) => ({
   setError: (error) => set({ error }),
 }));
 
-export const useSelectedStore = create<SelectedState>()((set) => ({
-  selected: {},
-  setCheckedSelected: (selectedItem) =>
-    set((state) => ({
-      selected: {
-        ...state.selected,
-        [selectedItem]:
-          state.selected[selectedItem] !== undefined
-            ? !state.selected[selectedItem]
-            : true,
-      },
-    })),
-  setAllSelected: () =>
-    set((state) => ({
-      selected: Object.fromEntries(
-        Object.keys(state.selected).map((key) => [key, true])
-      ),
-    })),
-  setNoneSelected: () =>
-    set((state) => ({
-      selected: Object.fromEntries(
-        Object.keys(state.selected).map((key) => [key, false])
-      ),
-    })),
-}));
+export const useSelectedStore = create<SelectedState>()((set, get) => ({
+  selected: new Map(),
 
-// export const useMediaStore = create<MediaState>()((set) => ({
-//   selectedMedia: [],
-//   addMedia: (mediaId) =>
-//     set((state) => ({
-//       selectedMedia: [...state.selectedMedia, mediaId]
-//     })),
-//   removeMedia: (mediaId) =>
-//     set((state) => ({
-//       selectedMedia: state.selectedMedia.filter(id => id !== mediaId)
-//     })),
-// }));
+  setCheckedSelected: (url: string) => {
+    set((state) => {
+      const m = new Map(state.selected);
+      if (m.has(url)) {
+        m.delete(url);
+      } else {
+        m.set(url, true);
+      }
+      return { selected: m };
+    });
+  },
+
+  removeAllChecked: () => {
+    set({ selected: new Map() });
+  },
+
+  addAllChecked: (items: MediaItem[]) => {
+    set((state) => {
+      const m = new Map(state.selected);
+      for (const item of items) {
+        m.set(item.url, true);
+      }
+      return { selected: m };
+    });
+  },
+
+  getSelectedCount: () => {
+    return get().selected.size;
+  },
+}));

@@ -7,11 +7,15 @@ function MediaList() {
   const { mediaItems } = useMediaStore();
   const { selected, setCheckedSelected } = useSelectedStore();
 
+  // if (mediaItems.length === 0) {
+  //   return <p className={styles["media-list__empty"]}>No media items</p>;
+  // }
+
   return (
     <ul className={styles["media-list"]}>
       {mediaItems.map((item) => {
         const name = item.url.slice(item.url.lastIndexOf("/"));
-        const isSel = !!selected[item.url];
+        const isSel = selected.has(item.url);
         return (
           <li
             key={item.url}
