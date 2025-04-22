@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { useMediaStore, useSelectedStore } from "../../../store";
 import styles from "./media-list.module.css";
 import { CheckIcon, PlaceholderIcon } from "../../shared";
+import { getFileName } from "../../../lib/getFileName";
 
 function MediaList() {
   const { mediaItems } = useMediaStore();
@@ -14,7 +15,8 @@ function MediaList() {
   return (
     <ul className={styles["media-list"]}>
       {mediaItems.map((item) => {
-        const name = item.url.slice(item.url.lastIndexOf("/"));
+        // const name = item.url.slice(item.url.lastIndexOf("/") + 1);
+        const name = getFileName(item.url);
         const isSel = selected.has(item.url);
         return (
           <li
