@@ -1,0 +1,177 @@
+<!-- tests/fixtures/media-sites.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Media Sites Fixture</title>
+  </head>
+  <body>
+    <!-- ========== 1. Reddit (видео в <video> с poster) ========== -->
+    <div class="Post">
+      <div class="media-preview-content">
+        <video
+          class="Media-HybridMediaPlayer-video"
+          poster="https://v.redd.it/abcd1234/DASH_480.jpg"
+          preload="metadata"
+          controls
+        >
+          <source
+            src="https://v.redd.it/abcd1234/DASH_720.mp4"
+            type="video/mp4"
+          />
+          <source
+            src="https://v.redd.it/abcd1234/DASH_720.webm"
+            type="video/webm"
+          />
+        </video>
+      </div>
+    </div>
+
+    <!-- ========== 2. Imgur (прямая картинка) ========== -->
+    <div class="imgur-post">
+      <img src="https://i.imgur.com/s8aePwb.jpg" alt="Example Imgur Image" />
+    </div>
+
+    <!-- ========== 3. 4chan (WebM внутри <video>) ========== -->
+    <div class="post reply" id="p1234567">
+      <div class="file">
+        <video class="file-media" loop autoplay muted preload="metadata">
+          <source
+            src="https://i.4cdn.org/wsg/1612345678901.webm"
+            type="video/webm"
+          />
+        </video>
+      </div>
+    </div>
+
+    <!-- ========== 4. 2ch.hk (mix of <a> и <img> с data-src) ========== -->
+    <div class="post__images post__images_type_multi">
+      <figure class="post__image">
+        <figcaption class="post__file-attr">
+          <a
+            class="desktop"
+            target="_blank"
+            href="/media/src/951499/17434923155460.mp4"
+            title="AQPtizhKo-pDZfl3CHnnUEg8VWB3msdFzevyushK1Tos03dbXF9ZGszBDRVfuRgwe9Rd93GBrudCDXECXyxXr6U4GTBeeSOUpKypdY (1).mp4"
+          >
+            AQPtizhKo-pDZfl[...].mp4</a
+          >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon js-post-findimg desktop"
+          >
+            <use xlink:href="#icon__findimg"></use>
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon js-post-saveimg desktop"
+            data-url="/media/src/951499/17434923155460.mp4"
+            data-name="AQPtizhKo-pDZfl3CHnnUEg8VWB3msdFzevyushK1Tos03dbXF9ZGszBDRVfuRgwe9Rd93GBrudCDXECXyxXr6U4GTBeeSOUpKypdY (1).mp4"
+          >
+            <use xlink:href="#icon__saveimg"></use>
+          </svg>
+
+          <span class="post__filezise">853Кб, 720x912, 00:00:05</span>
+        </figcaption>
+        <a
+          href="/media/src/951499/17434923155460.mp4"
+          class="post__image-link"
+          target="_blank"
+          onclick="return false;"
+        >
+          <img
+            src="/media/thumb/951499/17434923155460s.jpg"
+            width="157"
+            height="200"
+            alt="720x912"
+            id="img-1034513-3bebd05c9e676fe71952f6740507f4ac"
+            class="post__file-preview post__file-webm"
+            data-type="10"
+            data-title="AQPtizhKo-pDZfl3CHnnUEg8VWB3msdFzevyushK1Tos03dbXF9ZGszBDRVfuRgwe9Rd93GBrudCDXECXyxXr6U4GTBeeSOUpKypdY (1).mp4"
+            data-width="720"
+            data-height="912"
+            data-md5="1034513-3bebd05c9e676fe71952f6740507f4ac"
+            data-src="/media/src/951499/17434923155460.mp4"
+          />
+        </a>
+      </figure>
+      <figure class="post__image">
+        <figcaption class="post__file-attr">
+          <a
+            class="desktop"
+            target="_blank"
+            href="/media/src/951499/17434923155491.webm"
+            title="487297655180485022653515587200566701577509195n (1).webp"
+          >
+            487297655180485[...].webp</a
+          >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon js-post-findimg desktop"
+          >
+            <use xlink:href="#icon__findimg"></use>
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon js-post-saveimg desktop"
+            data-url="/media/src/951499/17434923155491.webm"
+            data-name="487297655180485022653515587200566701577509195n (1).webm"
+          >
+            <use xlink:href="#icon__saveimg"></use>
+          </svg>
+
+          <span class="post__filezise">260Кб, 1440x1800</span>
+        </figcaption>
+        <a
+          href="/media/src/951499/17434923155491.webm"
+          class="post__image-link"
+          target="_blank"
+          onclick="return false;"
+        >
+          <img
+            src="/media/thumb/951499/17434923155491s.jpg"
+            width="160"
+            height="200"
+            alt="1440x1800"
+            id="img-1034513-f84bb84f58af9343c494f14099f6b183"
+            class="post__file-preview"
+            data-type="9"
+            data-title="487297655180485022653515587200566701577509195n (1).webm"
+            data-width="1440"
+            data-height="1800"
+            data-md5="1034513-f84bb84f58af9343c494f14099f6b183"
+            data-src="/media/src/951499/17434923155491.webm"
+          />
+        </a>
+      </figure>
+    </div>
+
+    <!-- ========== 5. Giphy (iframe embed) ========== -->
+    <div class="giphy-embed">
+      <iframe
+        src="https://giphy.com/embed/3o72F0PD1rq7C6c0Ba"
+        width="480"
+        height="270"
+        frameborder="0"
+        allowfullscreen
+      >
+      </iframe>
+    </div>
+
+    <!-- ========== 6. Лишние файлы (должны игнорироваться) ========== -->
+    <div class="misc-files">
+      <a href="https://example.com/docs/manual.pdf">Download manual.pdf</a>
+      <a href="https://example.com/archive/project.zip">project.zip</a>
+    </div>
+
+    <!-- ========== 7. Повторение & query-параметры ========== -->
+    <div class="extras">
+      <!-- повторная ссылка, должна б работать фильтрация дублирования -->
+      <a href="https://v.redd.it/abcd1234/DASH_720.mp4?token=xyz"
+        >Video with token</a
+      >
+      <!-- неподдерживаемый MIME (должен игнорироваться) -->
+      <source src="audio.ogg" type="audio/ogg" />
+    </div>
+  </body>
+</html>
