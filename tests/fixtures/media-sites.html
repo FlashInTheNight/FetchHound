@@ -7,25 +7,14 @@
   </head>
   <body>
     <!-- ========== 1. Reddit (видео в <video> с poster) ========== -->
-    <div class="Post">
-      <div class="media-preview-content">
-        <video
-          class="Media-HybridMediaPlayer-video"
-          poster="https://v.redd.it/abcd1234/DASH_480.jpg"
-          preload="metadata"
-          controls
-        >
-          <source
-            src="https://v.redd.it/abcd1234/DASH_720.mp4"
-            type="video/mp4"
-          />
-          <source
-            src="https://v.redd.it/abcd1234/DASH_720.webm"
-            type="video/webm"
-          />
-        </video>
-      </div>
-    </div>
+    <video
+      src="https://packaged-media.redd.it/6r1tvkw8blwe1/pb/m2-res_594p.mp4?m=DASHPlaylist.mpd&v=1&e=1745488800&s=22f1f38e1fab0a0aed9fd9c3ff01a53ecb5c116f"
+      playsinline=""
+      poster="https://external-preview.redd.it/body-armor-company-demonstrates-their-stab-protection-on-v0-NTVveGF2MDlibHdlMWBD0rlOZOc1bhiSmvEHWUOlQkWTvVq1wWwxf5uPRr2m.png?width=640&crop=smart&format=pjpg&auto=webp&s=507310a433a22697cbcba1bc518eee24fb0be23a"
+      preload="auto"
+      tabindex="-1"
+      style="object-fit: contain"
+    ></video>
 
     <!-- ========== 2. Imgur (прямая картинка) ========== -->
     <div class="imgur-post">
@@ -144,18 +133,6 @@
           />
         </a>
       </figure>
-    </div>
-
-    <!-- ========== 5. Giphy (iframe embed) ========== -->
-    <div class="giphy-embed">
-      <iframe
-        src="https://giphy.com/embed/3o72F0PD1rq7C6c0Ba"
-        width="480"
-        height="270"
-        frameborder="0"
-        allowfullscreen
-      >
-      </iframe>
     </div>
 
     <!-- ========== 6. Лишние файлы (должны игнорироваться) ========== -->
