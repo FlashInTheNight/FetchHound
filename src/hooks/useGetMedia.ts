@@ -11,7 +11,7 @@ export const useGetMedia = () => {
   const { setMediaItems } = useMediaStore();
   const { setLoading } = useLoadingStore();
   const { setError } = useErrorStore();
-  const { setSelected } = useSelectedStore();
+  const { removeAllChecked } =  useSelectedStore();
 
   const getMedia = async (currentScanFn: scanFnType) => {
     const [tab] = await chrome.tabs.query({
@@ -24,6 +24,8 @@ export const useGetMedia = () => {
     try {
       setLoading(true);
       setError("");
+      removeAllChecked(); // Сбрасываем выбранные элементы перед новым сканированием
+      // Запускаем скрипт на текущей вкладке и получаем результат
       const [result] = (await chrome.scripting.executeScript({
         target: { tabId: tab.id },
         func: currentScanFn,
@@ -31,21 +33,15 @@ export const useGetMedia = () => {
 
       console.log("result is: ", result);
 
-      if (!result.result) {
+      if (!result.result || result.result.length === 0) {
         throw Error("No media found.");
       }
 
       setMediaItems(result.result);
-      // Инициализируем объект выбора: для каждого URL значение false
-      const initSelect: Record<string, boolean> = {};
-      result.result.forEach((media) => {
-        initSelect[media.url] = false;
-      });
-      setSelected(initSelect);
     } catch (error) {
       console.error("Error searchin  videos:", error);
       setMediaItems([]);
-      setError(error.message);
+      setError(error instanceof Error ? error.message : "An unknown error occurred");
     } finally {
       setLoading(false);
     }

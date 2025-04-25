@@ -59,4 +59,29 @@ describe("Scan videos in sites HTML", () => {
       ])
     );
   });
+
+  it("find video item in civitai", () => {
+    const video = scanVideos();
+    expect(video).toEqual(
+      expect.arrayContaining([
+        {
+          url: "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/017f28c0-b382-46ce-8aa3-4576f4bb9b54/transcode=true,width=450/71844242.webm",
+          thumb:
+            "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/017f28c0-b382-46ce-8aa3-4576f4bb9b54/anim=false,transcode=true,width=450/017f28c0-b382-46ce-8aa3-4576f4bb9b54.jpeg",
+        },
+      ])
+    );
+  });
+
+  it("video item with another MIME type should not includes", () => {
+    const video = scanVideos();
+    expect(video).not.toEqual(
+      expect.arrayContaining([
+        {
+          url: "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/017f28c0-b382-46ce-8aa3-4576f4bb9b54/transcode=true,width=450/71844242.mp4",
+          thumb: null,
+        },
+      ])
+    );
+  });
 });

@@ -9,6 +9,7 @@
 
 /* Одна карточка медиа */
 .media-item {
+  word-break: break-all;
   display: flex;
   align-items: center;
   padding: 8px 0;

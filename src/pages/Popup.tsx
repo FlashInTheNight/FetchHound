@@ -10,9 +10,7 @@ export default function Popup() {
       <header className={style.header}>
         <h1 className={style.title}>Media Downloader</h1>
       </header>
-      <MediaListWidjet />
-      {/* <StartBlockWidjet /> */}
-      {/* {mediaItems.length === 0 ? <StartBlock /> : <MediaListBlock />} */}
+      {mediaItems.length === 0 ? <StartBlockWidjet /> : <MediaListWidjet />}
     </main>
   );
 }
