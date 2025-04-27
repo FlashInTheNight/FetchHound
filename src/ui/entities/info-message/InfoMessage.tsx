@@ -8,8 +8,7 @@ function InfoMessage() {
   let currentText = "";
 
   if (error) {
-    currentText =
-      activeTab === "videos" ? "No videos found." : "No images found.";
+    currentText = error
   } else {
     currentText = `Click “Scan” to scan ${activeTab}.`;
   }

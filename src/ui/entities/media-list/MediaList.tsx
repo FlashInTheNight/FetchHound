@@ -1,50 +1,17 @@
-import clsx from "clsx";
-import { useMediaStore, useSelectedStore } from "../../../store";
+import { useMediaStore } from "../../../store";
+import MediaListItem from "./MediaListItem";
+import { MediaItem } from "../../../types";
 import styles from "./media-list.module.css";
-import { CheckIcon, PlaceholderIcon } from "../../shared";
-import { getFileName } from "../../../lib/getFileName";
 
 function MediaList() {
-  const { mediaItems } = useMediaStore();
-  const { selected, setCheckedSelected } = useSelectedStore();
-
-  // if (mediaItems.length === 0) {
-  //   return <p className={styles["media-list__empty"]}>No media items</p>;
-  // }
+  // здесь только список медиа, на него не влияют клики
+  const mediaItems = useMediaStore((s) => s.mediaItems);
 
   return (
     <ul className={styles["media-list"]}>
-      {mediaItems.map((item) => {
-        // const name = item.url.slice(item.url.lastIndexOf("/") + 1);
-        const name = getFileName(item.url);
-        const isSel = selected.has(item.url);
-        console.log("media element rendered", name, isSel);
-        return (
-          <li
-            key={item.url}
-            className={clsx(styles["media-item"], {
-              [styles["media-item--selected"]]: isSel,
-            })}
-            onClick={() => setCheckedSelected(item.url)}
-          >
-            <div className={styles["media-thumb"]}>
-              {item.thumb ? (
-                <img src={item.thumb} alt={name} />
-              ) : (
-                <div className={styles["media-thumb__placeholder"]}>
-                  <PlaceholderIcon />
-                </div>
-              )}
-              {isSel && (
-                <div className={styles["media-thumb__overlay"]}>
-                  <CheckIcon />
-                </div>
-              )}
-            </div>
-            <span className={styles["media-name"]}>{name}</span>
-          </li>
-        );
-      })}
+      {mediaItems.map((item: MediaItem) => (
+        <MediaListItem key={item.url} item={item} />
+      ))}
     </ul>
   );
 }
