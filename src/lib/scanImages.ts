@@ -28,39 +28,23 @@ export const scanImages: scanFnType = () => {
     }
   });
 
-  return images;
-};
-
-export const scanImages_old_version: scanFnType = () => {
-  const images: MediaItem[] = [];
-
-  // Сканируем ссылки <a>, ведущие на видеофайлы
-  const anchorElems: HTMLAnchorElement[] = Array.from(
-    document.querySelectorAll(
-      'a[href$=".jpg"], a[href$=".jpeg"], a[href$=".png"], a[href$=".webp"], a[href$=".gif"]'
-    )
+  const figures = Array.from(
+    document.querySelectorAll<HTMLImageElement>("figure")
   );
+  figures.forEach((figure) => {
+    const link = figure.querySelector("a");
+    const img = figure.querySelector("img");
 
-  // console
-  console.log("anchroEl in images: ", anchorElems);
-
-  anchorElems.forEach((a) => {
-    const href = a.href;
-    if (href) {
-      // Пытаемся получить миниатюру из вложенного <img>, если он есть
-      const img = a.querySelector("img");
+    if (link && link.href) {
+      const href = link.href;
       const thumb = img ? img.src : null;
-      let imageEl = images.find((v) => v.url === href);
-      if (imageEl === undefined) {
-        images.push({ url: href, thumb });
-      } else if (imageEl?.thumb === null && thumb !== null) {
-        imageEl.thumb = thumb;
-      }
+      images.push({ url: href, thumb });
+    } else if (img && img.src) {
+      const href = img.src;
+      const thumb = img.src;
+      images.push({ url: href, thumb });
     }
   });
-
-  //console
-  // console.log("images: ", images);
 
   return images;
 };

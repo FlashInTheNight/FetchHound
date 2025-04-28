@@ -26,7 +26,7 @@ const MediaListItem: React.FC<Props> = ({ item }) => {
   }, [toggle, item.url]);
 
   // console
-  console.log("media element rendered", name, isSel);
+  // console.log("media element rendered", name, isSel);
 
   return (
     <li

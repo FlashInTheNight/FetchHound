@@ -8,7 +8,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "test": "vitest",
-    "test-video-sites": "vitest tests/scanVideosSites.test.ts"
+    "test-scan-videos": "vitest tests/scanVideosSites.test.ts",
+    "test-scan-images": "vitest tests/scanImages.test.ts"
   },
   "dependencies": {
     "react": "^18.2.0",

@@ -11,7 +11,22 @@
   "{{chrome}}.permissions": [
     "activeTab",
     "scripting",
-    "downloads"
+    "downloads",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/offscreen.html",
+        "src/offscreen.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
   ],
   "{{chrome}}.action": {
     "default_popup": "src/popup.html"
