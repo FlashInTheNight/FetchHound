@@ -10,26 +10,26 @@ function GroupBtns() {
 
   const handelAddAll = () => addAll(mediaItems);
   const handleDownload = async () => {
-    // Получаем массив выбранных URL
     const selectedUrls = getSelectedUrls();
 
+    // fix: необходимо ли это?
     if (selectedUrls.length === 0) {
-      alert("No items selected for download.");
+      console.error("No items selected for download.");
       return;
     }
 
     try {
-      // Получаем прямую ссылку на медиафайл
-      const directUrl = await new Promise((resolve) => {
+      // Получаем прямые ссылки на медиафайл
+      const directUrls = await new Promise((resolve) => {
         chrome.runtime.sendMessage(
-          { type: "RESOLVE_DIRECT_LINK", url: selectedUrls[0] },
+          { type: "RESOLVE_DIRECT_LINKS", urls: selectedUrls },
           (resp) => {
-            resolve(resp?.directUrl);
+            resolve(resp?.directUrls);
           }
         );
       });
 
-      if (!directUrl) {
+      if (!directUrls) {
         console.error("Failed to resolve direct URL");
         return;
       }
@@ -38,7 +38,7 @@ function GroupBtns() {
       chrome.runtime.sendMessage(
         {
           type: "DOWNLOAD_VIDEOS",
-          urls: [directUrl],
+          urls: directUrls,
         },
         (response) => {
           if (response?.success) {
