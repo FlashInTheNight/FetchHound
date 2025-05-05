@@ -10,7 +10,7 @@ interface ScanResponse {
 
 // Интерфейс ответа от content script
 interface Props {
-  videos: ScanResponse[];
+  videos: VideoItem[];
   selected: Record<string, boolean>;
   toggleSelect: (url: string) => void;
 }

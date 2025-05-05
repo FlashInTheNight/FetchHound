@@ -6,8 +6,10 @@
 //   console.log("Extension installed:", details);
 // });
 
-import { findWallpaperImage, MediaSearchResult } from './utils/mediaUtils';
-import { downloadMultipleFiles } from './utils/downloadUtils';
+import { findWallpaperImage, MediaSearchResult, isDirectMediaUrl } from "./utils/mediaUtils";
+import { downloadMultipleFiles } from "./utils/downloadUtils";
+
+
 
 // Обработчик сообщений
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
@@ -57,8 +59,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     (async () => {
       const directUrls: (string | null)[] = [];
       for (const url of targetUrls) {
-        const result = await getDirectLink(url);
-        directUrls.push(result.url);
+        if (isDirectMediaUrl(url)) {
+          directUrls.push(url);
+        } else {
+          const result = await getDirectLink(url);
+          directUrls.push(result.url);
+        }
       }
       sendResponse({ directUrls });
     })();

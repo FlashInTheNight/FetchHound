@@ -1,15 +1,18 @@
 {
   "name": "Video Downloader Extension",
-  "description": "Расширение для поиска и скачивания видео с веб-страниц.",
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "description": "Расширение для поиска и скачивания видео с веб-страниц.",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "test": "vitest",
     "test-scan-videos": "vitest tests/scanVideosSites.test.ts",
-    "test-scan-images": "vitest tests/scanImages.test.ts"
+    "test-scan-images": "vitest tests/scanImages.test.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug"
   },
   "dependencies": {
     "react": "^18.2.0",

@@ -44,3 +44,19 @@ export const findWallpaperImage = (): MediaSearchResult => {
     };
   }
 }; 
+
+
+// Регулярное выражение для проверки прямых ссылок на медиафайлы
+const DIRECT_MEDIA_URL_PATTERN = /\.(mp4|webm|mkv|avi|mov|jpg|jpeg|png|gif|webp)(?:\?[^/]*)?$/i;
+
+// Функция проверки является ли ссылка прямой
+export const isDirectMediaUrl = (url: string): boolean => {
+  try {
+    // Убираем протокол и домен для проверки только пути
+    const urlPath = new URL(url).pathname;
+    return DIRECT_MEDIA_URL_PATTERN.test(urlPath);
+  } catch {
+    // Если URL некорректный, считаем что это не прямая ссылка
+    return false;
+  }
+};

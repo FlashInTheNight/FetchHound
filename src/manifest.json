@@ -1,6 +1,9 @@
 {
   "{{chrome}}.manifest_version": 3,
   "{{firefox}}.manifest_version": 2,
+  "name": "Video Downloader Extension",
+  "description": "Расширение для поиска и скачивания видео с веб-страниц.",
+  "version": "1.0.0",
   "icons": {
     "16": "icon/16.png",
     "32": "icon/32.png",
@@ -20,8 +23,8 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "src/offscreen.html",
-        "src/offscreen.js"
+        "src/popup.html",
+        "src/popup.ts"
       ],
       "matches": [
         "<all_urls>"

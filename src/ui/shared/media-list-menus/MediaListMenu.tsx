@@ -1,12 +1,13 @@
-import { useSelectedStore } from "../../../store";
+import { useSelectedStore, useMediaStore } from "../../../store";
 import { Button } from "../button/Button";
 import style from "./media-list-menu.module.css";
 
-function MediaListMenu() {
-  const { setAllSelected, setNoneSelected } = useSelectedStore();
+export function MediaListMenu() {
+  const { addAllChecked, removeAllChecked } = useSelectedStore();
+  const { mediaItems } = useMediaStore();
 
-  const handleSelectAll = () => setAllSelected();
-  const handleRemoveAll = () => setNoneSelected();
+  const handleSelectAll = () => addAllChecked(mediaItems);
+  const handleRemoveAll = () => removeAllChecked();
   const handleDownload = () => console.log("Download button clicked");
 
   // Отправка сообщения в background script для последовательного скачивания выбранных видео
@@ -57,5 +58,3 @@ function MediaListMenu() {
     </div>
   );
 }
-
-export { MediaListMenu };
