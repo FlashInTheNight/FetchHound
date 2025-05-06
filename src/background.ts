@@ -6,10 +6,12 @@
 //   console.log("Extension installed:", details);
 // });
 
-import { findWallpaperImage, MediaSearchResult, isDirectMediaUrl } from "./utils/mediaUtils";
+import {
+  findWallpaperImage,
+  MediaSearchResult,
+  isDirectMediaUrl,
+} from "./utils/mediaUtils";
 import { downloadMultipleFiles } from "./utils/downloadUtils";
-
-
 
 // Обработчик сообщений
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
@@ -42,8 +44,9 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
                 (results) => {
                   const result = results?.[0]?.result as MediaSearchResult;
                   console.log("Found direct URL:", result.url);
+                  console.log("results is: ", results);
 
-                  chrome.tabs.remove(tab.id!);
+                  // chrome.tabs.remove(tab.id!);
                   resolve(result);
                 }
               );
@@ -61,7 +64,9 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       for (const url of targetUrls) {
         if (isDirectMediaUrl(url)) {
           directUrls.push(url);
+          console.log("get direct link");
         } else {
+          console.log("get dirty link");
           const result = await getDirectLink(url);
           directUrls.push(result.url);
         }
