@@ -17,11 +17,12 @@ export const findWallpaperImage = (): MediaSearchResult => {
       const src = (img as HTMLImageElement).src;
       console.log("current src: ", src);
       if (!src) continue;
+
       // Проверяем по ID
-      // const imgID = (img as HTMLImageElement).id;
-      // if (imgID && IMAGES_IDS.includes(imgID)) {
-      //   return { url: src };
-      // }
+      const imgID = (img as HTMLImageElement).id;
+      if (imgID && IMAGES_IDS.includes(imgID)) {
+        return { url: src };
+      }
 
       // Проверяем по последней части пути ссылки
       const lastRoute = location.pathname.split("/").pop();

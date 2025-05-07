@@ -10,7 +10,8 @@ export const scanVideos: scanFnType = () => {
   // Регулярное выражение для проверки видеофайлов (учитывает query-параметры)
   // Это регулярное выражение проверяет, что URL заканчивается на .mp4 или .webm, даже если за ним следуют query-параметры (например, ?token=abc123).
   const videoRegex = /\.(mp4|webm|mov)(\?.*)?$/i;
-  const videoTagRegex = /[?&]tags=video/;
+  const imageRegex = /\.(jpg|jpeg|gif|webp|png)(\?.*)?$/i;
+  // const videoTagRegex = /[?&]s=view/;
 
   // 1. Сканируем элементы <video>
   const videoElems = Array.from(document.querySelectorAll("video"));
@@ -30,41 +31,30 @@ export const scanVideos: scanFnType = () => {
     }
   });
 
-  // 2. Сканируем отдельные элементы <source> (если они не были найдены внутри <video>)
-  // const sourceElems = Array.from(document.querySelectorAll("source"));
-  // sourceElems.forEach((source) => {
-  //   const typeAttr = source.getAttribute("type") || "";
-  //   if (typeAttr.includes("video")) {
-  //     const src = source.getAttribute("src");
-  //     if (src && videoRegex.test(src)) {
-  //       if (!videos.some((v) => v.url === src)) {
-  //         videos.push({ url: src, thumb: null });
-  //       }
-  //     }
-  //   }
-  // });
-
-  // 3. Сканируем ссылки <a>, ведущие на видеофайлы
+  // 3. Сканируем ссылки <a>, ведущие на видеофайлы, фильтруем так: итем должен иметь ссылку и 1) либо иметь расширение в ссылке 2) либо иметь HTML элемент img(щитаем её как миниатюру). Второй этап - ссылка не должна содержать расширение пикчи
   const anchorElems: HTMLAnchorElement[] = Array.from(
     document.querySelectorAll("a")
-  ); // optimize: лучшер сразу отфильтровать по videoRegex
+  ).filter((el) => {
+    const firstCheck =
+      Boolean(el.href) &&
+      (videoRegex.test(el.href) || Boolean(el.querySelector("img")));
+
+    const secondCheck = imageRegex.test(el.href) === false;
+
+    return firstCheck && secondCheck;
+  });
 
   anchorElems.forEach((a) => {
-    const href = a.href;
-    const isValidRegCheck = videoRegex.test(href) || videoTagRegex.test(href);
-    if (href && isValidRegCheck) {
-      // Пытаемся получить миниатюру из вложенного <img>, если он есть
-      // optimize: возможно стоит поменять массив на другую структуру данных
-      const img = a.querySelector("img");
-      const thumb = img ? img.src : null;
-      console.log("thumb", thumb);
-      let videoEl = videos.find((v) => v.url === href);
-      if (videoEl === undefined) {
-        videos.push({ url: href, thumb });
-      }
-      if (videoEl?.thumb === null && thumb !== null) {
-        videoEl.thumb = thumb;
-      }
+    // Пытаемся получить миниатюру из вложенного <img>, если он есть
+    // optimize: возможно стоит поменять массив на другую структуру данных
+    const img = a.querySelector("img");
+    const thumb = img ? img.src : null;
+    let videoEl = videos.find((v) => v.url === a.href);
+    if (videoEl === undefined) {
+      videos.push({ url: a.href, thumb });
+    }
+    if (videoEl?.thumb === null && thumb !== null) {
+      videoEl.thumb = thumb;
     }
   });
 
