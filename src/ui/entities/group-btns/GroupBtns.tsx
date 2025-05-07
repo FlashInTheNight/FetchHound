@@ -1,4 +1,4 @@
-import { useMediaStore, useSelectedStore } from "../../../store";
+import { useMediaStore, useSelectedStore, useTabStore } from "../../../store";
 import { CustomButton } from "../../shared";
 import styles from "./group-btns.module.css";
 
@@ -7,6 +7,7 @@ function GroupBtns() {
   const addAll = useSelectedStore((s) => s.addAllChecked);
   const { mediaItems } = useMediaStore();
   const { getSelectedUrls, getSelectedCount } = useSelectedStore();
+  const { activeTab } = useTabStore();
 
   const handelAddAll = () => addAll(mediaItems);
   const handleDownload = async () => {
@@ -22,7 +23,11 @@ function GroupBtns() {
       // Получаем прямые ссылки на медиафайл
       const directUrls = await new Promise((resolve) => {
         chrome.runtime.sendMessage(
-          { type: "RESOLVE_DIRECT_LINKS", urls: selectedUrls },
+          {
+            type: "RESOLVE_DIRECT_LINKS",
+            urls: selectedUrls,
+            mediaTab: activeTab,
+          },
           (resp) => {
             resolve(resp?.directUrls);
           }

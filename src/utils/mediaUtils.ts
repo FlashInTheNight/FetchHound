@@ -32,7 +32,7 @@ export const findWallpaperImage = (): MediaSearchResult => {
       if (lastRoute && src.includes(lastRoute)) {
         return { url: src };
       } else {
-        console.log("cant find throught pathname");
+        console.log("Cant find throught pathname");
       }
 
       // Проверяем по атрибуту alt. Beta version. Суть: если в alt есть более 4 слов, то это обои, так как эти слова используются для тегов(неправильный вывод). В alt часто содержится название картинки с расширением

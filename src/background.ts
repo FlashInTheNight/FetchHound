@@ -11,6 +11,7 @@ import {
   MediaSearchResult,
   isDirectMediaUrl,
 } from "./utils/mediaUtils";
+import { findDirectVideoLink } from "./utils/background/findDirectVideoLink";
 import { downloadMultipleFiles } from "./utils/downloadUtils";
 
 // Обработчик сообщений
@@ -29,6 +30,11 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             return;
           }
 
+          const currentFinderFn =
+            msg.mediaTab === "videos"
+              ? findDirectVideoLink
+              : findWallpaperImage;
+
           const onUpdated = (
             tabId: number,
             changeInfo: chrome.tabs.TabChangeInfo
@@ -39,7 +45,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
               chrome.scripting.executeScript(
                 {
                   target: { tabId: tab.id },
-                  func: findWallpaperImage,
+                  func: currentFinderFn,
                 },
                 (results) => {
                   const result = results?.[0]?.result as MediaSearchResult;
