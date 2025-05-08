@@ -7,33 +7,57 @@ import { MediaItem, scanFnType } from "../types";
 
 export const scanImages: scanFnType = () => {
   const videoFormatRegex = /\.(mp4|webm|mov|ogg|m4v)(\?.*)?$/i;
+  const imageRegex = /\.(jpg|jpeg|gif|webp|png)(\?.*)?$/i;
+
+  const images: MediaItem[] = [];
 
   const anchors = Array.from(
     document.querySelectorAll<HTMLAnchorElement>("a")
-  ).filter(
-    (a) => !!a.querySelector("img") && videoFormatRegex.test(a.href) === false
-  );
+  ).filter((el) => {
+    const firstCheck =
+      Boolean(el.href) &&
+      (imageRegex.test(el.href) || Boolean(el.querySelector("img")));
 
-  if (anchors.length === 0) {
-    return [];
-  }
+    const secondCheck = videoFormatRegex.test(el.href) === false;
 
-  const images: MediaItem[] = [];
+    return firstCheck && secondCheck;
+  });
+
+  console.log("anchors is: ", anchors);
+
   anchors.forEach((a) => {
-    const href = a.href;
-    if (href) {
-      const img = a.querySelector("img");
-      const thumb = img ? img.src : null;
-      images.push({ url: href, thumb });
+    const img = a.querySelector("img");
+    const thumb = img ? img.src : null;
+    let imageEl = images.find((i) => i.url === a.href);
+    if (imageEl === undefined) {
+      images.push({ url: a.href, thumb });
+    }
+    if (imageEl?.thumb === null && thumb !== null) {
+      imageEl.thumb = thumb;
     }
   });
 
   const figures = Array.from(
     document.querySelectorAll<HTMLImageElement>("figure")
-  );
-  figures.forEach((figure) => {
+  ).filter((figure) => {
+    const aTag = figure.querySelector("a");
+    return aTag && !videoFormatRegex.test(aTag.href);
+  });
+
+  console.log("anchors is: ", figures);
+
+  for (const figure of figures) {
     const link = figure.querySelector("a");
     const img = figure.querySelector("img");
+
+    const isPreviouslyFound = images.some(
+      (i) => i.url === link?.href || i.thumb === img?.src
+    );
+    console.log("isPreviouslyFound is: ", isPreviouslyFound);
+
+    if (isPreviouslyFound) {
+      continue;
+    }
 
     if (link && link.href) {
       const href = link.href;
@@ -44,7 +68,7 @@ export const scanImages: scanFnType = () => {
       const thumb = img.src;
       images.push({ url: href, thumb });
     }
-  });
+  }
 
   return images;
 };

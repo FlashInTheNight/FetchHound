@@ -58,29 +58,5 @@ export const scanVideos: scanFnType = () => {
     }
   });
 
-  // 3. Сканируем <article> элементы для reddit с атрибутами content-href и poster
-  if (window.location.hostname.includes("reddit.com")) {
-    const articleElems = Array.from(document.querySelectorAll("article"));
-    articleElems.forEach((article) => {
-      const shredditPost = article.querySelector("shreddit-post");
-      const articleType = shredditPost?.getAttribute("post-type") || "";
-      if (!articleType.includes("video") || shredditPost === null) return; // Пропускаем, если тип не видео
-
-      const videoUrl = shredditPost?.getAttribute("content-href");
-      const playerHost = article.querySelector("shreddit-player-2");
-      const thumb = playerHost?.getAttribute("poster") || null;
-
-      if (videoUrl) {
-        let videoEl = videos.find((v) => v.url === videoUrl);
-        if (videoEl === undefined) {
-          videos.push({ url: videoUrl, thumb });
-        }
-        if (videoEl?.thumb === null && thumb !== null) {
-          videoEl.thumb = thumb;
-        }
-      }
-    });
-  }
-
   return videos;
 };

@@ -9,8 +9,8 @@ function MediaList() {
 
   return (
     <ul className={styles["media-list"]}>
-      {mediaItems.map((item: MediaItem) => (
-        <MediaListItem key={item.url} item={item} />
+      {mediaItems.map((item: MediaItem, id) => (
+        <MediaListItem key={`${item.url}-${id}`} item={item} />
       ))}
     </ul>
   );
