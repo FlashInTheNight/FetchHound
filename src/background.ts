@@ -10,9 +10,10 @@ import {
   findWallpaperImage,
   MediaSearchResult,
   isDirectMediaUrl,
-} from "./utils/mediaUtils";
+} from "./utils/background/mediaUtils";
 import { findDirectVideoLink } from "./utils/background/findDirectVideoLink";
-import { downloadMultipleFiles } from "./utils/downloadUtils";
+import { downloadMultipleFiles } from "./utils/background/downloadUtils";
+import { findUnknownMediaLink } from "./utils/background";
 
 // Обработчик сообщений
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
@@ -30,10 +31,29 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             return;
           }
 
-          const currentFinderFn =
-            msg.mediaTab === "videos"
-              ? findDirectVideoLink
-              : findWallpaperImage;
+          console.log("msg.mediaTab is: ", msg.mediaTab);
+
+          let currentFinderFn; // Объявляем переменную, которой будет присвоено значение
+
+          switch (msg.mediaTab) {
+            case "all":
+              currentFinderFn = findUnknownMediaLink;
+              break;
+            case "videos":
+              currentFinderFn = findDirectVideoLink;
+              break;
+            case "images":
+              currentFinderFn = findWallpaperImage;
+              break;
+            default:
+              currentFinderFn = findUnknownMediaLink;
+              break;
+          }
+
+          // const currentFinderFn =
+          //   msg.mediaTab === "videos"
+          //     ? findDirectVideoLink
+          //     : findWallpaperImage;
 
           const onUpdated = (
             tabId: number,

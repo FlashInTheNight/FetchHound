@@ -10,6 +10,16 @@ const MediaTabs = () => {
     <div className={styles.tabs}>
       <button
         className={clsx(styles.tab, {
+          [styles.active]: activeTab === "all",
+          [styles["tab--disabled"]]: loading,
+        })}
+        onClick={() => setActiveTab("all")}
+        disabled={loading}
+      >
+        All
+      </button>
+      <button
+        className={clsx(styles.tab, {
           [styles.active]: activeTab === "images",
           [styles["tab--disabled"]]: loading,
         })}

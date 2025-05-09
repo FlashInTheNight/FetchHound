@@ -2,7 +2,7 @@ import React, { memo, useCallback } from "react";
 import clsx from "clsx";
 import { useSelectedStore } from "../../../store";
 import { CheckIcon, PlaceholderIcon } from "../../shared";
-import { getFileName } from "../../../lib/getFileName";
+import { getFileName } from "../../../utils/getFileName";
 import { MediaItem } from "../../../types";
 import styles from "./media-list.module.css";
 

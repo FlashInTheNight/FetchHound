@@ -1,4 +1,4 @@
-import { scanVideos } from "../src/lib/scanVideos";
+import { scanVideos } from "../src/utils/scanVideos";
 import { describe, it, expect, beforeEach } from "vitest";
 import fixtureMixed from "./fixtures/media-mixed.html?raw";
 

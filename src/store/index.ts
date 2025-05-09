@@ -3,8 +3,8 @@ import { MediaItem } from "../types";
 
 // Интерфейсы для сторов
 export interface TabState {
-  activeTab: "videos" | "images";
-  setActiveTab: (tab: "videos" | "images") => void;
+  activeTab: "all" | "videos" | "images";
+  setActiveTab: (tab: "all" | "videos" | "images") => void;
 }
 
 export interface MediaState {
@@ -32,7 +32,7 @@ export interface SelectedState {
 }
 
 export const useTabStore = create<TabState>()((set) => ({
-  activeTab: "videos",
+  activeTab: "all",
   setActiveTab: (tab) => set({ activeTab: tab }),
 }));
 
