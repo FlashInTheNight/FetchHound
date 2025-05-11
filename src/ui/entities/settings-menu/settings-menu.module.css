@@ -1,0 +1,62 @@
+/* Шапка с кнопкой Settings */
+.settingsButton {
+  display: flex;
+  color: #fff;
+  background: none;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  padding: 4px 6px;
+  cursor: pointer;
+}
+
+/* Полноэкранный полупрозрачный фон */
+.overlay {
+  position: absolute;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+/* Собственно модалка */
+.modal {
+  background: var(--menu-bg, #fff);
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 260px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.modal h3 {
+  margin-top: 0;
+}
+
+.modalButton {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  padding: 8px;
+  background: var(--btn-bg, #007bff);
+  color: var(--btn-text, #fff);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modalButton:hover {
+  background: var(--btn-bg-hover, #0056b3);
+}
+
+.closeButton {
+  margin-top: 12px;
+  background: none;
+  border: none;
+  color: var(--btn-text, #007bff);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+}
