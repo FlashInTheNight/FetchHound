@@ -11,7 +11,6 @@ export const scanVideos: scanFnType = (excludedUrls: string[] = []) => {
   // Это регулярное выражение проверяет, что URL заканчивается на .mp4 или .webm, даже если за ним следуют query-параметры (например, ?token=abc123).
   const videoRegex = /\.(mp4|webm|mov)(\?.*)?$/i;
   const imageRegex = /\.(jpg|jpeg|gif|webp|png)(\?.*)?$/i;
-  // const videoTagRegex = /[?&]s=view/;
 
   // 1. Сканируем элементы <video>
   const videoElems = Array.from(document.querySelectorAll("video"));

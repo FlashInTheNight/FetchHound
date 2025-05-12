@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { MediaItem } from "../types";
-import { testData } from "../test-data";
 
 // Интерфейсы для сторов
 export interface MediaListModeState {
@@ -48,7 +47,7 @@ export const useTabStore = create<TabState>()((set) => ({
 }));
 
 export const useMediaStore = create<MediaState>()((set) => ({
-  mediaItems: testData,
+  mediaItems: [],
   setMediaItems: (media) => set({ mediaItems: media }),
 }));
 

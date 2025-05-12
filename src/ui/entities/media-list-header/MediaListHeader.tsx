@@ -14,6 +14,7 @@ function MediaListHeader() {
   const handleBackButtonClick = () => {
     removeAllChecked();
     setMediaItems([]);
+    setMode("normal");
   };
   const { activeMode, setMode } = useMediaListMode();
 

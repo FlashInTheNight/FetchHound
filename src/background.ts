@@ -33,7 +33,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
           console.log("msg.mediaTab is: ", msg.mediaTab);
 
-          let currentFinderFn; // Объявляем переменную, которой будет присвоено значение
+          let currentFinderFn;
 
           switch (msg.mediaTab) {
             case "all":
@@ -49,11 +49,6 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
               currentFinderFn = findUnknownMediaLink;
               break;
           }
-
-          // const currentFinderFn =
-          //   msg.mediaTab === "videos"
-          //     ? findDirectVideoLink
-          //     : findWallpaperImage;
 
           const onUpdated = (
             tabId: number,
@@ -72,7 +67,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
                   console.log("Found direct URL:", result.url);
                   console.log("results is: ", results);
 
-                  // chrome.tabs.remove(tab.id!);
+                  chrome.tabs.remove(tab.id!);
                   resolve(result);
                 }
               );

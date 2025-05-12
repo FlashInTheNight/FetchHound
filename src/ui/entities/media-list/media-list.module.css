@@ -5,6 +5,7 @@
   margin: 0;
   height: 335px;
   overflow-y: auto;
+  position: relative;
 }
 
 /* Одна карточка медиа */

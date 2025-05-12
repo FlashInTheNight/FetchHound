@@ -41,15 +41,17 @@ export const useGetMedia = () => {
       console.log("result is: ", result);
 
       if (!result.result || result.result.length === 0) {
-        throw Error("No media found.");
+        throw Error("No media items were found on the page.");
       }
 
       setMediaItems(result.result);
     } catch (error) {
-      console.error("Error searchin  videos:", error);
-      setMediaItems([]);
+      console.error("Error searchin  media:", error);
+      // setMediaItems([]);
       setError(
-        error instanceof Error ? error.message : "An unknown error occurred"
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred while scanning the page."
       );
     } finally {
       setLoading(false);
