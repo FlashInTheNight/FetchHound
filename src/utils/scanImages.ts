@@ -5,7 +5,7 @@ import { MediaItem, scanFnType } from "../types";
  * @returns {MediaItem[]} Возвращает массив объектов вида: [{ url: '...', thumb: '...' | null }]
  */
 
-export const scanImages: scanFnType = () => {
+export const scanImages: scanFnType = (excludedUrls: string[] = []) => {
   const videoFormatRegex = /\.(mp4|webm|mov|ogg|m4v)(\?.*)?$/i;
   const imageRegex = /\.(jpg|jpeg|gif|webp|png)(\?.*)?$/i;
 
@@ -70,5 +70,11 @@ export const scanImages: scanFnType = () => {
     }
   }
 
-  return images;
+  if (excludedUrls.length === 0) {
+    return images;
+  }
+  const removeSet = new Set(excludedUrls);
+  const result = images.filter((image) => !removeSet.has(image.url));
+
+  return result;
 };

@@ -1,7 +1,13 @@
 import { create } from "zustand";
 import { MediaItem } from "../types";
+import { testData } from "../test-data";
 
 // Интерфейсы для сторов
+export interface MediaListModeState {
+  activeMode: "normal" | "exclude";
+  setMode: (mode: "normal" | "exclude") => void;
+}
+
 export interface TabState {
   activeTab: "all" | "videos" | "images";
   setActiveTab: (tab: "all" | "videos" | "images") => void;
@@ -31,13 +37,18 @@ export interface SelectedState {
   getSelectedUrls: () => string[];
 }
 
+export const useMediaListMode = create<MediaListModeState>()((set) => ({
+  activeMode: "normal",
+  setMode: (mode) => set({ activeMode: mode }),
+}));
+
 export const useTabStore = create<TabState>()((set) => ({
   activeTab: "all",
   setActiveTab: (tab) => set({ activeTab: tab }),
 }));
 
 export const useMediaStore = create<MediaState>()((set) => ({
-  mediaItems: [],
+  mediaItems: testData,
   setMediaItems: (media) => set({ mediaItems: media }),
 }));
 

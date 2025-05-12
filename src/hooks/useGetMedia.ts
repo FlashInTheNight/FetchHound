@@ -5,13 +5,14 @@ import {
   useSelectedStore,
 } from "../store";
 import { scanFnType } from "../types";
+import { storage } from "../storage";
 
 // Функция для запроса сканирования страницы
 export const useGetMedia = () => {
   const { setMediaItems } = useMediaStore();
   const { setLoading } = useLoadingStore();
   const { setError } = useErrorStore();
-  const { removeAllChecked } =  useSelectedStore();
+  const { removeAllChecked } = useSelectedStore();
 
   const getMedia = async (currentScanFn: scanFnType) => {
     const [tab] = await chrome.tabs.query({
@@ -26,10 +27,16 @@ export const useGetMedia = () => {
       setError("");
       removeAllChecked(); // Сбрасываем выбранные элементы перед новым сканированием
       // Запускаем скрипт на текущей вкладке и получаем результат
-      const [result] = (await chrome.scripting.executeScript({
+
+      // Получаем исключенные URL для текущего хоста
+      const host = tab.url ? new URL(tab.url).host : "";
+      const excludedUrls = await storage.get(host);
+
+      const [result] = await chrome.scripting.executeScript({
         target: { tabId: tab.id },
         func: currentScanFn,
-      })) as any[]; // Приводим к типу any, чтобы избежать ошибок компиляции
+        args: [excludedUrls],
+      });
 
       console.log("result is: ", result);
 
@@ -41,7 +48,9 @@ export const useGetMedia = () => {
     } catch (error) {
       console.error("Error searchin  videos:", error);
       setMediaItems([]);
-      setError(error instanceof Error ? error.message : "An unknown error occurred");
+      setError(
+        error instanceof Error ? error.message : "An unknown error occurred"
+      );
     } finally {
       setLoading(false);
     }

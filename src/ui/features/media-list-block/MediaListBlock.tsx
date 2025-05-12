@@ -1,10 +1,13 @@
-import { GroupBtns, MediaList } from "../../entities";
+import { useMediaListMode } from "../../../store";
+import { ExcludeGroupBtns, GroupBtns, MediaList } from "../../entities";
 
 function MediaListBlock() {
+  const { activeMode } = useMediaListMode();
+
   return (
     <div>
       <MediaList />
-      <GroupBtns />
+      {activeMode === "normal" ? <GroupBtns /> : <ExcludeGroupBtns />}
     </div>
   );
 }

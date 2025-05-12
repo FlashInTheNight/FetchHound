@@ -4,7 +4,7 @@ import { MediaItem, scanFnType } from "../types";
  * @description Функция scanVideos ищет видеофайлы на странице.
  * @returns {MediaItem[] | []} Возвращает массив объектов вида: [{ url: '...', thumb: '...' | null }] или пустой массив, если видео не найдены.
  */
-export const scanVideos: scanFnType = () => {
+export const scanVideos: scanFnType = (excludedUrls: string[] = []) => {
   const videos: MediaItem[] = [];
 
   // Регулярное выражение для проверки видеофайлов (учитывает query-параметры)
@@ -58,5 +58,11 @@ export const scanVideos: scanFnType = () => {
     }
   });
 
-  return videos;
+  if(excludedUrls.length === 0) {
+    return videos
+  }
+  const removeSet = new Set(excludedUrls);
+  const result = videos.filter((video) => !removeSet.has(video.url))
+
+  return result;
 };

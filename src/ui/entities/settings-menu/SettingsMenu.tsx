@@ -4,8 +4,22 @@ import styles from "./settings-menu.module.css";
 import { SettingsIcon } from "../../shared/icons/SettingsIcon";
 
 export const SettingsMenu: React.FC = () => {
-  const host = window.location.host;
   const [settingsOpen, setSettingsOpen] = useState(false);
+
+  const handleClearSiteExclusions = async () => {
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
+    });
+    let host;
+    if (tab.url) {
+      host = new URL(tab.url).host;
+    } else {
+      throw Error("tis tab cant be used for scan");
+    }
+    await storage.clearSite(host);
+    setSettingsOpen(false);
+  };
 
   return (
     <>
@@ -26,11 +40,7 @@ export const SettingsMenu: React.FC = () => {
             <h3>Settings</h3>
             <button
               className={styles.modalButton}
-              onClick={async () => {
-                await storage.clearSite(host);
-                setSettingsOpen(false);
-                // можно вызвать рескан страницы
-              }}
+              onClick={handleClearSiteExclusions}
             >
               Clear Site Exclusions
             </button>

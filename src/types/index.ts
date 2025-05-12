@@ -4,4 +4,4 @@ export interface MediaItem {
   thumb: string | null;
 }
 
-export type scanFnType = () => MediaItem[];
+export type scanFnType = (excludedUrls: string[] | []) => MediaItem[];

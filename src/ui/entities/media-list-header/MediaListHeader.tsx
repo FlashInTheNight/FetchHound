@@ -1,11 +1,28 @@
-import { useMediaStore, useSelectedStore } from "../../../store";
-import { LeftArrowIcon } from "../../shared";
+import {
+  useMediaListMode,
+  useMediaStore,
+  useSelectedStore,
+} from "../../../store";
+import { CustomButton, LeftArrowIcon } from "../../shared";
+import { ExcludeIcon } from "../../shared/icons/ExcludeIcon";
 import styles from "./media-list-header.module.css";
 
 function MediaListHeader() {
   const { mediaItems, setMediaItems } = useMediaStore();
   const count = useSelectedStore((s) => s.getSelectedCount());
-  const handleBackButtonClick = () => setMediaItems([]);
+  const { removeAllChecked } = useSelectedStore();
+  const handleBackButtonClick = () => {
+    removeAllChecked();
+    setMediaItems([]);
+  };
+  const { activeMode, setMode } = useMediaListMode();
+
+  const handeSetMode = () => {
+    removeAllChecked();
+    setMode("exclude");
+  };
+
+  console.log("component rendered");
 
   return (
     <div className={styles.mediaListHeader}>
@@ -17,9 +34,20 @@ function MediaListHeader() {
         <LeftArrowIcon className={styles.mediaListHeader__backButtonIcon} />
         Scan Again
       </button>
-      <p className={styles.mediaListHeader__status}>
-        {count} of {mediaItems.length} selected
-      </p>
+      <div className={styles.mediaListHeader__tablo}>
+        <p className={styles.mediaListHeader__status}>
+          {count} of {mediaItems.length} selected
+        </p>
+        <CustomButton
+          variant="outline"
+          className={styles.mediaListHeader__unwantedBtn}
+          title="Select Unwanted"
+          disabled={activeMode === "exclude"}
+          onClick={handeSetMode}
+        >
+          <ExcludeIcon />
+        </CustomButton>
+      </div>
     </div>
   );
 }

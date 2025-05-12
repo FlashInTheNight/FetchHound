@@ -2,9 +2,9 @@ import { scanFnType } from "../types";
 
 /**
  * @description Функция scanAll ищет изображения и видео на странице.
- * @returns {MediaItem[]} Возвращает массив объектов вида: [{ url: '...', thumb: '...' | null }]
+ * @returns {MediaItem[] | []} Возвращает массив объектов вида: [{ url: '...', thumb: '...' | null }]
  */
-export const scanAll: scanFnType = () => {
+export const scanAll: scanFnType = (excludedUrls: string[] = []) => {
   const media = new Map<string, string | null>();
   // Регулярное выражение для проверки прямых ссылок на медиафайлы
   const DIRECT_MEDIA_URL_PATTERN =
@@ -69,10 +69,16 @@ export const scanAll: scanFnType = () => {
     }
   }
 
+  if (excludedUrls.length > 0) {
+    excludedUrls.forEach((url) => media.delete(url));
+  }
+
   // Преобразование в массив объектов
   const resultArray = Array.from(media, ([urlValue, thumbValue]) => {
     return { url: urlValue, thumb: thumbValue };
   });
+
+  console.log("current media :", media);
 
   return resultArray;
 };

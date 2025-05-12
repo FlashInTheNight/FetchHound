@@ -1,10 +1,11 @@
 import React, { memo, useCallback } from "react";
 import clsx from "clsx";
-import { useSelectedStore } from "../../../store";
+import { useMediaListMode, useSelectedStore } from "../../../store";
 import { CheckIcon, PlaceholderIcon } from "../../shared";
 import { getFileName } from "../../../utils/getFileName";
 import { MediaItem } from "../../../types";
 import styles from "./media-list.module.css";
+import { ExcludeIcon } from "../../shared/icons/ExcludeIcon";
 
 interface Props {
   item: MediaItem;
@@ -18,6 +19,7 @@ const MediaListItem: React.FC<Props> = ({ item }) => {
 
   // Берём колбэк из стора
   const toggle = useSelectedStore((state) => state.setCheckedSelected);
+  const mode = useMediaListMode((state) => state.activeMode);
 
   // Стабильный колбэк по URL
   // Если не использовать useCallback, то при каждом рендере будет создаваться новый колбэк
@@ -31,7 +33,8 @@ const MediaListItem: React.FC<Props> = ({ item }) => {
   return (
     <li
       className={clsx(styles["media-item"], {
-        [styles["media-item--selected"]]: isSel,
+        [styles["media-item--selected"]]: isSel && mode === "normal",
+        [styles["media-item--selected-excluded"]]: isSel && mode === "exclude",
       })}
       onClick={onClick}
     >
@@ -45,7 +48,11 @@ const MediaListItem: React.FC<Props> = ({ item }) => {
         )}
         {isSel && (
           <div className={styles["media-thumb__overlay"]}>
-            <CheckIcon />
+            {mode === "normal" ? (
+              <CheckIcon />
+            ) : (
+              <ExcludeIcon size={34} color="#fff" />
+            )}
           </div>
         )}
       </div>

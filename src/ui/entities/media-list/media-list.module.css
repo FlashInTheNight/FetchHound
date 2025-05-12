@@ -27,6 +27,12 @@
   background-color: rgba(0, 122, 255, 0.1);
 }
 
+
+
+.media-item--selected-excluded {
+  background-color: rgba(180, 48, 48, 0.1);
+}
+
 /* Блок с миниатюрой */
 .media-thumb {
   position: relative;

@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 8px;
+  padding: 4px 8px;
   border-bottom: 1px solid var(--border-color);
   /* Небольшая тень снизу для отделения от списка */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -35,4 +35,15 @@
   margin: 0;
   font-size: 14px;
   color: var(--text-color);
+}
+
+.mediaListHeader__unwantedBtn {
+  padding: 4px 6px;
+  display: flex;
+}
+
+.mediaListHeader__tablo {
+  display: inline-flex;
+  column-gap: 8px;
+  align-items: center;
 }
