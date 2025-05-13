@@ -1,0 +1,50 @@
+.error-notification {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  width: 92%;
+  min-height: 40px;
+  background-color: var(--error-color, #ff3b30);
+  color: var(--text-color-light, #fff);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  font-size: 14px;
+  z-index: 90;
+  animation: fadeIn 0.2s;
+  gap: 8px;
+}
+
+.error-notification-text {
+  margin: 0;
+  flex: 1;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.error-notification-btn {
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}

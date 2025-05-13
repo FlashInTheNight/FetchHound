@@ -1,11 +1,13 @@
 /* Основной список */
+.media-list-wrapper {
+  position: relative;
+}
 .media-list {
   list-style: none;
   padding: 0 var(--wrapper-padding-x);
   margin: 0;
   height: 335px;
   overflow-y: auto;
-  position: relative;
 }
 
 /* Одна карточка медиа */
