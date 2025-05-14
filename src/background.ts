@@ -92,7 +92,8 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           directUrls.push({ url });
           console.log("get direct link");
         } else {
-          console.log("get dirty link");
+          console.log("get relative link");
+          // добавить realtive link в объект
           const result = await getDirectLink(url);
           directUrls.push(result);
         }

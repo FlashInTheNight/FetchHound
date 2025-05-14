@@ -10,6 +10,7 @@ export type scanFnType = (excludedUrls: string[] | []) => MediaItem[];
 export interface MediaSearchResult {
   url: string;
   error?: string;
+  // relativeUrl?: string;
 }
 
 export interface ScanDirectLinkResult {

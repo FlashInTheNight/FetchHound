@@ -77,32 +77,37 @@ function GroupBtns() {
       }
 
       // Отправляем сообщение в background.ts для скачивания
-      const downloadResult = await new Promise<DownloadResponse>((resolve, reject) => {
-        chrome.runtime.sendMessage(
-          {
-            type: "DOWNLOAD_VIDEOS",
-            urls: urlsForDownload,
-          },
-          (response) => {
-            if (chrome.runtime.lastError) {
-              reject(new Error(chrome.runtime.lastError.message));
-              return;
+      const downloadResult = await new Promise<DownloadResponse>(
+        (resolve, reject) => {
+          chrome.runtime.sendMessage(
+            {
+              type: "DOWNLOAD_VIDEOS",
+              urls: urlsForDownload,
+            },
+            (response) => {
+              if (chrome.runtime.lastError) {
+                reject(new Error(chrome.runtime.lastError.message));
+                return;
+              }
+              if (!response) {
+                reject(new Error("No response from background script"));
+                return;
+              }
+              resolve(response as DownloadResponse);
             }
-            if (!response) {
-              reject(new Error("No response from background script"));
-              return;
-            }
-            resolve(response as DownloadResponse);
-          }
-        );
-      });
+          );
+        }
+      );
 
       console.log("Response from background:", downloadResult);
 
       if (!downloadResult.success) {
-        const failedDownloads = downloadResult.results?.filter(r => !r.success) || [];
+        const failedDownloads =
+          downloadResult.results?.filter((r) => !r.success) || [];
         if (failedDownloads.length > 0) {
-          const errorMessages = failedDownloads.map(r => `${r.url}: ${r.error}`).join('\n');
+          const errorMessages = failedDownloads
+            .map((r) => `${r.url}: ${r.error}`)
+            .join("\n");
           throw new Error(`Failed to download some files:\n${errorMessages}`);
         }
         throw new Error(downloadResult.error || "Failed to download media");
@@ -111,9 +116,10 @@ function GroupBtns() {
       console.log("Download started successfully.");
     } catch (error) {
       console.error("Error during download process:", error);
-      const errorMessage = error instanceof Error
-        ? error.message
-        : "An unexpected error occurred.";
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred.";
       setAdditionalError(errorMessage);
     }
   };
