@@ -1,14 +1,11 @@
-export interface UnknownMediaLinkResult {
-  url: string | null;
-  error?: string;
-}
+import { type ScanDirectLinkResult } from "../../types";
 
-export const findUnknownMediaLink = (): UnknownMediaLinkResult => {
-  const videoTag = document.querySelector("video[id]");
+export const findUnknownMediaLink = (): ScanDirectLinkResult => {
   const IMAGES_IDS = ["image", "wallpaper"];
   const DIRECT_MEDIA_URL_PATTERN =
     /\.(mp4|webm|mkv|avi|mov|jpg|jpeg|png|gif|webp)(?:\?[^/]*)?$/i;
 
+  const videoTag = document.querySelector("video[id]");
   if (videoTag) {
     const [video] = [videoTag];
     let videoUrl = video.getAttribute("src");
@@ -60,6 +57,6 @@ export const findUnknownMediaLink = (): UnknownMediaLinkResult => {
 
   return {
     url: null,
-    error: "Couldn't find the media item at this link",
+    error: "No media items were found on this page.",
   };
 };

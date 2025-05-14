@@ -1,32 +1,33 @@
-export interface VideoSearchResult {
-  url: string | null;
-  error?: string;
-}
+import { type ScanDirectLinkResult } from "../../types";
 
-export const findDirectVideoLink = (): VideoSearchResult => {
-  const videoTag = document.querySelector("video[id]");
+export const findDirectVideoLink = (): ScanDirectLinkResult => {
+  try {
+    const videoTag = document.querySelector("video[id]");
 
-  if (!videoTag) {
-    return {
-      url: null,
-      error: "Cant find throught pathname",
-    };
-  }
-
-  const [video] = [videoTag];
-  let videoUrl = video.getAttribute("src");
-  if (!videoUrl) {
-    const sourceElem = video.querySelector("source");
-    if (sourceElem) {
-      videoUrl = sourceElem.getAttribute("src");
+    if (!videoTag) {
+      throw Error("No suitable video element found.");
     }
-  }
-  if (videoUrl) {
-    return { url: videoUrl };
-  } else {
+
+    const [video] = [videoTag];
+    let videoUrl = video.getAttribute("src");
+    if (!videoUrl) {
+      const sourceElem = video.querySelector("source");
+      if (sourceElem) {
+        videoUrl = sourceElem.getAttribute("src");
+      }
+    }
+    if (videoUrl) {
+      return { url: videoUrl };
+    } else {
+      throw Error("No video source URL found.");
+    }
+  } catch (error) {
     return {
       url: null,
-      error: "Cant find throught pathname",
+      error:
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred during video search.",
     };
   }
 };

@@ -8,6 +8,12 @@ export interface MediaListModeState {
   setMode: (mode: "normal" | "exclude") => void;
 }
 
+export interface extentionMode {
+  mode: "scan" | "download";
+  getMode: () => "scan" | "download";
+  setExtMode: (mode: "scan" | "download") => void;
+}
+
 export interface TabState {
   activeTab: "all" | "videos" | "images";
   setActiveTab: (tab: "all" | "videos" | "images") => void;
@@ -16,6 +22,7 @@ export interface TabState {
 export interface MediaState {
   mediaItems: MediaItem[] | [];
   setMediaItems: (media: MediaItem[] | []) => void;
+  getMediaItems: () => MediaItem[] | [];
 }
 
 export interface LoadingState {
@@ -25,6 +32,9 @@ export interface LoadingState {
 
 export interface ErrorState {
   error: string;
+  additionalError: string;
+  setAdditionalError: (error: string) => void;
+  getError: () => string;
   setError: (error: string) => void;
 }
 
@@ -34,6 +44,7 @@ export interface SelectedState {
   removeAllChecked: () => void;
   addAllChecked: (items: MediaItem[]) => void;
   getSelectedCount: () => number;
+  getSelectedMapUrls: () => Map<string, boolean>;
   getSelectedUrls: () => string[];
 }
 
@@ -47,9 +58,16 @@ export const useTabStore = create<TabState>()((set) => ({
   setActiveTab: (tab) => set({ activeTab: tab }),
 }));
 
-export const useMediaStore = create<MediaState>()((set) => ({
+export const useMediaStore = create<MediaState>()((set, get) => ({
   mediaItems: testData,
   setMediaItems: (media) => set({ mediaItems: media }),
+  getMediaItems: () => get().mediaItems,
+}));
+
+export const useExtensionMode = create<extentionMode>()((set, get) => ({
+  mode: "scan",
+  getMode: () => get().mode,
+  setExtMode: (mode) => set({ mode }),
 }));
 
 export const useLoadingStore = create<LoadingState>()((set) => ({
@@ -57,8 +75,11 @@ export const useLoadingStore = create<LoadingState>()((set) => ({
   setLoading: (loading) => set({ loading }),
 }));
 
-export const useErrorStore = create<ErrorState>()((set) => ({
+export const useErrorStore = create<ErrorState>()((set, get) => ({
   error: "",
+  additionalError: "",
+  setAdditionalError: (error) => set({ additionalError: error }),
+  getError: () => get().error,
   setError: (error) => set({ error }),
 }));
 
@@ -93,6 +114,10 @@ export const useSelectedStore = create<SelectedState>()((set, get) => ({
 
   getSelectedCount: () => {
     return get().selected.size;
+  },
+
+  getSelectedMapUrls: () => {
+    return get().selected;
   },
 
   getSelectedUrls: () => {

@@ -3,14 +3,25 @@ import { CancelIcon } from "../icons/CancelIcon";
 import styles from "./error-notification.module.css";
 
 export const ErrorNotification = () => {
-  const { error, setError } = useErrorStore();
+  const { error, additionalError, setAdditionalError, setError } =
+    useErrorStore();
+
+  const handleClose = () => {
+    setError("");
+    setAdditionalError("");
+  };
+
   return (
     <div className={styles["error-notification"]}>
-      <p className={styles["error-notification-text"]}>{error}</p>
+      <div>
+        <p className={styles["error-notification-text"]}>{error}</p>
+        <p className={styles["error-notification-text"]}>{additionalError}</p>
+      </div>
+
       <button
         className={styles["error-notification-btn"]}
         type="button"
-        onClick={() => setError("")}
+        onClick={handleClose}
       >
         <CancelIcon size={28} />
       </button>

@@ -4,8 +4,8 @@ import { useMediaListMode, useSelectedStore } from "../../../store";
 import { CheckIcon, PlaceholderIcon } from "../../shared";
 import { getFileName } from "../../../utils/getFileName";
 import { MediaItem } from "../../../types";
-import styles from "./media-list.module.css";
 import { ExcludeIcon } from "../../shared/icons/ExcludeIcon";
+import styles from "./media-list.module.css";
 
 interface Props {
   item: MediaItem;
@@ -56,7 +56,12 @@ const MediaListItem: React.FC<Props> = ({ item }) => {
           </div>
         )}
       </div>
-      <span className={styles["media-name"]}>{name}</span>
+      <div className={styles["media-descr"]}>
+        <span className={styles["media-name"]}>{name}</span>
+        {item.error && (
+          <p className={styles["media-error-descr"]}>Error: {item.error}</p>
+        )}
+      </div>
     </li>
   );
 };

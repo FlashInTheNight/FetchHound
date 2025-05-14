@@ -1,4 +1,6 @@
 import {
+  useErrorStore,
+  useExtensionMode,
   useMediaListMode,
   useMediaStore,
   useSelectedStore,
@@ -11,10 +13,14 @@ function MediaListHeader() {
   const { mediaItems, setMediaItems } = useMediaStore();
   const count = useSelectedStore((s) => s.getSelectedCount());
   const { removeAllChecked } = useSelectedStore();
+  const { setExtMode } = useExtensionMode();
+  const { setError } = useErrorStore();
   const handleBackButtonClick = () => {
     removeAllChecked();
     setMediaItems([]);
+    setError("");
     setMode("normal");
+    setExtMode("scan");
   };
   const { activeMode, setMode } = useMediaListMode();
 

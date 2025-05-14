@@ -1,9 +1,6 @@
-export interface MediaSearchResult {
-  url: string | null;
-  error?: string;
-}
+import { type ScanDirectLinkResult } from "../../types";
 
-export const findWallpaperImage = (): MediaSearchResult => {
+export const findWallpaperImage = (): ScanDirectLinkResult => {
   const IMAGES_IDS = ["image", "wallpaper"];
   const imageFormatRegex = /\.(jpg|jpeg|webm|gif|png)(\?.*)?$/i;
   try {
@@ -31,8 +28,6 @@ export const findWallpaperImage = (): MediaSearchResult => {
       console.log("isPathIncluded: ", isPathIncluded);
       if (lastRoute && src.includes(lastRoute)) {
         return { url: src };
-      } else {
-        console.log("Cant find throught pathname");
       }
 
       // Проверяем по атрибуту alt. Beta version. Суть: если в alt есть более 4 слов, то это обои, так как эти слова используются для тегов(неправильный вывод). В alt часто содержится название картинки с расширением
@@ -46,15 +41,14 @@ export const findWallpaperImage = (): MediaSearchResult => {
       //   return { url: src };
       // }
     }
-
-    return { url: null, error: "No suitable image found" };
+    throw Error("No suitable image was found.");
   } catch (error) {
     return {
       url: null,
       error:
         error instanceof Error
           ? error.message
-          : "Unknown error during image search",
+          : "An unexpected error occurred during image search.",
     };
   }
 };

@@ -3,6 +3,7 @@ import {
   useLoadingStore,
   useErrorStore,
   useSelectedStore,
+  useExtensionMode,
 } from "../store";
 import { scanFnType } from "../types";
 import { storage } from "../storage";
@@ -13,6 +14,7 @@ export const useGetMedia = () => {
   const { setLoading } = useLoadingStore();
   const { setError } = useErrorStore();
   const { removeAllChecked } = useSelectedStore();
+  const { setExtMode } = useExtensionMode();
 
   const getMedia = async (currentScanFn: scanFnType) => {
     const [tab] = await chrome.tabs.query({
@@ -45,6 +47,7 @@ export const useGetMedia = () => {
       }
 
       setMediaItems(result.result);
+      setExtMode("download");
     } catch (error) {
       console.error("Error searchin  media:", error);
       // setMediaItems([]);

@@ -1,15 +1,22 @@
 export interface DownloadResult {
   success: boolean;
   error?: string;
+  results?: {
+    url: string;
+    success: boolean;
+    error?: string;
+  }[];
 }
 
 export const downloadFile = (url: string): Promise<number> => {
   return new Promise((resolve, reject) => {
     chrome.downloads.download({ url }, (downloadId) => {
+      if (chrome.runtime.lastError) {
+        console.error("Download error:", chrome.runtime.lastError.message);
+        return reject(new Error(chrome.runtime.lastError.message));
+      }
       if (!downloadId) {
-        return reject(
-          chrome.runtime.lastError && chrome.runtime.lastError.message
-        );
+        return reject(new Error("Failed to start download"));
       }
 
       const onChangedListener = (delta: chrome.downloads.DownloadDelta) => {
@@ -27,19 +34,32 @@ export const downloadFile = (url: string): Promise<number> => {
   });
 };
 
-export const downloadMultipleFiles = async (urls: string[]): Promise<DownloadResult> => {
-  try {
-    for (const url of urls) {
-      console.log("Downloading:", url);
+export const downloadMultipleFiles = async (
+  urls: string[]
+): Promise<DownloadResult> => {
+  const results = [];
+  let hasErrors = false;
+
+  for (const url of urls) {
+    console.log("Downloading:", url);
+    try {
       await downloadFile(url);
       console.log("Downloaded:", url);
+      results.push({ url, success: true });
+    } catch (error) {
+      console.error("Download error:", error);
+      hasErrors = true;
+      results.push({
+        url,
+        success: false,
+        error: error instanceof Error ? error.message : "An unknown error occurred",
+      });
     }
-    return { success: true };
-  } catch (error) {
-    console.error("Download error:", error);
-    return { 
-      success: false, 
-      error: error instanceof Error ? error.message : "Unknown error" 
-    };
   }
-}; 
+
+  return {
+    success: !hasErrors,
+    results,
+    error: hasErrors ? "Some files failed to download" : undefined,
+  };
+};

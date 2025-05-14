@@ -30,8 +30,6 @@
   background-color: rgba(0, 122, 255, 0.1);
 }
 
-
-
 .media-item--selected-excluded {
   background-color: rgba(180, 48, 48, 0.1);
 }
@@ -81,6 +79,11 @@
   color: var(--placeholder-icon-color); /* чуть темнее рамки */
 }
 
+.media-descr {
+  display: flex;
+  flex-direction: column;
+}
+
 /* Название файла */
 .media-name {
   margin-left: 12px;
@@ -91,4 +94,9 @@
 
 .media-item:hover > .media-name {
   color: var(--primary-hover);
+}
+
+.media-error-descr {
+  color: var(--error-color);
+  margin: 0 0 0 12px;
 }

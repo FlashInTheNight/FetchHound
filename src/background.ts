@@ -8,12 +8,12 @@
 
 import {
   findWallpaperImage,
-  MediaSearchResult,
+  findDirectVideoLink,
+  findUnknownMediaLink,
   isDirectMediaUrl,
-} from "./utils/background/mediaUtils";
-import { findDirectVideoLink } from "./utils/background/findDirectVideoLink";
-import { downloadMultipleFiles } from "./utils/background/downloadUtils";
-import { findUnknownMediaLink } from "./utils/background";
+  downloadMultipleFiles,
+} from "./utils/background";
+import { type MediaSearchResult } from "./types";
 
 // Обработчик сообщений
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
@@ -27,7 +27,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         chrome.tabs.create({ url, active: false }, (tab) => {
           if (!tab.id) {
             console.error("Failed to create tab");
-            resolve({ url: null, error: "Failed to create tab" });
+            resolve({ url, error: "Failed to create tab" });
             return;
           }
 
@@ -68,7 +68,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
                   console.log("results is: ", results);
 
                   chrome.tabs.remove(tab.id!);
-                  resolve(result);
+                  if (Object.hasOwn(result, "error")) {
+                    console.error("Error in content script:", result.error);
+                    resolve({ url, error: result.error });
+                  } else {
+                    resolve(result);
+                  }
                 }
               );
             }
@@ -81,15 +86,15 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
     // Обрабатываем все URL последовательно
     (async () => {
-      const directUrls: (string | null)[] = [];
+      const directUrls: (MediaSearchResult | null)[] = [];
       for (const url of targetUrls) {
         if (isDirectMediaUrl(url)) {
-          directUrls.push(url);
+          directUrls.push({ url });
           console.log("get direct link");
         } else {
           console.log("get dirty link");
           const result = await getDirectLink(url);
-          directUrls.push(result.url);
+          directUrls.push(result);
         }
       }
       sendResponse({ directUrls });
