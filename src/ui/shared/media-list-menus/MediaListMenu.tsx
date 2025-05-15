@@ -1,5 +1,5 @@
 import { useSelectedStore, useMediaStore } from "../../../store";
-import { Button } from "../button/Button";
+// import { Button } from "../button/Button";
 import style from "./media-list-menu.module.css";
 
 export function MediaListMenu() {
@@ -46,7 +46,7 @@ export function MediaListMenu() {
 
   return (
     <div className={style["wrapper"]}>
-      <Button onClick={handleSelectAll} textSize="small">
+      {/* <Button onClick={handleSelectAll} textSize="small">
         Select All
       </Button>
       <Button onClick={handleRemoveAll} textSize="small">
@@ -54,7 +54,7 @@ export function MediaListMenu() {
       </Button>
       <Button onClick={handleDownload} textSize="small" variant="secondary">
         Download Selected
-      </Button>
+      </Button> */}
     </div>
   );
 }

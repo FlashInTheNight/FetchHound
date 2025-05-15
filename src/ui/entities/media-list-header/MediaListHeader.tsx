@@ -29,7 +29,7 @@ function MediaListHeader() {
     setMode("exclude");
   };
 
-  console.log("component rendered");
+  // console.log("component rendered");
 
   return (
     <div className={styles.mediaListHeader}>

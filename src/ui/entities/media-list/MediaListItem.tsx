@@ -24,7 +24,7 @@ const MediaListItem: React.FC<Props> = ({ item }) => {
   // Стабильный колбэк по URL
   // Если не использовать useCallback, то при каждом рендере будет создаваться новый колбэк
   const onClick = useCallback(() => {
-    toggle(item.url);
+    toggle(item);
   }, [toggle, item.url]);
 
   // console
@@ -56,12 +56,7 @@ const MediaListItem: React.FC<Props> = ({ item }) => {
           </div>
         )}
       </div>
-      <div className={styles["media-descr"]}>
-        <span className={styles["media-name"]}>{name}</span>
-        {item.error && (
-          <p className={styles["media-error-descr"]}>Error: {item.error}</p>
-        )}
-      </div>
+      <span className={styles["media-name"]}>{name}</span>
     </li>
   );
 };

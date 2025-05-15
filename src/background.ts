@@ -14,12 +14,13 @@ import {
   downloadMultipleFiles,
 } from "./utils/background";
 import { type MediaSearchResult } from "./types";
+import { SelectedItem } from "./store";
 
 // Обработчик сообщений
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === "RESOLVE_DIRECT_LINKS") {
-    const targetUrls: string[] = msg.urls;
-    console.log("Received URLs for resolution:", targetUrls);
+    const targetUrlsMap: Record<string, SelectedItem> = msg.urls;
+    console.log("Received URLs for resolution:", msg.urls);
 
     // Функция для получения прямой ссылки из одной вкладки
     const getDirectLink = (url: string): Promise<MediaSearchResult> => {
@@ -72,7 +73,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
                     console.error("Error in content script:", result.error);
                     resolve({ url, error: result.error });
                   } else {
-                    resolve(result);
+                    resolve({ url, directUrl: result.directUrl });
                   }
                 }
               );
@@ -86,19 +87,32 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
     // Обрабатываем все URL последовательно
     (async () => {
-      const directUrls: (MediaSearchResult | null)[] = [];
-      for (const url of targetUrls) {
-        if (isDirectMediaUrl(url)) {
-          directUrls.push({ url });
-          console.log("get direct link");
-        } else {
-          console.log("get relative link");
-          // добавить realtive link в объект
-          const result = await getDirectLink(url);
-          directUrls.push(result);
+      let iGetResolveDirectLinkError = false;
+      for (const urlKey of Object.keys(targetUrlsMap)) {
+        if (!isDirectMediaUrl(urlKey)) {
+          const urlObj = targetUrlsMap[urlKey];
+          const directUrl: MediaSearchResult = await getDirectLink(urlKey);
+          if (directUrl.error) {
+            iGetResolveDirectLinkError = true;
+            targetUrlsMap[urlKey] = {
+              ...urlObj,
+              error: directUrl.error,
+            };
+          } else {
+            targetUrlsMap[urlKey] = {
+              ...urlObj,
+              directUrl: directUrl.directUrl,
+            };
+          }
         }
       }
-      sendResponse({ directUrls });
+
+      sendResponse({
+        directUrls: {
+          updatedSelectedUrls: targetUrlsMap,
+          iGetResolveDirectLinkError,
+        },
+      });
     })();
 
     return true;

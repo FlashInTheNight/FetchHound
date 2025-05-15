@@ -17,13 +17,13 @@ export const findDirectVideoLink = (): ScanDirectLinkResult => {
       }
     }
     if (videoUrl) {
-      return { url: videoUrl };
+      return { directUrl: videoUrl };
     } else {
       throw Error("No video source URL found.");
     }
   } catch (error) {
     return {
-      url: null,
+      directUrl: null,
       error:
         error instanceof Error
           ? error.message

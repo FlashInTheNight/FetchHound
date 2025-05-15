@@ -95,8 +95,3 @@
 .media-item:hover > .media-name {
   color: var(--primary-hover);
 }
-
-.media-error-descr {
-  color: var(--error-color);
-  margin: 0 0 0 12px;
-}

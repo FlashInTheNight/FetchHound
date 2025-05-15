@@ -16,7 +16,7 @@ export const findUnknownMediaLink = (): ScanDirectLinkResult => {
       }
     }
     if (videoUrl) {
-      return { url: videoUrl };
+      return { directUrl: videoUrl };
     }
   }
 
@@ -31,7 +31,7 @@ export const findUnknownMediaLink = (): ScanDirectLinkResult => {
     // Проверяем по ID
     const imgID = (img as HTMLImageElement).id;
     if (imgID && IMAGES_IDS.includes(imgID)) {
-      return { url: src };
+      return { directUrl: src };
     }
 
     // Проверяем по последней части пути ссылки
@@ -40,12 +40,12 @@ export const findUnknownMediaLink = (): ScanDirectLinkResult => {
     const isPathIncluded = lastRoute ? src.includes(lastRoute) : false;
     console.log("isPathIncluded: ", isPathIncluded);
     if (lastRoute && src.includes(lastRoute)) {
-      return { url: src };
+      return { directUrl: src };
     }
 
     // Проверяем по атрибуту alt. Beta version. В alt часто содержится название картинки с расширением
     if (img.alt && DIRECT_MEDIA_URL_PATTERN.test(img.alt)) {
-      return { url: src };
+      return { directUrl: src };
     }
 
     // Проверяем классы. Beta version. Суть: если в классе есть слово wallpaper, то это обои.
@@ -56,7 +56,7 @@ export const findUnknownMediaLink = (): ScanDirectLinkResult => {
   }
 
   return {
-    url: null,
+    directUrl: null,
     error: "No media items were found on this page.",
   };
 };

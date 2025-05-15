@@ -38,14 +38,23 @@ export interface ErrorState {
   setError: (error: string) => void;
 }
 
+export interface SelectedItem {
+  originalUrl: string;
+  thumb: string | null;
+  directUrl?: string;
+  error?: string;
+}
+
 export interface SelectedState {
-  selected: Map<string, boolean>;
-  setCheckedSelected: (url: string) => void;
+  selected: Map<string, SelectedItem>;
+  setCheckedSelected: (item: MediaItem) => void;
+  setUpdateSelected: (items: Map<string, SelectedItem>) => void;
   removeAllChecked: () => void;
   addAllChecked: (items: MediaItem[]) => void;
   getSelectedCount: () => number;
-  getSelectedMapUrls: () => Map<string, boolean>;
+  getSelectedMapUrls: () => Map<string, SelectedItem>;
   getSelectedUrls: () => string[];
+  getObjectSelectedUrls: () => Record<string, SelectedItem>;
 }
 
 export const useMediaListMode = create<MediaListModeState>()((set) => ({
@@ -85,17 +94,23 @@ export const useErrorStore = create<ErrorState>()((set, get) => ({
 
 export const useSelectedStore = create<SelectedState>()((set, get) => ({
   selected: new Map(),
-
-  setCheckedSelected: (url: string) => {
+  setCheckedSelected: (item) => {
     set((state) => {
       const m = new Map(state.selected);
-      if (m.has(url)) {
-        m.delete(url);
+      if (m.has(item.url)) {
+        m.delete(item.url);
       } else {
-        m.set(url, true);
+        m.set(item.url, {
+          originalUrl: item.url,
+          thumb: item.thumb,
+        });
       }
       return { selected: m };
     });
+  },
+
+  setUpdateSelected: (items) => {
+    set({ selected: items });
   },
 
   removeAllChecked: () => {
@@ -106,7 +121,10 @@ export const useSelectedStore = create<SelectedState>()((set, get) => ({
     set((state) => {
       const m = new Map(state.selected);
       for (const item of items) {
-        m.set(item.url, true);
+        m.set(item.url, {
+          originalUrl: item.url,
+          thumb: item.thumb,
+        });
       }
       return { selected: m };
     });
@@ -122,5 +140,9 @@ export const useSelectedStore = create<SelectedState>()((set, get) => ({
 
   getSelectedUrls: () => {
     return Array.from(get().selected.keys());
+  },
+
+  getObjectSelectedUrls: () => {
+    return Object.fromEntries(get().selected);
   },
 }));

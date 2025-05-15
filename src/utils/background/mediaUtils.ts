@@ -18,7 +18,7 @@ export const findWallpaperImage = (): ScanDirectLinkResult => {
       // Проверяем по ID
       const imgID = (img as HTMLImageElement).id;
       if (imgID && IMAGES_IDS.includes(imgID)) {
-        return { url: src };
+        return { directUrl: src };
       }
 
       // Проверяем по последней части пути ссылки
@@ -27,12 +27,12 @@ export const findWallpaperImage = (): ScanDirectLinkResult => {
       const isPathIncluded = lastRoute ? src.includes(lastRoute) : false;
       console.log("isPathIncluded: ", isPathIncluded);
       if (lastRoute && src.includes(lastRoute)) {
-        return { url: src };
+        return { directUrl: src };
       }
 
       // Проверяем по атрибуту alt. Beta version. Суть: если в alt есть более 4 слов, то это обои, так как эти слова используются для тегов(неправильный вывод). В alt часто содержится название картинки с расширением
       if (img.alt && imageFormatRegex.test(img.alt)) {
-        return { url: src };
+        return { directUrl: src };
       }
 
       // Проверяем классы. Beta version. Суть: если в классе есть слово wallpaper, то это обои.
@@ -44,7 +44,7 @@ export const findWallpaperImage = (): ScanDirectLinkResult => {
     throw Error("No suitable image was found.");
   } catch (error) {
     return {
-      url: null,
+      directUrl: null,
       error:
         error instanceof Error
           ? error.message
