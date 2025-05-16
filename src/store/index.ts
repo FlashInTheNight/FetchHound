@@ -14,6 +14,16 @@ export interface extentionMode {
   setExtMode: (mode: "scan" | "download") => void;
 }
 
+export interface extentionStatus {
+  status: "showList" | "downloading";
+  setExtentionStatus: (status: "showList" | "downloading") => void;
+}
+
+export interface DownloadStatus {
+  status: "downloaded" | "success" | "error";
+  setDownloadStatus: (status: "downloaded" | "success" | "error") => void;
+}
+
 export interface TabState {
   activeTab: "all" | "videos" | "images";
   setActiveTab: (tab: "all" | "videos" | "images") => void;
@@ -57,6 +67,13 @@ export interface SelectedState {
   getObjectSelectedUrls: () => Record<string, SelectedItem>;
 }
 
+export interface DownloadedReultState {
+  urls: Record<string, SelectedItem>;
+  setUrls: (urls: Record<string, SelectedItem>) => void;
+  getUrls: () => Record<string, SelectedItem>;
+  removeAllUrls: () => void;
+}
+
 export const useMediaListMode = create<MediaListModeState>()((set) => ({
   activeMode: "normal",
   setMode: (mode) => set({ activeMode: mode }),
@@ -74,7 +91,7 @@ export const useMediaStore = create<MediaState>()((set, get) => ({
 }));
 
 export const useExtensionMode = create<extentionMode>()((set, get) => ({
-  mode: "scan",
+  mode: "download",
   getMode: () => get().mode,
   setExtMode: (mode) => set({ mode }),
 }));
@@ -145,4 +162,57 @@ export const useSelectedStore = create<SelectedState>()((set, get) => ({
   getObjectSelectedUrls: () => {
     return Object.fromEntries(get().selected);
   },
+}));
+
+export const useDownloadedResultStore = create<DownloadedReultState>()(
+  (set, get) => ({
+    urls: {
+      "http://localhost:3001/media/17241582886691.mp4": {
+        originalUrl: "http://localhost:3001/media/17241582886691.mp4",
+        thumb: null,
+      },
+      "http://localhost:3001/media/video-1.webm": {
+        originalUrl: "http://localhost:3001/media/video-1.webm",
+        thumb: "http://localhost:3001/media/thumb/video-1-thumb.jpg",
+      },
+      "http://localhost:3001/media/image-1.jpg": {
+        originalUrl: "http://localhost:3001/media/image-1.jpg",
+        thumb: "http://localhost:3001/media/thumb/image-thumb-1.jpg",
+      },
+      "http://localhost:3001/base/3412": {
+        originalUrl: "http://localhost:3001/base/3412",
+        thumb: "http://localhost:3001/media/thumb/image-thumb-2.jpg",
+        directUrl: "http://localhost:3001/media/image-2.jpg",
+      },
+      "http://localhost:3001/base/3425": {
+        originalUrl: "http://localhost:3001/base/3425",
+        thumb: "http://localhost:3001/media/thumb/video-thumb-2.jpg",
+        directUrl: "../media/video-2.mp4",
+        error: "Invalid URL",
+      },
+      "http://localhost:3001/ad/ad-1": {
+        originalUrl: "http://localhost:3001/ad/ad-1",
+        thumb: "http://localhost:3001/media/thumb/video-thumb-2.jpg",
+        error: "No media items were found on this page.",
+      },
+      "http://localhost:3001/broken-link/bl-1": {
+        originalUrl: "http://localhost:3001/broken-link/bl-1",
+        thumb: "http://localhost:3001/media/thumb/video-thumb-2.jpg",
+        error: "No media items were found on this page.",
+      },
+    },
+    setUrls: (urls) => set({ urls }),
+    getUrls: () => get().urls,
+    removeAllUrls: () => set({ urls: {} }),
+  })
+);
+
+export const useExtensionStatus = create<extentionStatus>()((set) => ({
+  status: "downloading",
+  setExtentionStatus: (status) => set({ status }),
+}));
+
+export const useDownloadStatus = create<DownloadStatus>()((set) => ({
+  status: "error",
+  setDownloadStatus: (status) => set({ status }),
 }));

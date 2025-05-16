@@ -1,0 +1,32 @@
+.downloadResultsListWrapper {
+  padding: 0 var(--wrapper-padding-x, 0);
+  height: 335px;
+  overflow-y: auto;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.downloadResultsList__header {
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+}
+
+.downloadResultsList__header--red {
+  /* border-bottom-color: var(--error-color, #b43030); */
+  color: var(--error-color, #b43030);
+}
+
+.downloadResultsList__header--green {
+  /* border-bottom-color: var(--success-color, #4caf50); */
+  color: var(--success-color, #4caf50);
+}
+
+.downloadResultsList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

@@ -1,11 +1,14 @@
+import { SelectedItem } from "../../store";
+
 export interface DownloadResult {
   success: boolean;
   error?: string;
-  results?: {
-    url: string;
-    success: boolean;
-    error?: string;
-  }[];
+  urls: Record<string, SelectedItem>;
+  // results?: {
+  //   url: string;
+  //   success: boolean;
+  //   error?: string;
+  // }[];
 }
 
 export const downloadFile = (url: string): Promise<number> => {
@@ -35,31 +38,42 @@ export const downloadFile = (url: string): Promise<number> => {
 };
 
 export const downloadMultipleFiles = async (
-  urls: string[]
+  urls: Record<string, SelectedItem>
 ): Promise<DownloadResult> => {
-  const results = [];
+  // const results = [];
   let hasErrors = false;
 
-  for (const url of urls) {
-    console.log("Downloading:", url);
+  for (const key of Object.keys(urls)) {
+    console.log("Downloading:", urls[key].originalUrl);
     try {
-      await downloadFile(url);
-      console.log("Downloaded:", url);
-      results.push({ url, success: true });
+      if (urls[key].error) {
+        continue;
+      } else if (urls[key].directUrl) {
+        await downloadFile(urls[key].directUrl);
+        console.log("Downloaded:", urls[key].directUrl);
+        // results.push({ url, success: true });
+      } else {
+        await downloadFile(key);
+        console.log("Downloaded:", key);
+        // results.push({ url, success: true });
+      }
     } catch (error) {
       console.error("Download error:", error);
       hasErrors = true;
-      results.push({
-        url,
-        success: false,
-        error: error instanceof Error ? error.message : "An unknown error occurred",
-      });
+      urls[key].error =
+        error instanceof Error ? error.message : "An unknown error occurred";
+      // results.push({
+      //   url,
+      //   success: false,
+      //   error:
+      //     error instanceof Error ? error.message : "An unknown error occurred",
+      // });
     }
   }
 
   return {
     success: !hasErrors,
-    results,
+    urls,
     error: hasErrors ? "Some files failed to download" : undefined,
   };
 };

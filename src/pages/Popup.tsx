@@ -1,11 +1,11 @@
-import { useExtensionMode, useMediaStore } from "../store";
+import { useExtensionMode, useExtensionStatus, useMediaStore } from "../store";
 import { SettingsMenu } from "../ui/entities";
 import { MediaListWidjet, StartBlockWidjet } from "../ui/widjets";
 import style from "./popup.module.css";
 
 export default function Popup() {
-  const { mediaItems } = useMediaStore();
   const { mode } = useExtensionMode();
+
   return (
     <main className={style["app-wrapper"]}>
       <header className={style.header}>

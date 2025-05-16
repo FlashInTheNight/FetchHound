@@ -119,8 +119,8 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   }
 
   if (msg.type === "DOWNLOAD_VIDEOS") {
-    const urls = msg.urls;
-    if (!urls || urls.length === 0) {
+    const urls: Record<string, SelectedItem> = msg.urls;
+    if (!urls || Object.keys(urls).length === 0) {
       sendResponse({ success: false, error: "No URLs provided" });
       return;
     }

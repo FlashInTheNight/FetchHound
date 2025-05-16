@@ -1,6 +1,9 @@
 import {
   SelectedItem,
+  useDownloadedResultStore,
+  useDownloadStatus,
   useErrorStore,
+  useExtensionStatus,
   useMediaStore,
   useSelectedStore,
   useTabStore,
@@ -8,7 +11,8 @@ import {
 import { CustomButton } from "../../shared";
 import styles from "./group-btns.module.css";
 import { type MediaSearchResult } from "../../../types";
-import { getSortedDirectUrls } from "../../../utils";
+// import { getSortedDirectUrls } from "../../../utils";
+import { DownloadResult } from "../../../utils/background/downloadUtils";
 
 interface DownloadResponse {
   success: boolean;
@@ -31,14 +35,19 @@ function GroupBtns() {
     removeAllChecked,
     getObjectSelectedUrls,
   } = useSelectedStore();
+  const { setUrls } = useDownloadedResultStore();
   const { activeTab } = useTabStore();
   const { setError, setAdditionalError, getError } = useErrorStore();
+  const { setExtentionStatus } = useExtensionStatus();
+  const { setDownloadStatus } = useDownloadStatus();
 
   const handelAddAll = () => addAll(mediaItems);
   const handleDownload = async () => {
     try {
       setError("");
       setMediaItems([]);
+      setExtentionStatus("downloading");
+      setDownloadStatus("downloaded");
       const selectedUrlsObject = getObjectSelectedUrls();
 
       console.log("selectedUrls is: ", selectedUrlsObject);
@@ -53,7 +62,7 @@ function GroupBtns() {
         updatedSelectedUrls,
       }: {
         iGetResolveDirectLinkError: boolean;
-        updatedSelectedUrls: Map<string, SelectedItem>;
+        updatedSelectedUrls: Record<string, SelectedItem>;
       } = await new Promise((resolve) => {
         chrome.runtime.sendMessage(
           {
@@ -98,29 +107,38 @@ function GroupBtns() {
       // }
 
       // Отправляем сообщение в background.ts для скачивания
-      // const downloadResult = await new Promise<DownloadResponse>(
-      //   (resolve, reject) => {
-      //     chrome.runtime.sendMessage(
-      //       {
-      //         type: "DOWNLOAD_VIDEOS",
-      //         urls: urlsForDownload,
-      //       },
-      //       (response) => {
-      //         if (chrome.runtime.lastError) {
-      //           reject(new Error(chrome.runtime.lastError.message));
-      //           return;
-      //         }
-      //         if (!response) {
-      //           reject(new Error("No response from background script"));
-      //           return;
-      //         }
-      //         resolve(response as DownloadResponse);
-      //       }
-      //     );
-      //   }
-      // );
+      const downloadResult = await new Promise<DownloadResult>(
+        (resolve, reject) => {
+          chrome.runtime.sendMessage(
+            {
+              type: "DOWNLOAD_VIDEOS",
+              urls: updatedSelectedUrls,
+            },
+            (response) => {
+              if (chrome.runtime.lastError) {
+                reject(new Error(chrome.runtime.lastError.message));
+                return;
+              }
+              if (!response) {
+                reject(new Error("No response from background script"));
+                return;
+              }
+              resolve(response as DownloadResult);
+            }
+          );
+        }
+      );
 
-      // console.log("Response from background:", downloadResult);
+      console.log("Response from background:", downloadResult);
+
+      if (
+        iGetResolveDirectLinkError === false ||
+        downloadResult.success === false
+      ) {
+        console.error("Error during download:", downloadResult.error);
+        setUrls(downloadResult.urls);
+        throw new Error("Failed to download some files");
+      }
 
       // if (!downloadResult.success) {
       //   const failedDownloads =
@@ -135,13 +153,16 @@ function GroupBtns() {
       // }
 
       console.log("Download started successfully.");
+      setDownloadStatus("success");
     } catch (error) {
       console.error("Error during download process:", error);
       const errorMessage =
         error instanceof Error
           ? error.message
           : "An unexpected error occurred.";
-      setAdditionalError(errorMessage);
+      // setAdditionalError(errorMessage);
+      setError(errorMessage);
+      setDownloadStatus("error");
     }
   };
 

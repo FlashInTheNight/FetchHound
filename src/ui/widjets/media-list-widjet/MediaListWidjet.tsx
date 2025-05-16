@@ -1,11 +1,17 @@
+import { useExtensionStatus } from "../../../store";
 import { MediaListHeader } from "../../entities";
-import { MediaListBlock } from "../../features";
+import { DownloadSummary, MediaListBlock } from "../../features";
 
 function MediaListWidjet() {
+  const extentionStatus = useExtensionStatus((state) => state.status);
   return (
     <div>
       <MediaListHeader />
-      <MediaListBlock />
+      {extentionStatus === "showList" ? (
+        <MediaListBlock />
+      ) : (
+        <DownloadSummary />
+      )}
     </div>
   );
 }
