@@ -21,7 +21,7 @@ export const DownloadResultsList = () => {
           </h3>
           <ul className={styles.downloadResultsList}>
             {urlsWithError.map((item) => (
-              <DownloadResultsListItem key={item.originalUrl} urldata={item} />
+              <DownloadResultsListItem key={item.originalUrl} urldata={item}  errorUrl={true} />
             ))}
           </ul>
         </div>
@@ -38,7 +38,7 @@ export const DownloadResultsList = () => {
           </h3>
           <ul className={styles.downloadResultsList}>
             {urlsWithSuccess.map((item) => (
-              <DownloadResultsListItem key={item.originalUrl} urldata={item} />
+              <DownloadResultsListItem key={item.originalUrl} urldata={item}  />
             ))}
           </ul>
         </div>

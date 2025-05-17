@@ -1,0 +1,24 @@
+.downloadSummaryMessageWrapper {
+  padding: 8px var(--wrapper-padding-x);
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.downloadSummaryMessageWrapper--error {
+  background-color: var(--error-color, #ff3b30);
+}
+
+.downloadSummaryMessageWrapper--success {
+  background-color: var(--success-color, #4caf50);
+}
+
+.downloadSummaryMessageText {
+  margin: 0;
+  color: var(--text-color-light, #fff);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.4;
+  word-break: break-word;
+  text-align: center;
+}

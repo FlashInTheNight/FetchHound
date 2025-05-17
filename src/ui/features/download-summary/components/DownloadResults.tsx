@@ -1,5 +1,7 @@
 import { useDownloadStatus } from "../../../../store";
 import { DownloadResultsList } from "./DownloadResultsList";
+import styles from "../css/download-results.module.css";
+import { SuccessIcon } from "../../../shared/icons";
 
 export const DownloadResults = () => {
   const downloadStatus = useDownloadStatus((state) => state.status);
@@ -7,8 +9,8 @@ export const DownloadResults = () => {
   return (
     <div>
       {downloadStatus === "success" ? (
-        <div>
-          <p>all link downloaded</p>
+        <div className={styles.successResult}>
+          <SuccessIcon size={150} />
         </div>
       ) : (
         <DownloadResultsList />

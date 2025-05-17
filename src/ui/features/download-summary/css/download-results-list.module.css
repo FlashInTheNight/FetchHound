@@ -1,9 +1,10 @@
 .downloadResultsListWrapper {
   padding: 0 var(--wrapper-padding-x, 0);
-  height: 335px;
   overflow-y: auto;
+  height: 341px;
   margin: 0 auto;
   display: flex;
+  row-gap: 12px;
   flex-direction: column;
 }
 

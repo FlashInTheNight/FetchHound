@@ -1,5 +1,7 @@
 import { useDownloadStatus } from "../../../store";
+import { LoadingIcon } from "../../shared";
 import { DownloadResults, DownloadSummaryMessage } from "./components";
+import styles from "./css/download-summary.module.css";
 
 export const DownloadSummary = () => {
   const downloadStatus = useDownloadStatus((state) => state.status);
@@ -7,7 +9,13 @@ export const DownloadSummary = () => {
   return (
     <div>
       {downloadStatus === "downloaded" ? (
-        <div>loading...</div>
+        <div className={styles.loadingStatus}>
+          <LoadingIcon />
+          <p className={styles.loadingStatus__text}>
+            Downloading of the media items has begun. To access the download
+            report, do not close the extension window.
+          </p>
+        </div>
       ) : (
         <>
           <DownloadResults />

@@ -131,8 +131,16 @@ function GroupBtns() {
 
       console.log("Response from background:", downloadResult);
 
+      console.log(
+        "iGetResolveDirectLinkError is: ",
+        iGetResolveDirectLinkError
+      );
+      console.log("downloadResult.success is: ", downloadResult.success);
+
+      // !iGetResolveDirectLinkError || !downloadResult.success
+
       if (
-        iGetResolveDirectLinkError === false ||
+        iGetResolveDirectLinkError === true ||
         downloadResult.success === false
       ) {
         console.error("Error during download:", downloadResult.error);
@@ -163,6 +171,8 @@ function GroupBtns() {
       // setAdditionalError(errorMessage);
       setError(errorMessage);
       setDownloadStatus("error");
+    } finally {
+      removeAllChecked();
     }
   };
 

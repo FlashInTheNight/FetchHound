@@ -1,0 +1,7 @@
+.successResult {
+  height: 341px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--success-color);
+}

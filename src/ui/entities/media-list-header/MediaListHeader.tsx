@@ -1,6 +1,7 @@
 import {
   useErrorStore,
   useExtensionMode,
+  useExtensionStatus,
   useMediaListMode,
   useMediaStore,
   useSelectedStore,
@@ -15,12 +16,14 @@ function MediaListHeader() {
   const { removeAllChecked } = useSelectedStore();
   const { setExtMode } = useExtensionMode();
   const { setError } = useErrorStore();
+  const { status, setExtentionStatus } = useExtensionStatus();
   const handleBackButtonClick = () => {
     removeAllChecked();
     setMediaItems([]);
     setError("");
     setMode("normal");
     setExtMode("scan");
+    setExtentionStatus("showList");
   };
   const { activeMode, setMode } = useMediaListMode();
 
@@ -41,20 +44,22 @@ function MediaListHeader() {
         <LeftArrowIcon className={styles.mediaListHeader__backButtonIcon} />
         Scan Again
       </button>
-      <div className={styles.mediaListHeader__tablo}>
-        <p className={styles.mediaListHeader__status}>
-          {count} of {mediaItems.length} selected
-        </p>
-        <CustomButton
-          variant="outline"
-          className={styles.mediaListHeader__unwantedBtn}
-          title="Select Unwanted"
-          disabled={activeMode === "exclude"}
-          onClick={handeSetMode}
-        >
-          <ExcludeIcon />
-        </CustomButton>
-      </div>
+      {status === "showList" && (
+        <div className={styles.mediaListHeader__tablo}>
+          <p className={styles.mediaListHeader__status}>
+            {count} of {mediaItems.length} selected
+          </p>
+          <CustomButton
+            variant="outline"
+            className={styles.mediaListHeader__unwantedBtn}
+            title="Select Unwanted"
+            disabled={activeMode === "exclude"}
+            onClick={handeSetMode}
+          >
+            <ExcludeIcon />
+          </CustomButton>
+        </div>
+      )}
     </div>
   );
 }

@@ -268,3 +268,39 @@ export const testData = [
   //   "url": "https://www.liveinternet.ru/click"
   // }
 ]
+
+const downloadedImages = {
+  "http://localhost:3001/media/17241582886691.mp4": {
+    originalUrl: "http://localhost:3001/media/17241582886691.mp4",
+    thumb: null,
+  },
+  "http://localhost:3001/media/video-1.webm": {
+    originalUrl: "http://localhost:3001/media/video-1.webm",
+    thumb: "http://localhost:3001/media/thumb/video-1-thumb.jpg",
+  },
+  "http://localhost:3001/media/image-1.jpg": {
+    originalUrl: "http://localhost:3001/media/image-1.jpg",
+    thumb: "http://localhost:3001/media/thumb/image-thumb-1.jpg",
+  },
+  "http://localhost:3001/base/3412": {
+    originalUrl: "http://localhost:3001/base/3412",
+    thumb: "http://localhost:3001/media/thumb/image-thumb-2.jpg",
+    directUrl: "http://localhost:3001/media/image-2.jpg",
+  },
+  "http://localhost:3001/base/3425": {
+    originalUrl: "http://localhost:3001/base/3425",
+    thumb: "http://localhost:3001/media/thumb/video-thumb-2.jpg",
+    directUrl: "../media/video-2.mp4",
+    error: "Invalid URL",
+  },
+  "http://localhost:3001/ad/ad-1": {
+    originalUrl: "http://localhost:3001/ad/ad-1",
+    thumb: "http://localhost:3001/media/thumb/video-thumb-2.jpg",
+    error: "No media items were found on this page.",
+  },
+  "http://localhost:3001/broken-link/bl-1": {
+    originalUrl: "http://localhost:3001/broken-link/bl-1",
+    thumb: "http://localhost:3001/media/thumb/video-thumb-2.jpg",
+    error: "No media items were found on this page.",
+  },
+}
