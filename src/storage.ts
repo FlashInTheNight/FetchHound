@@ -23,10 +23,6 @@ export const storage = {
     return new Promise<void>((resolve, reject) => {
       chrome.storage.local.set({ exclusions: all }, () => {
         if (chrome.runtime.lastError) {
-          console.error(
-            "storage API error(clearSite):",
-            chrome.runtime.lastError
-          );
           reject(new Error(chrome.runtime.lastError.message));
         } else {
           resolve();

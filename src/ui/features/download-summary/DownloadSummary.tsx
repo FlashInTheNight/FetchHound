@@ -1,5 +1,5 @@
 import { useDownloadStatus } from "../../../store";
-import { LoadingIcon } from "../../shared";
+import { LoadingIcon } from "../../shared/icons";
 import { DownloadResults, DownloadSummaryMessage } from "./components";
 import styles from "./css/download-summary.module.css";
 

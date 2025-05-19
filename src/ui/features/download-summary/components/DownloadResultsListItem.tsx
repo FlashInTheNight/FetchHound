@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { type SelectedItem } from "../../../../store";
-import { PlaceholderIcon } from "../../../shared";
+import { PlaceholderIcon } from "../../../shared/icons";
 import styles from "../css/download-summary-list-item.module.css";
 
 interface Props {

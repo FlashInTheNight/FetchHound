@@ -27,17 +27,15 @@ interface DownloadResponse {
 function GroupBtns() {
   const removeAll = useSelectedStore((s) => s.removeAllChecked);
   const addAll = useSelectedStore((s) => s.addAllChecked);
-  const { mediaItems, getMediaItems, setMediaItems } = useMediaStore();
+  const { mediaItems, setMediaItems } = useMediaStore();
   const {
-    getSelectedUrls,
-    getSelectedMapUrls,
     getSelectedCount,
     removeAllChecked,
     getObjectSelectedUrls,
   } = useSelectedStore();
   const { setUrls } = useDownloadedResultStore();
   const { activeTab } = useTabStore();
-  const { setError, setAdditionalError, getError } = useErrorStore();
+  const { setError } = useErrorStore();
   const { setExtentionStatus } = useExtensionStatus();
   const { setDownloadStatus } = useDownloadStatus();
 
@@ -49,8 +47,6 @@ function GroupBtns() {
       setExtentionStatus("downloading");
       setDownloadStatus("downloaded");
       const selectedUrlsObject = getObjectSelectedUrls();
-
-      console.log("selectedUrls is: ", selectedUrlsObject);
 
       if (getSelectedCount() === 0) {
         throw new Error("No media items selected for download.");
@@ -76,36 +72,6 @@ function GroupBtns() {
         );
       });
 
-      if (iGetResolveDirectLinkError) {
-        console.error(
-          "Error resolving direct links:",
-          iGetResolveDirectLinkError
-        );
-      }
-
-      // if (!directUrls || directUrls.length === 0) {
-      //   throw new Error("Failed to resolve direct download links.");
-      // }
-
-      console.log("updatedSelectedUrls is: ", updatedSelectedUrls);
-
-      // функция для фильтрации ссылок
-      // const mediaItems = getMediaItems();
-      // const { urlsWithError, urlsForDownload } = getSortedDirectUrls(
-      //   directUrls,
-      //   mediaItems
-      // );
-
-      // console.log("urlsWithError", urlsWithError);
-      // console.log("urlsForDownload", urlsForDownload);
-      // removeAllChecked();
-      // if (urlsWithError.length > 0) {
-      //   setMediaItems(urlsWithError);
-      //   setError("Some media items could not be downloaded.");
-      // } else {
-      //   setMediaItems([]);
-      // }
-
       // Отправляем сообщение в background.ts для скачивания
       const downloadResult = await new Promise<DownloadResult>(
         (resolve, reject) => {
@@ -129,46 +95,20 @@ function GroupBtns() {
         }
       );
 
-      console.log("Response from background:", downloadResult);
-
-      console.log(
-        "iGetResolveDirectLinkError is: ",
-        iGetResolveDirectLinkError
-      );
-      console.log("downloadResult.success is: ", downloadResult.success);
-
-      // !iGetResolveDirectLinkError || !downloadResult.success
-
       if (
         iGetResolveDirectLinkError === true ||
         downloadResult.success === false
       ) {
-        console.error("Error during download:", downloadResult.error);
         setUrls(downloadResult.urls);
         throw new Error("Failed to download some files");
       }
 
-      // if (!downloadResult.success) {
-      //   const failedDownloads =
-      //     downloadResult.results?.filter((r) => !r.success) || [];
-      //   if (failedDownloads.length > 0) {
-      //     const errorMessages = failedDownloads
-      //       .map((r) => `${r.url}: ${r.error}`)
-      //       .join("\n");
-      //     throw new Error(`Failed to download some files:\n${errorMessages}`);
-      //   }
-      //   throw new Error(downloadResult.error || "Failed to download media");
-      // }
-
-      console.log("Download started successfully.");
       setDownloadStatus("success");
     } catch (error) {
-      console.error("Error during download process:", error);
       const errorMessage =
         error instanceof Error
           ? error.message
           : "An unexpected error occurred.";
-      // setAdditionalError(errorMessage);
       setError(errorMessage);
       setDownloadStatus("error");
     } finally {

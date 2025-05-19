@@ -9,10 +9,7 @@
     "build": "tsc && vite build",
     "test": "vitest",
     "test-scan-videos": "vitest tests/scanVideosSites.test.ts",
-    "test-scan-images": "vitest tests/scanImages.test.ts",
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui",
-    "test:e2e:debug": "playwright test --debug"
+    "test-scan-images": "vitest tests/scanImages.test.ts"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -20,7 +17,6 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.52.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@types/chrome": "^0.0.313",
@@ -31,7 +27,6 @@
     "@vitejs/plugin-react": "^4.2.1",
     "clsx": "^2.1.1",
     "jsdom": "^26.1.0",
-    "serve": "^14.2.4",
     "typescript": "~5.6.3",
     "vite": "^5.0.0",
     "vite-plugin-web-extension": "^4.0.0",

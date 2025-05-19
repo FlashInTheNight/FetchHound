@@ -1,7 +1,7 @@
 import React, { memo, useCallback } from "react";
 import clsx from "clsx";
 import { useMediaListMode, useSelectedStore } from "../../../store";
-import { CheckIcon, PlaceholderIcon } from "../../shared";
+import { CheckIcon, PlaceholderIcon } from "../../shared/icons";
 import { getFileName } from "../../../utils/getFileName";
 import { MediaItem } from "../../../types";
 import { ExcludeIcon } from "../../shared/icons/ExcludeIcon";
@@ -26,9 +26,6 @@ const MediaListItem: React.FC<Props> = ({ item }) => {
   const onClick = useCallback(() => {
     toggle(item);
   }, [toggle, item.url]);
-
-  // console
-  // console.log("media element rendered", name, isSel);
 
   return (
     <li

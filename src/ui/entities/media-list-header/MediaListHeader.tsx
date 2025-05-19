@@ -6,7 +6,8 @@ import {
   useMediaStore,
   useSelectedStore,
 } from "../../../store";
-import { CustomButton, LeftArrowIcon } from "../../shared";
+import { CustomButton } from "../../shared";
+import { LeftArrowIcon } from "../../shared/icons";
 import { ExcludeIcon } from "../../shared/icons/ExcludeIcon";
 import styles from "./media-list-header.module.css";
 

@@ -1,6 +1,6 @@
-import { useExtensionMode, useExtensionStatus, useMediaStore } from "../store";
+import { useExtensionMode } from "../store";
 import { SettingsMenu } from "../ui/entities";
-import { MediaListWidjet, StartBlockWidjet } from "../ui/widjets";
+import { MediaListWidjet, StartBlockWidjet } from "../ui/widgets";
 import style from "./popup.module.css";
 
 export default function Popup() {
