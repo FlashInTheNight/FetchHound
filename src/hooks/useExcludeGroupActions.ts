@@ -6,7 +6,7 @@ import {
   useSelectedStore,
   useTabStore,
 } from '../store';
-import { storage } from '../storage';
+import { storage } from '../utils/storage';
 import { scanAll, scanImages, scanVideos } from '../utils';
 import { useGetMedia } from './useGetMedia';
 

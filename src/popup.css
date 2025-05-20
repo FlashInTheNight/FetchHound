@@ -23,40 +23,40 @@
 }
 
 :root {
-  /* Основные цвета */
-  --background-color: #ffffff; /* Белый фон */
-  --header-bg-color: #1d3353; /* Темно-синий фон для заголовка */
+  /* Main colors */
+  --background-color: #ffffff; /* White background */
+  --header-bg-color: #1d3353; /* Dark blue for header background */
 
-  --text-color: #333333; /* Тёмно-серый текст для хорошей читаемости */
-  --text-color-light: #ffffff; /* Белый текст для заголовка */
-  --text-color-non-active: #7d88a1; /* Серый текст для неактивных элементов */
+  --text-color: #333333; /* Dark gray text for good readability */
+  --text-color-light: #ffffff; /* White text for header */
+  --text-color-non-active: #7d88a1; /* Gray text for inactive elements */
 
-  /* Основной акцент (например, для кнопок, ссылок) */
-  --primary-color: #007aff; /* Яркий синий (подобен iOS Blue) */
-  --primary-hover: #005ecb; /* Темнее для hover-состояния */
-  --primary-active: #004a99; /* Ещё темнее для активного состояния */
+  /* Primary accent (e.g., for buttons, links) */
+  --primary-color: #007aff; /* Bright blue (similar to iOS Blue) */
+  --primary-hover: #005ecb; /* Darker for hover state */
+  --primary-active: #004a99; /* Even darker for active state */
 
-  /* Второстепенный акцент */
-  --secondary-color: #34c759; /* Зелёный, хорошо подходит для успеха/подтверждения */
+  /* Secondary accent */
+  --secondary-color: #34c759; /* Green, good for success/confirmation */
   --secondary-hover: #28a745;
-  --secondary-active: #218838; /* Темнее для активного состояния */
+  --secondary-active: #218838; /* Darker for active state */
 
-  /* Дополнительные цвета */
-  --border-color: #e0e0e0; /* Для разделителей, рамок */
-  --placeholder-icon-color: #a0a0a0; /* Серый для иконок и плейсхолдеров */
-  --border-outline-color: #bcc5d4; /* Синий для выделения элементов */
-  --error-color: #ff3b30; /* Красный для ошибок */
-  --error-background-color: #ff3a30db; /* Светло-красный фон для ошибок */
-  --success-color: #4caf50; /* Зелёный для успеха/подтверждения */
-  --disabled-color: #999; /* Серый для отключенных элементов */
-  /* Дополнительная акцентная палитра */
-  --accent-color: #ff9500; /* Оранжевый для акцентов, если понадобится */
+  /* Additional colors */
+  --border-color: #e0e0e0; /* For dividers, borders */
+  --placeholder-icon-color: #a0a0a0; /* Gray for icons and placeholders */
+  --border-outline-color: #bcc5d4; /* Blue for element highlighting */
+  --error-color: #ff3b30; /* Red for errors */
+  --error-background-color: #ff3a30db; /* Light red background for errors */
+  --success-color: #4caf50; /* Green for success/confirmation */
+  --disabled-color: #999; /* Gray for disabled elements */
+  /* Additional accent palette */
+  --accent-color: #ff9500; /* Orange for accents, if needed */
 
-  --wrapper-padding-x: 8px; /* Отступы для приложения */
-  --wrapper-padding-y: 12px; /* Отступы для приложения */
-  --wrapper-border-radius: 8px; /* Радиус скругления для приложения */
+  --wrapper-padding-x: 8px; /* App horizontal padding */
+  --wrapper-padding-y: 12px; /* App vertical padding */
+  --wrapper-border-radius: 8px; /* App border radius */
 
-  --gap-element: 16px; /* Отступы между элементами */
+  --gap-element: 16px; /* Spacing between elements */
 
   --font-family: "Inter";
 
@@ -80,35 +80,3 @@ body {
   font-size: 14px;
   line-height: 1.45;
 }
-
-/* button {
-  background-color: var(--primary-color);
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-} */
-
-/* button:hover {
-  background-color: var(--primary-hover);
-} */
-
-/* input,
-select,
-textarea {
-  padding: 8px;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-} */
-
-/* .error-message {
-  color: var(--error-color);
-} */
-
-/* Пример стилизации контейнеров или разделителей */
-/* .divider {
-  border-bottom: 1px solid var(--border-color);
-  margin: 16px 0;
-} */

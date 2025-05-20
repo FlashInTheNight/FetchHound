@@ -6,7 +6,7 @@ import {
   useExtensionMode,
 } from '../store';
 import { scanFnType } from '../types';
-import { storage } from '../storage';
+import { storage } from '../utils/storage';
 
 // Функция для запроса сканирования страницы
 export const useGetMedia = () => {

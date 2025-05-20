@@ -1,9 +1,7 @@
-// В chrome.storage.local храним объект вида:
 export interface ExclusionMap {
-  [host: string]: string[]; // host → массив URL, которые нужно игнорировать
+  [host: string]: string[];
 }
-
-// storage.ts
+// This file is responsible for managing the storage of excluded URLs in the Chrome extension.
 export const storage = {
   async getAll(): Promise<ExclusionMap> {
     return (await chrome.storage.local.get('exclusions')).exclusions || {};

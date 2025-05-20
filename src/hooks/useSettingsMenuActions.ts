@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { storage } from '../storage';
+import { storage } from '../utils/storage';
 
 export const useSettingsMenuActions = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
