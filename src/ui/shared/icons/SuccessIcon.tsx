@@ -1,7 +1,13 @@
-export const SuccessIcon = ({
-  className = "",
+import React from 'react';
+
+interface SuccessIconProps extends React.SVGProps<SVGSVGElement> {
+  size?: number;
+  color?: string;
+}
+
+export const SuccessIcon: React.FC<SuccessIconProps> = ({
   size = 20,
-  color = "currentColor",
+  color = 'currentColor',
   ...props
 }) => (
   <svg

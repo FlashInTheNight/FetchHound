@@ -1,11 +1,11 @@
-import { useGetMedia } from "../../../hooks/useGetMedia";
-import { scanAll, scanImages, scanVideos } from "../../../utils";
-import { useLoadingStore, useTabStore } from "../../../store";
-import { MediaTabs } from "../../entities";
-import { CustomButton } from "../../shared";
-import styles from "./scan-media.module.css";
+import { useGetMedia } from '../../../hooks/useGetMedia';
+import { scanAll, scanImages, scanVideos } from '../../../utils';
+import { useLoadingStore, useTabStore } from '../../../store';
+import { MediaTabs } from '../../entities';
+import { CustomButton } from '../../shared';
+import styles from './scan-media.module.css';
 
-function ScanMedia() {
+const ScanMedia = () => {
   const { loading } = useLoadingStore();
   const { activeTab } = useTabStore();
   const { getMedia } = useGetMedia();
@@ -14,11 +14,11 @@ function ScanMedia() {
     // можно удалит loading так как кнопка будет отключена во время сканирования
     if (loading) return; // Если загрузка идет, ничего не делаем
     switch (activeTab) {
-      case "videos":
+      case 'videos':
         getMedia(scanVideos);
         break;
 
-      case "images":
+      case 'images':
         getMedia(scanImages);
         break;
 
@@ -28,17 +28,13 @@ function ScanMedia() {
     }
   };
   return (
-    <div className={styles["media-tabs-wrapper"]}>
+    <div className={styles['media-tabs-wrapper']}>
       <MediaTabs />
-      <CustomButton
-        className={styles["media-tabs-btn"]}
-        onClick={handleScan}
-        disabled={loading}
-      >
+      <CustomButton className={styles['media-tabs-btn']} onClick={handleScan} disabled={loading}>
         Scan
       </CustomButton>
     </div>
   );
-}
+};
 
 export { ScanMedia };

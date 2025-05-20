@@ -1,4 +1,4 @@
-import { MediaItem, scanFnType } from "../types";
+import { MediaItem, scanFnType } from '../types';
 
 /**
  * @description Функция scanImages ищет изображения на странице.
@@ -11,24 +11,19 @@ export const scanImages: scanFnType = (excludedUrls: string[] = []) => {
 
   const images: MediaItem[] = [];
 
-  const anchors = Array.from(
-    document.querySelectorAll<HTMLAnchorElement>("a")
-  ).filter((el) => {
+  const anchors = Array.from(document.querySelectorAll<HTMLAnchorElement>('a')).filter(el => {
     const firstCheck =
-      Boolean(el.href) &&
-      (imageRegex.test(el.href) || Boolean(el.querySelector("img")));
+      Boolean(el.href) && (imageRegex.test(el.href) || Boolean(el.querySelector('img')));
 
     const secondCheck = videoFormatRegex.test(el.href) === false;
 
     return firstCheck && secondCheck;
   });
 
-  console.log("anchors is: ", anchors);
-
-  anchors.forEach((a) => {
-    const img = a.querySelector("img");
+  anchors.forEach(a => {
+    const img = a.querySelector('img');
     const thumb = img ? img.src : null;
-    let imageEl = images.find((i) => i.url === a.href);
+    let imageEl = images.find(i => i.url === a.href);
     if (imageEl === undefined) {
       images.push({ url: a.href, thumb });
     }
@@ -37,23 +32,18 @@ export const scanImages: scanFnType = (excludedUrls: string[] = []) => {
     }
   });
 
-  const figures = Array.from(
-    document.querySelectorAll<HTMLImageElement>("figure")
-  ).filter((figure) => {
-    const aTag = figure.querySelector("a");
-    return aTag && !videoFormatRegex.test(aTag.href);
-  });
-
-  console.log("anchors is: ", figures);
+  const figures = Array.from(document.querySelectorAll<HTMLImageElement>('figure')).filter(
+    figure => {
+      const aTag = figure.querySelector('a');
+      return aTag && !videoFormatRegex.test(aTag.href);
+    }
+  );
 
   for (const figure of figures) {
-    const link = figure.querySelector("a");
-    const img = figure.querySelector("img");
+    const link = figure.querySelector('a');
+    const img = figure.querySelector('img');
 
-    const isPreviouslyFound = images.some(
-      (i) => i.url === link?.href || i.thumb === img?.src
-    );
-    console.log("isPreviouslyFound is: ", isPreviouslyFound);
+    const isPreviouslyFound = images.some(i => i.url === link?.href || i.thumb === img?.src);
 
     if (isPreviouslyFound) {
       continue;
@@ -74,7 +64,7 @@ export const scanImages: scanFnType = (excludedUrls: string[] = []) => {
     return images;
   }
   const removeSet = new Set(excludedUrls);
-  const result = images.filter((image) => !removeSet.has(image.url));
+  const result = images.filter(image => !removeSet.has(image.url));
 
   return result;
 };

@@ -1,6 +1,6 @@
-import styles from "./loading-icon.module.css";
+import styles from './loading-icon.module.css';
 
-const LoadingIcon = () => (
+export const LoadingIcon = () => (
   <svg
     className="loading-icon"
     width="128"
@@ -9,7 +9,7 @@ const LoadingIcon = () => (
     xmlns="http://www.w3.org/2000/svg"
   >
     <circle
-      className={styles["loading-icon__circle-bg"]}
+      className={styles['loading-icon__circle-bg']}
       cx="25"
       cy="25"
       r="20"
@@ -18,7 +18,7 @@ const LoadingIcon = () => (
       fill="none"
     />
     <circle
-      className={styles["loading-icon__circle"]}
+      className={styles['loading-icon__circle']}
       cx="25"
       cy="25"
       r="20"
@@ -30,5 +30,3 @@ const LoadingIcon = () => (
     />
   </svg>
 );
-
-export { LoadingIcon };

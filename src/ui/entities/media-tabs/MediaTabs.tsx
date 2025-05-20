@@ -1,6 +1,6 @@
-import clsx from "clsx";
-import styles from "./media-tabs.module.css";
-import { useLoadingStore, useTabStore } from "../../../store";
+import clsx from 'clsx';
+import styles from './media-tabs.module.css';
+import { useLoadingStore, useTabStore } from '../../../store';
 
 const MediaTabs = () => {
   const { activeTab, setActiveTab } = useTabStore();
@@ -10,29 +10,29 @@ const MediaTabs = () => {
     <div className={styles.tabs}>
       <button
         className={clsx(styles.tab, {
-          [styles.active]: activeTab === "all",
-          [styles["tab--disabled"]]: loading,
+          [styles.active]: activeTab === 'all',
+          [styles['tab--disabled']]: loading,
         })}
-        onClick={() => setActiveTab("all")}
+        onClick={() => setActiveTab('all')}
         disabled={loading}
       >
         All
       </button>
       <button
         className={clsx(styles.tab, {
-          [styles.active]: activeTab === "images",
-          [styles["tab--disabled"]]: loading,
+          [styles.active]: activeTab === 'images',
+          [styles['tab--disabled']]: loading,
         })}
-        onClick={() => setActiveTab("images")}
+        onClick={() => setActiveTab('images')}
         disabled={loading}
       >
         Images
       </button>
       <button
         className={clsx(styles.tab, {
-          [styles.active]: activeTab === "videos",
+          [styles.active]: activeTab === 'videos',
         })}
-        onClick={() => setActiveTab("videos")}
+        onClick={() => setActiveTab('videos')}
         disabled={loading}
       >
         Videos

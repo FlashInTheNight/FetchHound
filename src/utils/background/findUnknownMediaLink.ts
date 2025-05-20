@@ -1,18 +1,17 @@
-import { type ScanDirectLinkResult } from "../../types";
+import { type ScanDirectLinkResult } from '../../types';
 
 export const findUnknownMediaLink = (): ScanDirectLinkResult => {
-  const IMAGES_IDS = ["image", "wallpaper"];
-  const DIRECT_MEDIA_URL_PATTERN =
-    /\.(mp4|webm|mkv|avi|mov|jpg|jpeg|png|gif|webp)(?:\?[^/]*)?$/i;
+  const IMAGES_IDS = ['image', 'wallpaper'];
+  const DIRECT_MEDIA_URL_PATTERN = /\.(mp4|webm|mkv|avi|mov|jpg|jpeg|png|gif|webp)(?:\?[^/]*)?$/i;
 
-  const videoTag = document.querySelector("video[id]");
+  const videoTag = document.querySelector('video[id]');
   if (videoTag) {
     const [video] = [videoTag];
-    let videoUrl = video.getAttribute("src");
+    let videoUrl = video.getAttribute('src');
     if (!videoUrl) {
-      const sourceElem = video.querySelector("source");
+      const sourceElem = video.querySelector('source');
       if (sourceElem) {
-        videoUrl = sourceElem.getAttribute("src");
+        videoUrl = sourceElem.getAttribute('src');
       }
     }
     if (videoUrl) {
@@ -20,12 +19,10 @@ export const findUnknownMediaLink = (): ScanDirectLinkResult => {
     }
   }
 
-  const images = Array.from(document.querySelectorAll("img"));
+  const images = Array.from(document.querySelectorAll('img'));
 
   for (const img of images) {
-    console.log("current img: ", img);
     const src = (img as HTMLImageElement).src;
-    console.log("current src: ", src);
     if (!src) continue;
 
     // Проверяем по ID
@@ -35,10 +32,8 @@ export const findUnknownMediaLink = (): ScanDirectLinkResult => {
     }
 
     // Проверяем по последней части пути ссылки
-    const lastRoute = location.pathname.split("/").pop();
-    console.log("last route: ", lastRoute);
-    const isPathIncluded = lastRoute ? src.includes(lastRoute) : false;
-    console.log("isPathIncluded: ", isPathIncluded);
+
+    const lastRoute = location.pathname.split('/').pop();
     if (lastRoute && src.includes(lastRoute)) {
       return { directUrl: src };
     }
@@ -57,6 +52,6 @@ export const findUnknownMediaLink = (): ScanDirectLinkResult => {
 
   return {
     directUrl: null,
-    error: "No media items were found on this page.",
+    error: 'No media items were found on this page.',
   };
 };

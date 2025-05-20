@@ -1,7 +1,15 @@
-const LeftArrowIcon = ({
-  className = "",
+import React from 'react';
+
+interface LeftArrowIconProps extends React.SVGProps<SVGSVGElement> {
+  className?: string;
+  size?: number;
+  color?: string;
+}
+
+export const LeftArrowIcon: React.FC<LeftArrowIconProps> = ({
+  className = '',
   size = 24,
-  color = "currentColor",
+  color = 'currentColor',
   ...props
 }) => (
   <svg
@@ -22,5 +30,3 @@ const LeftArrowIcon = ({
     />
   </svg>
 );
-
-export { LeftArrowIcon };

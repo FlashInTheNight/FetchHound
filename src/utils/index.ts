@@ -1,5 +1,5 @@
-export { scanImages } from "./scanImages";
-export { scanVideos } from "./scanVideos";
-export { scanAll } from "./scanAll";
-export { getFileName } from "./getFileName";
-export { getSortedUrls } from "./getSortedUrls";
+export { scanImages } from './scanImages';
+export { scanVideos } from './scanVideos';
+export { scanAll } from './scanAll';
+export { getFileName } from './getFileName';
+export { getSortedUrls } from './getSortedUrls';

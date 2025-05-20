@@ -1,4 +1,10 @@
-export const SettingsIcon = ({ className = "", size = 20, ...props }) => (
+import React from 'react';
+
+interface SettingsIconProps extends React.SVGProps<SVGSVGElement> {
+  size?: number;
+}
+
+export const SettingsIcon: React.FC<SettingsIconProps> = ({ size = 20, ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}

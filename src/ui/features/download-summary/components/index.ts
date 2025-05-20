@@ -1,2 +1,2 @@
-export { DownloadSummaryMessage } from "./DownloadSummaryMessage";
-export { DownloadResults } from "./DownloadResults";
+export { DownloadSummaryMessage } from './DownloadSummaryMessage';
+export { DownloadResults } from './DownloadResults';

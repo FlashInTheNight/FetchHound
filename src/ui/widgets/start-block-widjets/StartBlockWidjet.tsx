@@ -1,11 +1,11 @@
-import { ScanMedia, StartBlock } from "../../features";
+import { ScanMedia, StartBlock } from '../../features';
 
-function StartBlockWidjet() {
+const StartBlockWidjet = () => {
   return (
     <div>
       <ScanMedia />
       <StartBlock />
     </div>
   );
-}
+};
 export { StartBlockWidjet };

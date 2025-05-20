@@ -1,7 +1,13 @@
-export const ExcludeIcon = ({
-  className = "",
+import React from 'react';
+
+interface ExcludeIconProps extends React.SVGProps<SVGSVGElement> {
+  size?: number;
+  color?: string;
+}
+
+export const ExcludeIcon: React.FC<ExcludeIconProps> = ({
   size = 20,
-  color = "currentColor",
+  color = 'currentColor',
   ...props
 }) => (
   <svg
@@ -13,14 +19,6 @@ export const ExcludeIcon = ({
     {...props}
   >
     <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" />
-    <line
-      x1="6"
-      y1="18"
-      x2="18"
-      y2="6"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
+    <line x1="6" y1="18" x2="18" y2="6" stroke={color} strokeWidth="2" strokeLinecap="round" />
   </svg>
 );

@@ -1,4 +1,10 @@
-const CheckIcon = ({ className = "", ...props }) => (
+import React from 'react';
+
+interface CheckIconProps extends React.SVGProps<SVGSVGElement> {
+  className?: string;
+}
+
+export const CheckIcon: React.FC<CheckIconProps> = ({ className = '', ...props }) => (
   <svg
     className={className}
     width="34"
@@ -17,5 +23,3 @@ const CheckIcon = ({ className = "", ...props }) => (
     />
   </svg>
 );
-
-export { CheckIcon };

@@ -1,32 +1,31 @@
-import { create } from "zustand";
-import { MediaItem } from "../types";
-import { testData } from "../test-data";
+import { create } from 'zustand';
+import { MediaItem } from '../types';
 
 // Интерфейсы для сторов
 export interface MediaListModeState {
-  activeMode: "normal" | "exclude";
-  setMode: (mode: "normal" | "exclude") => void;
+  activeMode: 'normal' | 'exclude';
+  setMode: (mode: 'normal' | 'exclude') => void;
 }
 
 export interface extentionMode {
-  mode: "scan" | "download";
-  getMode: () => "scan" | "download";
-  setExtMode: (mode: "scan" | "download") => void;
+  mode: 'scan' | 'download';
+  getMode: () => 'scan' | 'download';
+  setExtMode: (mode: 'scan' | 'download') => void;
 }
 
 export interface extentionStatus {
-  status: "showList" | "downloading";
-  setExtentionStatus: (status: "showList" | "downloading") => void;
+  status: 'showList' | 'downloading';
+  setExtentionStatus: (status: 'showList' | 'downloading') => void;
 }
 
 export interface DownloadStatus {
-  status: "downloaded" | "success" | "error";
-  setDownloadStatus: (status: "downloaded" | "success" | "error") => void;
+  status: 'downloaded' | 'success' | 'error';
+  setDownloadStatus: (status: 'downloaded' | 'success' | 'error') => void;
 }
 
 export interface TabState {
-  activeTab: "all" | "videos" | "images";
-  setActiveTab: (tab: "all" | "videos" | "images") => void;
+  activeTab: 'all' | 'videos' | 'images';
+  setActiveTab: (tab: 'all' | 'videos' | 'images') => void;
 }
 
 export interface MediaState {
@@ -74,45 +73,45 @@ export interface DownloadedReultState {
   removeAllUrls: () => void;
 }
 
-export const useMediaListMode = create<MediaListModeState>()((set) => ({
-  activeMode: "normal",
-  setMode: (mode) => set({ activeMode: mode }),
+export const useMediaListMode = create<MediaListModeState>()(set => ({
+  activeMode: 'normal',
+  setMode: mode => set({ activeMode: mode }),
 }));
 
-export const useTabStore = create<TabState>()((set) => ({
-  activeTab: "all",
-  setActiveTab: (tab) => set({ activeTab: tab }),
+export const useTabStore = create<TabState>()(set => ({
+  activeTab: 'all',
+  setActiveTab: tab => set({ activeTab: tab }),
 }));
 
 export const useMediaStore = create<MediaState>()((set, get) => ({
   mediaItems: [],
-  setMediaItems: (media) => set({ mediaItems: media }),
+  setMediaItems: media => set({ mediaItems: media }),
   getMediaItems: () => get().mediaItems,
 }));
 
 export const useExtensionMode = create<extentionMode>()((set, get) => ({
-  mode: "scan",
+  mode: 'scan',
   getMode: () => get().mode,
-  setExtMode: (mode) => set({ mode }),
+  setExtMode: mode => set({ mode }),
 }));
 
-export const useLoadingStore = create<LoadingState>()((set) => ({
+export const useLoadingStore = create<LoadingState>()(set => ({
   loading: false,
-  setLoading: (loading) => set({ loading }),
+  setLoading: loading => set({ loading }),
 }));
 
 export const useErrorStore = create<ErrorState>()((set, get) => ({
-  error: "",
-  additionalError: "",
-  setAdditionalError: (error) => set({ additionalError: error }),
+  error: '',
+  additionalError: '',
+  setAdditionalError: error => set({ additionalError: error }),
   getError: () => get().error,
-  setError: (error) => set({ error }),
+  setError: error => set({ error }),
 }));
 
 export const useSelectedStore = create<SelectedState>()((set, get) => ({
   selected: new Map(),
-  setCheckedSelected: (item) => {
-    set((state) => {
+  setCheckedSelected: item => {
+    set(state => {
       const m = new Map(state.selected);
       if (m.has(item.url)) {
         m.delete(item.url);
@@ -126,7 +125,7 @@ export const useSelectedStore = create<SelectedState>()((set, get) => ({
     });
   },
 
-  setUpdateSelected: (items) => {
+  setUpdateSelected: items => {
     set({ selected: items });
   },
 
@@ -135,7 +134,7 @@ export const useSelectedStore = create<SelectedState>()((set, get) => ({
   },
 
   addAllChecked: (items: MediaItem[]) => {
-    set((state) => {
+    set(state => {
       const m = new Map(state.selected);
       for (const item of items) {
         m.set(item.url, {
@@ -164,21 +163,19 @@ export const useSelectedStore = create<SelectedState>()((set, get) => ({
   },
 }));
 
-export const useDownloadedResultStore = create<DownloadedReultState>()(
-  (set, get) => ({
-    urls: {},
-    setUrls: (urls) => set({ urls }),
-    getUrls: () => get().urls,
-    removeAllUrls: () => set({ urls: {} }),
-  })
-);
-
-export const useExtensionStatus = create<extentionStatus>()((set) => ({
-  status: "showList",
-  setExtentionStatus: (status) => set({ status }),
+export const useDownloadedResultStore = create<DownloadedReultState>()((set, get) => ({
+  urls: {},
+  setUrls: urls => set({ urls }),
+  getUrls: () => get().urls,
+  removeAllUrls: () => set({ urls: {} }),
 }));
 
-export const useDownloadStatus = create<DownloadStatus>()((set) => ({
-  status: "downloaded",
-  setDownloadStatus: (status) => set({ status }),
+export const useExtensionStatus = create<extentionStatus>()(set => ({
+  status: 'showList',
+  setExtentionStatus: status => set({ status }),
+}));
+
+export const useDownloadStatus = create<DownloadStatus>()(set => ({
+  status: 'downloaded',
+  setDownloadStatus: status => set({ status }),
 }));

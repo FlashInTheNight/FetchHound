@@ -1,4 +1,10 @@
-const PlaceholderIcon = ({ className = "" }) => (
+import React from 'react';
+
+interface PlaceholderIconProps extends React.SVGProps<SVGSVGElement> {
+  className?: string;
+}
+
+export const PlaceholderIcon: React.FC<PlaceholderIconProps> = ({ className = '' }) => (
   <svg
     className={className}
     width="24"
@@ -16,5 +22,3 @@ const PlaceholderIcon = ({ className = "" }) => (
     <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
   </svg>
 );
-
-export { PlaceholderIcon };

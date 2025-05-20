@@ -6,7 +6,7 @@ export interface ExclusionMap {
 // storage.ts
 export const storage = {
   async getAll(): Promise<ExclusionMap> {
-    return (await chrome.storage.local.get("exclusions")).exclusions || {};
+    return (await chrome.storage.local.get('exclusions')).exclusions || {};
   },
   async get(host: string): Promise<string[]> {
     const all = await this.getAll();
@@ -32,12 +32,8 @@ export const storage = {
   },
   async clearAll() {
     return new Promise<void>((resolve, reject) => {
-      chrome.storage.local.remove("exclusions", () => {
+      chrome.storage.local.remove('exclusions', () => {
         if (chrome.runtime.lastError) {
-          console.error(
-            "storage API error(clearAll):",
-            chrome.runtime.lastError
-          );
           reject(new Error(chrome.runtime.lastError.message));
         } else {
           resolve();

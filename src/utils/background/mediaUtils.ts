@@ -1,18 +1,14 @@
-import { type ScanDirectLinkResult } from "../../types";
+import { type ScanDirectLinkResult } from '../../types';
 
 export const findWallpaperImage = (): ScanDirectLinkResult => {
-  const IMAGES_IDS = ["image", "wallpaper"];
+  const IMAGES_IDS = ['image', 'wallpaper'];
   const imageFormatRegex = /\.(jpg|jpeg|webm|gif|png)(\?.*)?$/i;
   try {
     // Ищем изображение по разным критериям
-    const images = Array.from(document.querySelectorAll("img"));
-    // console
-    console.log("Found images:", images.length);
+    const images = Array.from(document.querySelectorAll('img'));
 
     for (const img of images) {
-      console.log("current img: ", img);
       const src = (img as HTMLImageElement).src;
-      console.log("current src: ", src);
       if (!src) continue;
 
       // Проверяем по ID
@@ -22,10 +18,7 @@ export const findWallpaperImage = (): ScanDirectLinkResult => {
       }
 
       // Проверяем по последней части пути ссылки
-      const lastRoute = location.pathname.split("/").pop();
-      console.log("last route: ", lastRoute);
-      const isPathIncluded = lastRoute ? src.includes(lastRoute) : false;
-      console.log("isPathIncluded: ", isPathIncluded);
+      const lastRoute = location.pathname.split('/').pop();
       if (lastRoute && src.includes(lastRoute)) {
         return { directUrl: src };
       }
@@ -41,21 +34,20 @@ export const findWallpaperImage = (): ScanDirectLinkResult => {
       //   return { url: src };
       // }
     }
-    throw Error("No suitable image was found.");
+    throw Error('No suitable image was found.');
   } catch (error) {
     return {
       directUrl: null,
       error:
         error instanceof Error
           ? error.message
-          : "An unexpected error occurred during image search.",
+          : 'An unexpected error occurred during image search.',
     };
   }
 };
 
 // Регулярное выражение для проверки прямых ссылок на медиафайлы
-const DIRECT_MEDIA_URL_PATTERN =
-  /\.(mp4|webm|mkv|avi|mov|jpg|jpeg|png|gif|webp)(?:\?[^/]*)?$/i;
+const DIRECT_MEDIA_URL_PATTERN = /\.(mp4|webm|mkv|avi|mov|jpg|jpeg|png|gif|webp)(?:\?[^/]*)?$/i;
 
 // Функция проверки является ли ссылка прямой
 export const isDirectMediaUrl = (url: string): boolean => {

@@ -1,4 +1,4 @@
-import { type SelectedItem } from "../store";
+import { type SelectedItem } from '../store';
 
 export const getSortedUrls = (urlsObj: Record<string, SelectedItem>) => {
   const urlsWithError: SelectedItem[] = [];

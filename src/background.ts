@@ -5,34 +5,34 @@ import {
   findUnknownMediaLink,
   isDirectMediaUrl,
   downloadMultipleFiles,
-} from "./utils/background";
-import { type MediaSearchResult } from "./types";
-import { SelectedItem } from "./store";
+} from './utils/background';
+import { type MediaSearchResult } from './types';
+import { SelectedItem } from './store';
 
 // Обработчик сообщений
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  if (msg.type === "RESOLVE_DIRECT_LINKS") {
+  if (msg.type === 'RESOLVE_DIRECT_LINKS') {
     const targetUrlsMap: Record<string, SelectedItem> = msg.urls;
 
     // Функция для получения прямой ссылки из одной вкладки
     const getDirectLink = (url: string): Promise<MediaSearchResult> => {
-      return new Promise((resolve) => {
-        chrome.tabs.create({ url, active: false }, (tab) => {
+      return new Promise(resolve => {
+        chrome.tabs.create({ url, active: false }, tab => {
           if (!tab.id) {
-            resolve({ url, error: "Failed to create tab" });
+            resolve({ url, error: 'Failed to create tab' });
             return;
           }
 
           let currentFinderFn;
 
           switch (msg.mediaTab) {
-            case "all":
+            case 'all':
               currentFinderFn = findUnknownMediaLink;
               break;
-            case "videos":
+            case 'videos':
               currentFinderFn = findDirectVideoLink;
               break;
-            case "images":
+            case 'images':
               currentFinderFn = findWallpaperImage;
               break;
             default:
@@ -40,11 +40,8 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
               break;
           }
 
-          const onUpdated = (
-            tabId: number,
-            changeInfo: chrome.tabs.TabChangeInfo
-          ) => {
-            if (tabId === tab.id && changeInfo.status === "complete") {
+          const onUpdated = (tabId: number, changeInfo: chrome.tabs.TabChangeInfo) => {
+            if (tabId === tab.id && changeInfo.status === 'complete') {
               chrome.tabs.onUpdated.removeListener(onUpdated);
 
               chrome.scripting.executeScript(
@@ -52,11 +49,11 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
                   target: { tabId: tab.id },
                   func: currentFinderFn,
                 },
-                (results) => {
+                results => {
                   const result = results?.[0]?.result as MediaSearchResult;
 
                   chrome.tabs.remove(tab.id!);
-                  if (Object.hasOwn(result, "error")) {
+                  if (Object.hasOwn(result, 'error')) {
                     resolve({ url, error: result.error });
                   } else {
                     resolve({ url, directUrl: result.directUrl });
@@ -104,10 +101,10 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     return true;
   }
 
-  if (msg.type === "DOWNLOAD_VIDEOS") {
+  if (msg.type === 'DOWNLOAD_VIDEOS') {
     const urls: Record<string, SelectedItem> = msg.urls;
     if (!urls || Object.keys(urls).length === 0) {
-      sendResponse({ success: false, error: "No URLs provided" });
+      sendResponse({ success: false, error: 'No URLs provided' });
       return;
     }
 

@@ -9,7 +9,6 @@
   line-height: 1;
 }
 
-/* Размеры */
 .btn--small {
   padding: 8px 12px;
   font-size: 14px;
@@ -28,7 +27,6 @@
   font-weight: 700;
 }
 
-/* Варианты */
 .btn--primary {
   background-color: var(--primary-color);
   color: var(--text-color-light);
@@ -55,15 +53,6 @@
   color: var(--primary-active);
 }
 
-/* .btn--destructive {
-  background-color: var(--error-color);
-  color: #fff;
-}
-.btn--destructive:hover:not(.btn--disabled) {
-  filter: brightness(0.9);
-} */
-
-/* Состояние disabled */
 .btn--disabled,
 .btn:disabled {
   background-color: var(--border-color);
@@ -72,7 +61,6 @@
   opacity: 0.6;
 }
 
-/* Опционально: добавляем фокус */
 .btn:focus-visible {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;

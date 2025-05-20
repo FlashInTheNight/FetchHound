@@ -1,11 +1,11 @@
-import { useDownloadedResultStore } from "../../../../store";
-import { getSortedUrls } from "../../../../utils";
-import { DownloadResultsListItem } from "./DownloadResultsListItem";
-import styles from "../css/download-results-list.module.css";
-import clsx from "clsx";
+import { useDownloadedResultStore } from '../../../../store';
+import { getSortedUrls } from '../../../../utils';
+import { DownloadResultsListItem } from './DownloadResultsListItem';
+import styles from '../css/download-results-list.module.css';
+import clsx from 'clsx';
 
 export const DownloadResultsList = () => {
-  const downloadedLinks = useDownloadedResultStore((state) => state.urls);
+  const downloadedLinks = useDownloadedResultStore(state => state.urls);
   const { urlsWithError, urlsWithSuccess } = getSortedUrls(downloadedLinks);
   return (
     <div className={styles.downloadResultsListWrapper}>
@@ -14,14 +14,14 @@ export const DownloadResultsList = () => {
           <h3
             className={clsx(
               styles.downloadResultsList__header,
-              styles["downloadResultsList__header--red"]
+              styles['downloadResultsList__header--red']
             )}
           >
             Downloads with Errors
           </h3>
           <ul className={styles.downloadResultsList}>
-            {urlsWithError.map((item) => (
-              <DownloadResultsListItem key={item.originalUrl} urldata={item}  errorUrl={true} />
+            {urlsWithError.map(item => (
+              <DownloadResultsListItem key={item.originalUrl} urldata={item} errorUrl={true} />
             ))}
           </ul>
         </div>
@@ -31,14 +31,14 @@ export const DownloadResultsList = () => {
           <h3
             className={clsx(
               styles.downloadResultsList__header,
-              styles["downloadResultsList__header--green"]
+              styles['downloadResultsList__header--green']
             )}
           >
             Successfully Downloaded Links
           </h3>
           <ul className={styles.downloadResultsList}>
-            {urlsWithSuccess.map((item) => (
-              <DownloadResultsListItem key={item.originalUrl} urldata={item}  />
+            {urlsWithSuccess.map(item => (
+              <DownloadResultsListItem key={item.originalUrl} urldata={item} />
             ))}
           </ul>
         </div>

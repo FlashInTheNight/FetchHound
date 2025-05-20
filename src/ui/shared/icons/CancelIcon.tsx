@@ -1,7 +1,13 @@
-export const CancelIcon = ({
-  className = "",
+import React from 'react';
+
+interface CancelIconProps extends React.SVGProps<SVGSVGElement> {
+  size?: number;
+  color?: string;
+}
+
+export const CancelIcon: React.FC<CancelIconProps> = ({
   size = 20,
-  color = "currentColor",
+  color = 'currentColor',
   ...props
 }) => (
   <svg

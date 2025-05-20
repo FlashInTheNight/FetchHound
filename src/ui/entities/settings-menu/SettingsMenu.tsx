@@ -1,39 +1,36 @@
-import { useState } from "react";
-import { storage } from "../../../storage";
-import { SettingsIcon } from "../../shared/icons/SettingsIcon";
-import styles from "./settings-menu.module.css";
+import { useState } from 'react';
+import { storage } from '../../../storage';
+import { SettingsIcon } from '../../shared/icons/SettingsIcon';
+import styles from './settings-menu.module.css';
 
-export const SettingsMenu: React.FC = () => {
+export const SettingsMenu = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [error, setError] = useState({ clearSite: "", clearAll: "" });
-  const [message, setMessage] = useState({ clearSite: "", clearAll: "" });
+  const [error, setError] = useState({ clearSite: '', clearAll: '' });
+  const [message, setMessage] = useState({ clearSite: '', clearAll: '' });
 
   const handleClearSiteExclusions = async () => {
     try {
-      setError((prev) => ({
+      setError(prev => ({
         ...prev,
-        clearSite: "",
+        clearSite: '',
       }));
-      setMessage((prev) => ({
+      setMessage(prev => ({
         ...prev,
-        clearSite: "",
+        clearSite: '',
       }));
 
       const [tab] = await chrome.tabs.query({
         active: true,
         currentWindow: true,
       });
-      console.log("tab.url is: ", tab.url);
       let host;
       if (tab.url) {
         host = new URL(tab.url).host;
       } else {
-        throw new Error(
-          "Failed to clear the list, make sure you are on the desired site"
-        );
+        throw new Error('Failed to clear the list, make sure you are on the desired site');
       }
       await storage.clearSite(host);
-      setMessage((prev) => ({
+      setMessage(prev => ({
         ...prev,
         clearSite: `Exclusions for ${tab.url} have been cleared.`,
       }));
@@ -41,8 +38,8 @@ export const SettingsMenu: React.FC = () => {
       const e =
         err instanceof Error
           ? err.message
-          : "An unknown error occurred while clearing site exclusions.";
-      setError((prev) => ({
+          : 'An unknown error occurred while clearing site exclusions.';
+      setError(prev => ({
         ...prev,
         clearSite: e,
       }));
@@ -51,27 +48,27 @@ export const SettingsMenu: React.FC = () => {
 
   const handleClearAllExclusions = async () => {
     try {
-      setError((prev) => ({
+      setError(prev => ({
         ...prev,
-        clearAll: "",
+        clearAll: '',
       }));
-      setMessage((prev) => ({
+      setMessage(prev => ({
         ...prev,
-        clearAll: "",
+        clearAll: '',
       }));
 
       await storage.clearAll();
 
-      setMessage((prev) => ({
+      setMessage(prev => ({
         ...prev,
-        clearAll: "All exclusions have been cleared.",
+        clearAll: 'All exclusions have been cleared.',
       }));
     } catch (err) {
       const e =
         err instanceof Error
           ? err.message
-          : "An unknown error occurred while clearing all exclusions.";
-      setError((prev) => ({
+          : 'An unknown error occurred while clearing all exclusions.';
+      setError(prev => ({
         ...prev,
         clearAll: e,
       }));
@@ -81,10 +78,7 @@ export const SettingsMenu: React.FC = () => {
   return (
     <>
       {/* Кнопка открытия настроек */}
-      <button
-        className={styles.settingsButton}
-        onClick={() => setSettingsOpen(true)}
-      >
+      <button className={styles.settingsButton} onClick={() => setSettingsOpen(true)}>
         <SettingsIcon />
       </button>
 
@@ -95,34 +89,17 @@ export const SettingsMenu: React.FC = () => {
         <div className={styles.overlay}>
           <div className={styles.modal}>
             <h3>Settings</h3>
-            <button
-              className={styles.modalButton}
-              onClick={handleClearSiteExclusions}
-            >
+            <button className={styles.modalButton} onClick={handleClearSiteExclusions}>
               Clear Site Exclusions
             </button>
-            {error.clearSite && (
-              <p className={styles.errorMessage}>{error.clearSite}</p>
-            )}
-            {message.clearSite && (
-              <p className={styles.successMessage}>{message.clearSite}</p>
-            )}
-            <button
-              className={styles.modalButton}
-              onClick={handleClearAllExclusions}
-            >
+            {error.clearSite && <p className={styles.errorMessage}>{error.clearSite}</p>}
+            {message.clearSite && <p className={styles.successMessage}>{message.clearSite}</p>}
+            <button className={styles.modalButton} onClick={handleClearAllExclusions}>
               Clear All Exclusions
             </button>
-            {error.clearAll && (
-              <p className={styles.errorMessage}>{error.clearAll}</p>
-            )}
-            {message.clearAll && (
-              <p className={styles.successMessage}>{message.clearAll}</p>
-            )}
-            <button
-              className={styles.closeButton}
-              onClick={() => setSettingsOpen(false)}
-            >
+            {error.clearAll && <p className={styles.errorMessage}>{error.clearAll}</p>}
+            {message.clearAll && <p className={styles.successMessage}>{message.clearAll}</p>}
+            <button className={styles.closeButton} onClick={() => setSettingsOpen(false)}>
               Close
             </button>
           </div>

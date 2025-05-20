@@ -1,15 +1,16 @@
 import {
+  useErrorStore,
   useLoadingStore,
   useMediaListMode,
   useMediaStore,
   useSelectedStore,
   useTabStore,
-} from "../../../store";
-import { CustomButton } from "../../shared";
-import { storage } from "../../../storage";
-import { scanAll, scanImages, scanVideos } from "../../../utils";
-import styles from "./exclude-group-btns.module.css";
-import { useGetMedia } from "../../../hooks/useGetMedia";
+} from '../../../store';
+import { CustomButton } from '../../shared';
+import { storage } from '../../../storage';
+import { scanAll, scanImages, scanVideos } from '../../../utils';
+import styles from './exclude-group-btns.module.css';
+import { useGetMedia } from '../../../hooks/useGetMedia';
 
 export const ExcludeGroupBtns = () => {
   const { getSelectedUrls, removeAllChecked } = useSelectedStore();
@@ -18,10 +19,11 @@ export const ExcludeGroupBtns = () => {
   const { activeTab } = useTabStore();
   const { getMedia } = useGetMedia();
   const { loading } = useLoadingStore();
+  const { setError } = useErrorStore();
 
   const handleSetMode = () => {
     removeAllChecked();
-    setMode("normal");
+    setMode('normal');
   };
 
   const handleSaveAndRescan = async () => {
@@ -36,17 +38,17 @@ export const ExcludeGroupBtns = () => {
       if (tab.url) {
         host = new URL(tab.url).host;
       } else {
-        throw Error("tis tab cant be used for scan");
+        throw Error('tis tab cant be used for scan');
       }
       await storage.add(host, excludedUrls);
       setMediaItems([]);
-      setMode("normal");
+      setMode('normal');
       switch (activeTab) {
-        case "videos":
+        case 'videos':
           getMedia(scanVideos);
           break;
 
-        case "images":
+        case 'images':
           getMedia(scanImages);
           break;
 
@@ -55,24 +57,16 @@ export const ExcludeGroupBtns = () => {
           break;
       }
     } catch (err) {
-      if (err instanceof Error) {
-        console.log(err.message);
-      } else {
-        console.log("An unknown error occurred");
-      }
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
     }
   };
 
   return (
-    <div className={styles["group-btns"]}>
+    <div className={styles['group-btns']}>
       <CustomButton variant="outline" size="small" onClick={handleSetMode}>
         Cancel
       </CustomButton>
-      <CustomButton
-        size="small"
-        onClick={handleSaveAndRescan}
-        disabled={loading}
-      >
+      <CustomButton size="small" onClick={handleSaveAndRescan} disabled={loading}>
         Save & Rescan
       </CustomButton>
     </div>
