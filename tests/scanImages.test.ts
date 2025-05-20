@@ -1,4 +1,4 @@
-import { scanImages } from "../src/utils/scanImages";
+import { scanImages } from "../src/utils/scanners/scanImages";
 import { describe, it, expect, beforeEach } from "vitest";
 import PicsFixture from "./fixtures/media-pics.html?raw";
 

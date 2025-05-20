@@ -1,6 +1,6 @@
 import { type SelectedItem } from '../store';
 
-export const getSortedUrls = (urlsObj: Record<string, SelectedItem>) => {
+export const groupUrlsByStatus = (urlsObj: Record<string, SelectedItem>) => {
   const urlsWithError: SelectedItem[] = [];
   const urlsWithSuccess: SelectedItem[] = [];
 

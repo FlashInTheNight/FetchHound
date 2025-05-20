@@ -1,15 +1,17 @@
-import { scanFnType } from '../types';
+import { scanFnType } from '../../types';
 
 /**
- * @description Функция scanAll ищет изображения и видео на странице.
- * @returns {MediaItem[] | []} Возвращает массив объектов вида: [{ url: '...', thumb: '...' | null }]
+ * Scans the page for both images and videos and returns an array of found media items.
+ *
+ * @param {string[]} [excludedUrls=[]] - List of URLs to exclude from the results.
+ * @returns {MediaItem[]} Returns an array of objects: [{ url: '...', thumb: '...' | null }]
  */
 export const scanAll: scanFnType = (excludedUrls: string[] = []) => {
   const media = new Map<string, string | null>();
-  // Регулярное выражение для проверки прямых ссылок на медиафайлы
+  // Regular expression to check for direct media links
   const DIRECT_MEDIA_URL_PATTERN = /\.(mp4|webm|mkv|avi|mov|jpg|jpeg|png|gif|webp)(?:\?[^/]*)?$/i;
 
-  // 1. Сканируем элементы <video>
+  // 1. Scan <video> elements
   const videoElems: HTMLVideoElement[] = Array.from(document.querySelectorAll('video'));
   videoElems.forEach(video => {
     let videoUrl = video.getAttribute('src');
@@ -20,14 +22,11 @@ export const scanAll: scanFnType = (excludedUrls: string[] = []) => {
       }
     }
     if (videoUrl) {
-      // const poster = video.getAttribute("poster")
-      //   ? video.getAttribute("poster")
-      //   : null;
       media.set(videoUrl, video.getAttribute('poster'));
     }
   });
 
-  // 2. Сканируем ссылки <a>, ведущие на медиа
+  // 2. Scan <a> links that lead to media files
   const anchorElems: HTMLAnchorElement[] = Array.from(document.querySelectorAll('a')).filter(
     el =>
       Boolean(el.href) &&
@@ -40,7 +39,7 @@ export const scanAll: scanFnType = (excludedUrls: string[] = []) => {
     media.set(anchor.href, thumb);
   }
 
-  // 3. Сканируем иллюстрации
+  // 3. Scan <figure> elements for images or links to images
   const figures = Array.from(document.querySelectorAll<HTMLImageElement>('figure'));
 
   for (const figure of figures) {
@@ -64,7 +63,7 @@ export const scanAll: scanFnType = (excludedUrls: string[] = []) => {
     excludedUrls.forEach(url => media.delete(url));
   }
 
-  // Преобразование в массив объектов
+  // Convert to array of objects
   const resultArray = Array.from(media, ([urlValue, thumbValue]) => {
     return { url: urlValue, thumb: thumbValue };
   });

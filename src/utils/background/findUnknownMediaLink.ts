@@ -1,5 +1,10 @@
 import { type ScanDirectLinkResult } from '../../types';
 
+/**
+ * Attempts to find a direct media link (video or image) on the page by checking various attributes and patterns.
+ *
+ * @returns {ScanDirectLinkResult} An object containing the direct media URL if found, or an error message if not found.
+ */
 export const findUnknownMediaLink = (): ScanDirectLinkResult => {
   const IMAGES_IDS = ['image', 'wallpaper'];
   const DIRECT_MEDIA_URL_PATTERN = /\.(mp4|webm|mkv|avi|mov|jpg|jpeg|png|gif|webp)(?:\?[^/]*)?$/i;
@@ -25,29 +30,22 @@ export const findUnknownMediaLink = (): ScanDirectLinkResult => {
     const src = (img as HTMLImageElement).src;
     if (!src) continue;
 
-    // Проверяем по ID
+    // Check by ID
     const imgID = (img as HTMLImageElement).id;
     if (imgID && IMAGES_IDS.includes(imgID)) {
       return { directUrl: src };
     }
 
-    // Проверяем по последней части пути ссылки
-
+    // Check by the last part of the URL path
     const lastRoute = location.pathname.split('/').pop();
     if (lastRoute && src.includes(lastRoute)) {
       return { directUrl: src };
     }
 
-    // Проверяем по атрибуту alt. Beta version. В alt часто содержится название картинки с расширением
+    // Check by alt attribute. Alt often contains the image name with extension
     if (img.alt && DIRECT_MEDIA_URL_PATTERN.test(img.alt)) {
       return { directUrl: src };
     }
-
-    // Проверяем классы. Beta version. Суть: если в классе есть слово wallpaper, то это обои.
-    // Привет тут есть кто, если есть то дайте знак, я тут сижу и жду вас, а вы кто? ...
-    // if (img.classList.toString().toLowerCase().includes("wallpaper")) {
-    //   return { url: src };
-    // }
   }
 
   return {

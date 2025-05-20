@@ -1,14 +1,9 @@
-import { SelectedItem } from '../../store';
+import { type SelectedItem } from '../../store';
 
 export interface DownloadResult {
   success: boolean;
   error?: string;
   urls: Record<string, SelectedItem>;
-  // results?: {
-  //   url: string;
-  //   success: boolean;
-  //   error?: string;
-  // }[];
 }
 
 export const downloadFile = (url: string): Promise<number> => {

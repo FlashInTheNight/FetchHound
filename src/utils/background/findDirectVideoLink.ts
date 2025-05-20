@@ -1,5 +1,10 @@
 import { type ScanDirectLinkResult } from '../../types';
 
+/**
+ * Attempts to find a direct video link from a <video> element with an ID on the page.
+ *
+ * @returns {ScanDirectLinkResult} An object containing the direct video URL if found, or an error message if not found.
+ */
 export const findDirectVideoLink = (): ScanDirectLinkResult => {
   try {
     const videoTag = document.querySelector('video[id]');
