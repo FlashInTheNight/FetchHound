@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import styles from './media-tabs.module.css';
 import { useLoadingStore, useTabStore } from '../../../store';
 
-const MediaTabs = () => {
+export const MediaTabs = () => {
   const { activeTab, setActiveTab } = useTabStore();
   const { loading } = useLoadingStore();
 
@@ -40,5 +40,3 @@ const MediaTabs = () => {
     </div>
   );
 };
-
-export { MediaTabs };

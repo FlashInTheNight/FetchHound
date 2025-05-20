@@ -4,7 +4,6 @@
   justify-content: space-between;
   padding: 4px 8px;
   border-bottom: 1px solid var(--border-color);
-  /* Небольшая тень снизу для отделения от списка */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 

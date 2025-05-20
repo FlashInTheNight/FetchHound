@@ -14,12 +14,10 @@
 }
 
 .downloadResultsList__header--red {
-  /* border-bottom-color: var(--error-color, #b43030); */
   color: var(--error-color, #b43030);
 }
 
 .downloadResultsList__header--green {
-  /* border-bottom-color: var(--success-color, #4caf50); */
   color: var(--success-color, #4caf50);
 }
 

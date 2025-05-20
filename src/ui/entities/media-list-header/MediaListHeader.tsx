@@ -1,37 +1,12 @@
-import {
-  useErrorStore,
-  useExtensionMode,
-  useExtensionStatus,
-  useMediaListMode,
-  useMediaStore,
-  useSelectedStore,
-} from '../../../store';
+import { useMediaListHeaderActions } from '../../../hooks';
 import { CustomButton } from '../../shared';
 import { LeftArrowIcon } from '../../shared/icons';
 import { ExcludeIcon } from '../../shared/icons/ExcludeIcon';
 import styles from './media-list-header.module.css';
 
-const MediaListHeader = () => {
-  const { mediaItems, setMediaItems } = useMediaStore();
-  const count = useSelectedStore(s => s.getSelectedCount());
-  const { removeAllChecked } = useSelectedStore();
-  const { setExtMode } = useExtensionMode();
-  const { setError } = useErrorStore();
-  const { status, setExtentionStatus } = useExtensionStatus();
-  const handleBackButtonClick = () => {
-    removeAllChecked();
-    setMediaItems([]);
-    setError('');
-    setMode('normal');
-    setExtMode('scan');
-    setExtentionStatus('showList');
-  };
-  const { activeMode, setMode } = useMediaListMode();
-
-  const handeSetMode = () => {
-    removeAllChecked();
-    setMode('exclude');
-  };
+export const MediaListHeader = () => {
+  const { mediaItems, count, handleBackButtonClick, handeSetMode, status, activeMode } =
+    useMediaListHeaderActions();
 
   return (
     <div className={styles.mediaListHeader}>
@@ -62,5 +37,3 @@ const MediaListHeader = () => {
     </div>
   );
 };
-
-export { MediaListHeader };

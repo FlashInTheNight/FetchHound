@@ -4,8 +4,7 @@ import { MediaItem } from '../../../types';
 import { ErrorNotification } from '../../shared';
 import styles from './media-list.module.css';
 
-const MediaList = () => {
-  // здесь только список медиа, на него не влияют клики
+export const MediaList = () => {
   const mediaItems = useMediaStore(s => s.mediaItems);
   const { error } = useErrorStore();
 
@@ -20,5 +19,3 @@ const MediaList = () => {
     </div>
   );
 };
-
-export { MediaList };

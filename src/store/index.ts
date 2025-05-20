@@ -41,8 +41,6 @@ export interface LoadingState {
 
 export interface ErrorState {
   error: string;
-  additionalError: string;
-  setAdditionalError: (error: string) => void;
   getError: () => string;
   setError: (error: string) => void;
 }
@@ -102,8 +100,6 @@ export const useLoadingStore = create<LoadingState>()(set => ({
 
 export const useErrorStore = create<ErrorState>()((set, get) => ({
   error: '',
-  additionalError: '',
-  setAdditionalError: error => set({ additionalError: error }),
   getError: () => get().error,
   setError: error => set({ error }),
 }));

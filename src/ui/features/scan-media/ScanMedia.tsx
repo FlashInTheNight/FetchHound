@@ -11,8 +11,7 @@ const ScanMedia = () => {
   const { getMedia } = useGetMedia();
 
   const handleScan = () => {
-    // можно удалит loading так как кнопка будет отключена во время сканирования
-    if (loading) return; // Если загрузка идет, ничего не делаем
+    if (loading) return;
     switch (activeTab) {
       case 'videos':
         getMedia(scanVideos);
