@@ -1,12 +1,12 @@
 import { useDownloadedResultStore } from '../../../../store';
-import { getSortedUrls } from '../../../../utils';
+import { groupUrlsByStatus } from '../../../../utils';
 import { DownloadResultsListItem } from './DownloadResultsListItem';
 import styles from '../css/download-results-list.module.css';
 import clsx from 'clsx';
 
 export const DownloadResultsList = () => {
   const downloadedLinks = useDownloadedResultStore(state => state.urls);
-  const { urlsWithError, urlsWithSuccess } = getSortedUrls(downloadedLinks);
+  const { urlsWithError, urlsWithSuccess } = groupUrlsByStatus(downloadedLinks);
   return (
     <div className={styles.downloadResultsListWrapper}>
       {urlsWithError.length > 0 && (

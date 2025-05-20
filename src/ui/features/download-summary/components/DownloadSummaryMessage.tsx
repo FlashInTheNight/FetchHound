@@ -13,7 +13,7 @@ export const DownloadSummaryMessage = () => {
       })}
     >
       {downloadStatus === 'success' ? (
-        <p className={styles.downloadSummaryMessageText}>All media succesfuly downloaded</p>
+        <p className={styles.downloadSummaryMessageText}>All media successfully downloaded</p>
       ) : (
         <p className={styles.downloadSummaryMessageText}>{error}</p>
       )}

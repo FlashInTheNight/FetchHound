@@ -7,7 +7,7 @@ import {
   useTabStore,
 } from '../store';
 import { storage } from '../utils/storage';
-import { scanAll, scanImages, scanVideos } from '../utils';
+import { scanAll, scanImages, scanVideos } from '../utils/scanners';
 import { useGetMedia } from './useGetMedia';
 
 export const useExcludeGroupActions = () => {

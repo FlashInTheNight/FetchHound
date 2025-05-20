@@ -1,5 +1,5 @@
 import { useGetMedia } from '../../../hooks/useGetMedia';
-import { scanAll, scanImages, scanVideos } from '../../../utils';
+import { scanAll, scanImages, scanVideos } from '../../../utils/scanners';
 import { useLoadingStore, useTabStore } from '../../../store';
 import { MediaTabs } from '../../entities';
 import { CustomButton } from '../../shared';
