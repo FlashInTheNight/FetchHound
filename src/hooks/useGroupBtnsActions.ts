@@ -34,7 +34,7 @@ export const useGroupBtnsActions = () => {
         throw new Error('No media items selected for download.');
       }
 
-      // Получаем прямые ссылки на медиафайл
+      // Get direct links to media files
       const {
         iGetResolveDirectLinkError,
         updatedSelectedUrls,
@@ -54,7 +54,7 @@ export const useGroupBtnsActions = () => {
         );
       });
 
-      // Отправляем сообщение в background.ts для скачивания
+      // Send a message to background.ts for downloading
       const downloadResult = await new Promise<DownloadResult>((resolve, reject) => {
         chrome.runtime.sendMessage(
           {

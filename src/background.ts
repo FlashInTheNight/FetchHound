@@ -2,7 +2,6 @@
 import { downloadMultipleFiles, resolveDirectLinks } from './utils/background';
 import { SelectedItem } from './store';
 
-// Обработчик сообщений
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === 'RESOLVE_DIRECT_LINKS') {
     const targetUrlsMap: Record<string, SelectedItem> = msg.urls;

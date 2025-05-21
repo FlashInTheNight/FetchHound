@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { MediaItem } from '../types';
 
-// Интерфейсы для сторов
 export interface MediaListModeState {
   activeMode: 'normal' | 'exclude';
   setMode: (mode: 'normal' | 'exclude') => void;
