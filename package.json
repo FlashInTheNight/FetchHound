@@ -3,16 +3,13 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Расширение для поиска и скачивания видео с веб-страниц.",
+  "description": "A simple media downloader extension for Chrome",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "test": "vitest",
-    "test-scan-videos": "vitest tests/scanVideosSites.test.ts",
-    "test-scan-images": "vitest tests/scanImages.test.ts"
+    "format": "prettier --write \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -46,7 +43,6 @@
     "typescript": "~5.6.3",
     "vite": "^5.0.0",
     "vite-plugin-web-extension": "^4.0.0",
-    "vitest": "^3.1.2",
     "webextension-polyfill": "^0.10.0"
   }
 }

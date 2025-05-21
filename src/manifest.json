@@ -2,7 +2,7 @@
   "{{chrome}}.manifest_version": 3,
   "{{firefox}}.manifest_version": 2,
   "name": "Video Downloader Extension",
-  "description": "Расширение для поиска и скачивания видео с веб-страниц.",
+  "description": "A simple video downloader extension for Chrome",
   "version": "1.0.0",
   "icons": {
     "16": "icon/16.png",

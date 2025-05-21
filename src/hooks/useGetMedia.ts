@@ -8,7 +8,6 @@ import {
 import { scanFnType } from '../types';
 import { storage } from '../utils/storage';
 
-// Функция для запроса сканирования страницы
 export const useGetMedia = () => {
   const { setMediaItems } = useMediaStore();
   const { setLoading } = useLoadingStore();
@@ -27,10 +26,8 @@ export const useGetMedia = () => {
     try {
       setLoading(true);
       setError('');
-      removeAllChecked(); // Сбрасываем выбранные элементы перед новым сканированием
-      // Запускаем скрипт на текущей вкладке и получаем результат
+      removeAllChecked();
 
-      // Получаем исключенные URL для текущего хоста
       const host = tab.url ? new URL(tab.url).host : '';
       const excludedUrls = await storage.get(host);
 

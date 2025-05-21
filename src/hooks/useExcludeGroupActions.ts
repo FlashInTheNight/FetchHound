@@ -35,7 +35,7 @@ export const useExcludeGroupActions = () => {
       if (tab.url) {
         host = new URL(tab.url).host;
       } else {
-        throw Error('tis tab cant be used for scan');
+        throw Error('This tab cannot be used for scanning.');
       }
       await storage.add(host, excludedUrls);
       setMediaItems([]);
