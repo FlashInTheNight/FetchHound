@@ -7,6 +7,29 @@ export interface DownloadResult {
   urls: Record<string, SelectedItem>;
 }
 
+const formatErrorMessage = (error: unknown, url: string): string => {
+  if (error instanceof Error) {
+    if (error.message.includes('URL constructor')) {
+      return `Failed to download file: invalid URL (${url})`;
+    }
+    if (error.message.includes('Failed to start download')) {
+      return `Failed to start file download (${url})`;
+    }
+    if (error.message.includes('Download interrupted')) {
+      return `File download was interrupted (${url})`;
+    }
+  }
+  return `An unknown error occurred while downloading the file (${url})`;
+};
+
+// const makeAbsoluteUrl = (relativeUrl: string, baseUrl: string): string => {
+//   try {
+//     return new URL(relativeUrl, baseUrl).toString();
+//   } catch {
+//     return relativeUrl;
+//   }
+// };
+
 export const downloadFile = (url: string): Promise<number> => {
   return new Promise((resolve, reject) => {
     browser.downloads
@@ -50,7 +73,7 @@ export const downloadMultipleFiles = async (
       }
     } catch (error) {
       hasErrors = true;
-      urls[key].error = error instanceof Error ? error.message : 'An unknown error occurred';
+      urls[key].error = formatErrorMessage(error, key);
     }
   }
 
