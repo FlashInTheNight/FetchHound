@@ -1,8 +1,8 @@
 {
   "{{chrome}}.manifest_version": 3,
   "{{firefox}}.manifest_version": 2,
-  "name": "Video Downloader Extension",
-  "description": "A simple video downloader extension for Chrome",
+  "name": "FetchHound – Video & Image Downloader",
+  "description": "A powerful browser extension that helps you easily download media content from web pages.",
   "version": "1.0.0",
   "icons": {
     "16": "icon/16.png",
@@ -18,10 +18,17 @@
     "tabs",
     "storage"
   ],
-  "host_permissions": [
+  "{{firefox}}.permissions": [
+    "activeTab",
+    "downloads",
+    "tabs",
+    "storage",
     "<all_urls>"
   ],
-  "web_accessible_resources": [
+  "{{chrome}}.host_permissions": [
+    "<all_urls>"
+  ],
+  "{{chrome}}.web_accessible_resources": [
     {
       "resources": [
         "src/popup.html",
@@ -31,6 +38,10 @@
         "<all_urls>"
       ]
     }
+  ],
+  "{{firefox}}.web_accessible_resources": [
+    "src/popup.html",
+    "src/popup.ts"
   ],
   "{{chrome}}.action": {
     "default_popup": "src/popup.html"
@@ -43,5 +54,10 @@
     "{{firefox}}.scripts": [
       "src/background.ts"
     ]
+  },
+  "{{firefox}}.browser_specific_settings": {
+    "gecko": {
+      "id": "FetchHound@example.com"
+    }
   }
 }

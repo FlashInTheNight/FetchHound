@@ -10,9 +10,28 @@ export const scanVideos: scanFnType = (excludedUrls: string[] = []) => {
   const videos: MediaItem[] = [];
 
   // Regular expression to check for video files (supports query parameters)
-  // This regex checks that the URL ends with .mp4, .webm, or .mov, even if followed by query parameters (e.g., ?token=abc123).
   const videoRegex = /\.(mp4|webm|mov)(\?.*)?$/i;
   const imageRegex = /\.(jpg|jpeg|gif|webp|png)(\?.*)?$/i;
+
+  const normalizeUrl = (url: string): string => {
+    try {
+      const urlObj = new URL(url);
+      // Remove query parameters and hash
+      urlObj.search = '';
+      urlObj.hash = '';
+      return urlObj.toString();
+    } catch {
+      return url;
+    }
+  };
+
+  // Create a Set of normalized excluded URLs
+  const normalizedExcludedUrls = new Set(excludedUrls.map(normalizeUrl));
+
+  // Function to check if a URL should be excluded
+  const shouldExclude = (url: string): boolean => {
+    return normalizedExcludedUrls.has(normalizeUrl(url));
+  };
 
   // 1. Scan <video> elements
   const videoElems = Array.from(document.querySelectorAll('video'));
@@ -24,7 +43,7 @@ export const scanVideos: scanFnType = (excludedUrls: string[] = []) => {
         videoUrl = sourceElem.getAttribute('src');
       }
     }
-    if (videoUrl && videoRegex.test(videoUrl)) {
+    if (videoUrl && videoRegex.test(videoUrl) && !shouldExclude(videoUrl)) {
       videos.push({
         url: videoUrl,
         thumb: video.getAttribute('poster') || null,
@@ -32,14 +51,14 @@ export const scanVideos: scanFnType = (excludedUrls: string[] = []) => {
     }
   });
 
-  // 2. Scan <a> links that lead to video files. The item must have a link and either have a video extension in the link or contain an <img> element (used as a thumbnail). Second check: the link must not have an image extension.
+  // 2. Scan <a> links that lead to video files
   const anchorElems: HTMLAnchorElement[] = Array.from(document.querySelectorAll('a')).filter(el => {
     const firstCheck =
       Boolean(el.href) && (videoRegex.test(el.href) || Boolean(el.querySelector('img')));
 
     const secondCheck = imageRegex.test(el.href) === false;
 
-    return firstCheck && secondCheck;
+    return firstCheck && secondCheck && !shouldExclude(el.href);
   });
 
   anchorElems.forEach(a => {
@@ -55,11 +74,5 @@ export const scanVideos: scanFnType = (excludedUrls: string[] = []) => {
     }
   });
 
-  if (excludedUrls.length === 0) {
-    return videos;
-  }
-  const removeSet = new Set(excludedUrls);
-  const result = videos.filter(video => !removeSet.has(video.url));
-
-  return result;
+  return videos;
 };

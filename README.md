@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/icon/128.png" alt="FetchHound Logo" width="96" height="96">
+</p>
+
 # FetchHound – Video & Image Downloader
 
 A powerful browser extension that helps you easily download media content from web pages.

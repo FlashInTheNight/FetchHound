@@ -6,6 +6,7 @@ export const SettingsMenu = () => {
   const {
     handleClearSiteExclusions,
     handleClearAllExclusions,
+    handleCloseSettings,
     settingsOpen,
     setSettingsOpen,
     error,
@@ -20,7 +21,10 @@ export const SettingsMenu = () => {
       {settingsOpen && (
         <div className={styles.overlay}>
           <div className={styles.modal}>
-            <h3>Settings</h3>
+            <h3 className={styles.header}>Settings</h3>
+            <p className={styles.infoMessage}>
+              Please manually rescan the page after removing exclusions.
+            </p>
             <button className={styles.modalButton} onClick={handleClearSiteExclusions}>
               Clear Site Exclusions
             </button>
@@ -31,7 +35,7 @@ export const SettingsMenu = () => {
             </button>
             {error.clearAll && <p className={styles.errorMessage}>{error.clearAll}</p>}
             {message.clearAll && <p className={styles.successMessage}>{message.clearAll}</p>}
-            <button className={styles.closeButton} onClick={() => setSettingsOpen(false)}>
+            <button className={styles.closeButton} onClick={handleCloseSettings}>
               Close
             </button>
           </div>

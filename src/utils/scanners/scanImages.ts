@@ -10,16 +10,37 @@ export const scanImages: scanFnType = (excludedUrls: string[] = []) => {
   const videoFormatRegex = /\.(mp4|webm|mov|ogg|m4v)(\?.*)?$/i;
   const imageRegex = /\.(jpg|jpeg|gif|webp|png)(\?.*)?$/i;
 
+  const normalizeUrl = (url: string): string => {
+    try {
+      const urlObj = new URL(url);
+      // Remove query parameters and hash
+      // This is important to ensure that URLs with different query parameters are treated as the same
+      urlObj.search = '';
+      urlObj.hash = '';
+      return urlObj.toString();
+    } catch {
+      return url;
+    }
+  };
+
+  // Create a Set of normalized excluded URLs
+  const normalizedExcludedUrls = new Set(excludedUrls.map(normalizeUrl));
+
+  // Function to check if a URL should be excluded
+  const shouldExclude = (url: string): boolean => {
+    return normalizedExcludedUrls.has(normalizeUrl(url));
+  };
+
   const images: MediaItem[] = [];
 
-  // 1. Scan <a> links that lead to image files. The item must have a link and either have an image extension in the link or contain an <img> element (used as a thumbnail). Second check: the link must not have a video extension.
+  // 1. Scan <a> links that lead to image files
   const anchors = Array.from(document.querySelectorAll<HTMLAnchorElement>('a')).filter(el => {
     const firstCheck =
       Boolean(el.href) && (imageRegex.test(el.href) || Boolean(el.querySelector('img')));
 
     const secondCheck = videoFormatRegex.test(el.href) === false;
 
-    return firstCheck && secondCheck;
+    return firstCheck && secondCheck && !shouldExclude(el.href);
   });
 
   anchors.forEach(a => {
@@ -35,11 +56,11 @@ export const scanImages: scanFnType = (excludedUrls: string[] = []) => {
     }
   });
 
-  // 2. Scan <figure> elements for images or links to images, excluding those with video extensions
+  // 2. Scan <figure> elements for images or links to images
   const figures = Array.from(document.querySelectorAll<HTMLImageElement>('figure')).filter(
     figure => {
       const aTag = figure.querySelector('a');
-      return aTag && !videoFormatRegex.test(aTag.href);
+      return aTag && !videoFormatRegex.test(aTag.href) && !shouldExclude(aTag.href);
     }
   );
 
@@ -57,18 +78,12 @@ export const scanImages: scanFnType = (excludedUrls: string[] = []) => {
       const href = link.href;
       const thumb = img ? img.src : null;
       images.push({ url: href, thumb });
-    } else if (img && img.src) {
+    } else if (img && img.src && !shouldExclude(img.src)) {
       const href = img.src;
       const thumb = img.src;
       images.push({ url: href, thumb });
     }
   }
 
-  if (excludedUrls.length === 0) {
-    return images;
-  }
-  const removeSet = new Set(excludedUrls);
-  const result = images.filter(image => !removeSet.has(image.url));
-
-  return result;
+  return images;
 };

@@ -1,3 +1,4 @@
+import browser from 'webextension-polyfill';
 import {
   SelectedItem,
   useDownloadedResultStore,
@@ -42,37 +43,34 @@ export const useGroupBtnsActions = () => {
         iGetResolveDirectLinkError: boolean;
         updatedSelectedUrls: Record<string, SelectedItem>;
       } = await new Promise(resolve => {
-        chrome.runtime.sendMessage(
-          {
+        browser.runtime
+          .sendMessage({
             type: 'RESOLVE_DIRECT_LINKS',
             urls: selectedUrlsObject,
             mediaTab: activeTab,
-          },
-          resp => {
+          })
+          .then(resp => {
             resolve(resp?.directUrls);
-          }
-        );
+          });
       });
 
       // Send a message to background.ts for downloading
       const downloadResult = await new Promise<DownloadResult>((resolve, reject) => {
-        chrome.runtime.sendMessage(
-          {
+        browser.runtime
+          .sendMessage({
             type: 'DOWNLOAD_VIDEOS',
             urls: updatedSelectedUrls,
-          },
-          response => {
-            if (chrome.runtime.lastError) {
-              reject(new Error(chrome.runtime.lastError.message));
-              return;
-            }
+          })
+          .then(response => {
             if (!response) {
               reject(new Error('No response from background script'));
               return;
             }
             resolve(response as DownloadResult);
-          }
-        );
+          })
+          .catch(error => {
+            reject(new Error(error.message));
+          });
       });
 
       if (iGetResolveDirectLinkError === true || downloadResult.success === false) {

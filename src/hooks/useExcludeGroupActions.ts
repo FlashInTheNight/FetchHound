@@ -1,3 +1,4 @@
+import browser from 'webextension-polyfill';
 import {
   useErrorStore,
   useLoadingStore,
@@ -27,7 +28,7 @@ export const useExcludeGroupActions = () => {
   const handleSaveAndRescan = async () => {
     try {
       const excludedUrls = getSelectedUrls();
-      const [tab] = await chrome.tabs.query({
+      const [tab] = await browser.tabs.query({
         active: true,
         currentWindow: true,
       });

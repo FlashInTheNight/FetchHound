@@ -1,9 +1,9 @@
 {
-  "name": "Video Downloader Extension",
+  "name": "FetchHound – Video & Image Downloader",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "A simple media downloader extension for Chrome",
+  "description": "A powerful browser extension that helps you easily download media content from web pages.",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

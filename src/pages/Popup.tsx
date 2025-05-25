@@ -9,7 +9,7 @@ const Popup = () => {
   return (
     <main className={style['app-wrapper']}>
       <header className={style.header}>
-        <h1 className={style.title}>Media Downloader</h1>
+        <h1 className={style.title}>FetchHound</h1>
         <SettingsMenu />
       </header>
       {mode === 'scan' ? <StartBlockWidjet /> : <MediaListWidjet />}

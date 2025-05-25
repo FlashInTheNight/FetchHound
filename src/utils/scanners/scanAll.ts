@@ -11,6 +11,27 @@ export const scanAll: scanFnType = (excludedUrls: string[] = []) => {
   // Regular expression to check for direct media links
   const DIRECT_MEDIA_URL_PATTERN = /\.(mp4|webm|mkv|avi|mov|jpg|jpeg|png|gif|webp)(?:\?[^/]*)?$/i;
 
+  const normalizeUrl = (url: string): string => {
+    try {
+      const urlObj = new URL(url);
+      // Remove query parameters and hash
+      // This is important to ensure that URLs with different query parameters are treated as the same
+      urlObj.search = '';
+      urlObj.hash = '';
+      return urlObj.toString();
+    } catch {
+      return url;
+    }
+  };
+
+  // Create a Set of normalized excluded URLs
+  const normalizedExcludedUrls = new Set(excludedUrls.map(normalizeUrl));
+
+  // Function to check if a URL should be excluded
+  const shouldExclude = (url: string): boolean => {
+    return normalizedExcludedUrls.has(normalizeUrl(url));
+  };
+
   // 1. Scan <video> elements
   const videoElems: HTMLVideoElement[] = Array.from(document.querySelectorAll('video'));
   videoElems.forEach(video => {
@@ -21,7 +42,7 @@ export const scanAll: scanFnType = (excludedUrls: string[] = []) => {
         videoUrl = sourceElem.getAttribute('src');
       }
     }
-    if (videoUrl) {
+    if (videoUrl && !shouldExclude(videoUrl)) {
       media.set(videoUrl, video.getAttribute('poster'));
     }
   });
@@ -34,9 +55,11 @@ export const scanAll: scanFnType = (excludedUrls: string[] = []) => {
   );
 
   for (const anchor of anchorElems) {
-    const img = anchor.querySelector('img');
-    const thumb = img ? img.src : null;
-    media.set(anchor.href, thumb);
+    if (!shouldExclude(anchor.href)) {
+      const img = anchor.querySelector('img');
+      const thumb = img ? img.src : null;
+      media.set(anchor.href, thumb);
+    }
   }
 
   // 3. Scan <figure> elements for images or links to images
@@ -54,13 +77,9 @@ export const scanAll: scanFnType = (excludedUrls: string[] = []) => {
     }
 
     const thumb = img ? img.src : null;
-    if (link && link.href) {
+    if (link && link.href && !shouldExclude(link.href)) {
       media.set(link.href, thumb);
     }
-  }
-
-  if (excludedUrls.length > 0) {
-    excludedUrls.forEach(url => media.delete(url));
   }
 
   // Convert to array of objects

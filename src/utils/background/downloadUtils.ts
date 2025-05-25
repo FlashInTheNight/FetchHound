@@ -1,3 +1,4 @@
+import browser from 'webextension-polyfill';
 import { type SelectedItem } from '../../store';
 
 export interface DownloadResult {
@@ -8,26 +9,28 @@ export interface DownloadResult {
 
 export const downloadFile = (url: string): Promise<number> => {
   return new Promise((resolve, reject) => {
-    chrome.downloads.download({ url }, downloadId => {
-      if (chrome.runtime.lastError) {
-        return reject(new Error(chrome.runtime.lastError.message));
-      }
-      if (!downloadId) {
-        return reject(new Error('Failed to start download'));
-      }
-
-      const onChangedListener = (delta: chrome.downloads.DownloadDelta) => {
-        if (delta.id !== downloadId) return;
-        if (delta.state && delta.state.current === 'complete') {
-          chrome.downloads.onChanged.removeListener(onChangedListener);
-          resolve(downloadId);
-        } else if (delta.state && delta.state.current === 'interrupted') {
-          chrome.downloads.onChanged.removeListener(onChangedListener);
-          reject(new Error('Download interrupted'));
+    browser.downloads
+      .download({ url })
+      .then(downloadId => {
+        if (!downloadId) {
+          return reject(new Error('Failed to start download'));
         }
-      };
-      chrome.downloads.onChanged.addListener(onChangedListener);
-    });
+
+        const onChangedListener = (delta: browser.Downloads.DownloadDelta) => {
+          if (delta.id !== downloadId) return;
+          if (delta.state && delta.state.current === 'complete') {
+            browser.downloads.onChanged.removeListener(onChangedListener);
+            resolve(downloadId);
+          } else if (delta.state && delta.state.current === 'interrupted') {
+            browser.downloads.onChanged.removeListener(onChangedListener);
+            reject(new Error('Download interrupted'));
+          }
+        };
+        browser.downloads.onChanged.addListener(onChangedListener);
+      })
+      .catch(error => {
+        reject(new Error(error.message));
+      });
   });
 };
 

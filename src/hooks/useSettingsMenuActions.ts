@@ -1,3 +1,4 @@
+import browser from 'webextension-polyfill';
 import { useState } from 'react';
 import { storage } from '../utils/storage';
 
@@ -17,7 +18,7 @@ export const useSettingsMenuActions = () => {
         clearSite: '',
       }));
 
-      const [tab] = await chrome.tabs.query({
+      const [tab] = await browser.tabs.query({
         active: true,
         currentWindow: true,
       });
@@ -73,9 +74,16 @@ export const useSettingsMenuActions = () => {
     }
   };
 
+  const handleCloseSettings = () => {
+    setSettingsOpen(false);
+    setError({ clearSite: '', clearAll: '' });
+    setMessage({ clearSite: '', clearAll: '' });
+  };
+
   return {
     handleClearSiteExclusions,
     handleClearAllExclusions,
+    handleCloseSettings,
     settingsOpen,
     setSettingsOpen,
     error,
