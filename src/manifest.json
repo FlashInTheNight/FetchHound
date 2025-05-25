@@ -57,7 +57,8 @@
   },
   "{{firefox}}.browser_specific_settings": {
     "gecko": {
-      "id": "FetchHound@example.com"
+      "id": "fetchhound@mediafetch.io",
+      "strict_min_version": "109.0"
     }
   }
 }

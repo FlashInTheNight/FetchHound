@@ -16,7 +16,7 @@ export const downloadFile = (url: string): Promise<number> => {
           return reject(new Error('Failed to start download'));
         }
 
-        const onChangedListener = (delta: browser.Downloads.DownloadDelta) => {
+        const onChangedListener = (delta: browser.Downloads.OnChangedDownloadDeltaType) => {
           if (delta.id !== downloadId) return;
           if (delta.state && delta.state.current === 'complete') {
             browser.downloads.onChanged.removeListener(onChangedListener);
