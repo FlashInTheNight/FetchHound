@@ -4,6 +4,9 @@
   "name": "FetchHound – Video & Image Downloader",
   "description": "A powerful browser extension that helps you easily download media content from web pages.",
   "version": "1.0.0",
+  "author": "FlashInTheNight",
+  "homepage_url": "https://github.com/FlashInTheNight/FetchHound",
+  "support_url": "https://github.com/FlashInTheNight/FetchHound/issues",
   "icons": {
     "16": "icon/16.png",
     "32": "icon/32.png",
