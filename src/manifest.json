@@ -6,7 +6,7 @@
   "version": "1.0.0",
   "author": "FlashInTheNight",
   "homepage_url": "https://github.com/FlashInTheNight/FetchHound",
-  "support_url": "https://github.com/FlashInTheNight/FetchHound/issues",
+  "{{chrome}}.support_url": "https://github.com/FlashInTheNight/FetchHound/issues",
   "icons": {
     "16": "icon/16.png",
     "32": "icon/32.png",
