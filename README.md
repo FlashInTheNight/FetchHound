@@ -14,6 +14,47 @@ A powerful browser extension that helps you easily download media content from w
 - **Download Status Tracking**: Monitor download progress and receive detailed information about any failed downloads
 - **User-Friendly Interface**: Simple and intuitive interface for managing your downloads
 
+## Installation & Development
+
+### Prerequisites
+- Node.js (LTS version recommended)
+- pnpm v9.12.3 or higher
+
+### Setup
+1. Clone the repository:
+```bash
+git clone https://github.com/FlashInTheNight/fetchhound.git
+cd fetchhound
+```
+
+2. Install dependencies:
+```bash
+pnpm install
+```
+
+3. Start development server:
+```bash
+pnpm dev
+```
+
+4. Load the extension in your browser:
+   - **Firefox**: 
+     1. Open `about:debugging`
+     2. Click "This Firefox"
+     3. Click "Load Temporary Add-on"
+     4. Navigate to the project directory and select `dist/manifest.json`
+   - **Chrome/Edge**:
+     1. Open `chrome://extensions`
+     2. Enable "Developer mode"
+     3. Click "Load unpacked"
+     4. Select the `dist` directory
+
+### Building for Production
+```bash
+pnpm build
+```
+The built extension will be available in the `dist` directory.
+
 ## Important Notice
 
 This extension is designed to work with standard media files that are directly accessible on web pages. It will not work with:
